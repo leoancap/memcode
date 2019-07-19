@@ -1,0 +1,13 @@
+{
+  "defaultSeverity": "warning",
+  "extends": ["tslint-react"],
+  "linterOptions": {
+    "exclude": ["node_modules", "be", "server", "graphql"]
+  },
+  "rules": {
+    "semicolon": false,
+    "no-console": false,
+    "jsx-no-multiline-js": false,
+    "jsx-no-lambda": false
+  }
+}

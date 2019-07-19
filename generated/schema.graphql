@@ -1,0 +1,102 @@
+input ChangePasswordInput {
+  password: String!
+  token: String!
+}
+
+type Deck {
+  id: ID!
+  title: String!
+  description: String!
+  bundledExercises: String!
+  tags: [String!]!
+  language: String!
+  userId: Float!
+  user: User!
+  exercises: [Exercise!]!
+}
+
+input DeckInput {
+  title: String!
+  description: String!
+  tags: [String!]!
+  language: String!
+}
+
+type DeckToReview {
+  id: ID!
+  deckToReviewId: String!
+  deck: Deck!
+  user: User!
+  exercisesToReview: [ExerciseToReview!]!
+}
+
+type Exercise {
+  id: ID!
+  title: String!
+  description: String!
+  code: String!
+  solution: String!
+  tests: String!
+  deckId: String!
+  deck: Deck!
+}
+
+input ExerciseInput {
+  deckId: String!
+  title: String!
+  description: String!
+  code: String!
+  solution: String!
+  tests: String!
+}
+
+type ExerciseToReview {
+  id: ID!
+  exerciseId: String!
+  nextInterval: Float!
+  exercise: Exercise!
+  lastAttempt: Float!
+  deckToReview: DeckToReview!
+}
+
+type Mutation {
+  changePassword(data: ChangePasswordInput!): User
+  forgotPassword(email: String!): Boolean!
+  login(password: String!, email: String!): User
+  logout: Boolean!
+  register(data: RegisterInput!): User!
+  createDeck(data: DeckInput!): Deck
+  deleteDeck(deckId: String!): [Deck!]
+  createExercise(data: ExerciseInput!): Deck
+  deleteExercise(exerciseId: String!, deckId: String!): Deck
+  addDeckToReview(level: Float!, exerciseId: String!, deckId: String!): User
+  addExerciseToReview(level: Float!, exerciseId: String!, deckId: String!): User
+  strenghtenExercise(level: Float!, exerciseId: String!): User
+}
+
+type Query {
+  me: User
+  hello: String!
+  findDecksByLanguage(language: String!): [Deck!]!
+  decks: [Deck!]!
+  myDecks: [Deck!]!
+  findDeckByTitle(title: String!, user: String!): Deck
+  findDeckById(deckId: String!): Deck
+  findDeckByIdAndUser(deckId: String!, user: String!): Deck
+  findDeckByPattern(str: String!): Deck
+  myDecksToReview: [DeckToReview!]
+}
+
+input RegisterInput {
+  password: String!
+  email: String!
+}
+
+type User {
+  id: ID!
+  uuid: String!
+  email: String!
+  decks: [Deck!]!
+  decksToReview: [DeckToReview!]
+}
+

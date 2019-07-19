@@ -1,0 +1,6 @@
+.env.development
+.env.production
+.next
+node_modules
+.be
+now.json
