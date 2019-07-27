@@ -4,6 +4,15 @@ export const createDeckMutation = gql`
   mutation CreateDeck($data: DeckInput!) {
     createDeck(data: $data) {
       id
+      title
+      description
+      tags
+      language
+      bundledExercises
+      user {
+        id
+        uuid
+      }
     }
   }
 `

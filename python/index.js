@@ -19,6 +19,8 @@ def square(x): return x*x
 `
 const tests = "square(2); square(3)"
 
+app.set("port", process.env.PORT || 5000)
+
 app.post("*", async (req, res) => {
   const { code, solution, tests, isTesting } = req.body
   const results = await evalPythonCode(
@@ -31,6 +33,4 @@ app.post("*", async (req, res) => {
   res.end(JSON.stringify(results))
 })
 
-app.listen(5000, () => {
-  console.log("listening ")
-})
+app.listen(app.get("port"))

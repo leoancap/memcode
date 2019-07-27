@@ -65,7 +65,7 @@ type Mutation {
   login(password: String!, email: String!): User
   logout: Boolean!
   register(data: RegisterInput!): User!
-  createDeck(data: DeckInput!): Deck
+  createDeck(data: DeckInput!): [Deck!]
   deleteDeck(deckId: String!): [Deck!]
   createExercise(data: ExerciseInput!): Deck
   deleteExercise(exerciseId: String!, deckId: String!): Deck

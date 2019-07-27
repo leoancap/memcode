@@ -19,8 +19,6 @@ export default class ColoredScrollbars extends Component {
     const { top } = this.state
     const viewStyle = {
       padding: 0,
-      backgroundColor: `rgb(100, 100, 100)`,
-      color: `rgb(100, 100, 100)`,
     }
     return <div className="box" style={{ ...style, ...viewStyle }} {...props} />
   }

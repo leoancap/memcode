@@ -6,11 +6,11 @@ import { DeckInput } from "./deckInput"
 
 @Resolver()
 export class DeckResolver {
-  @Mutation(() => Deck, { nullable: true, complexity: 5 })
+  @Mutation(() => [Deck], { nullable: true, complexity: 5 })
   async createDeck(
     @Arg("data") data: DeckInput,
     @Ctx() ctx: MyContext,
-  ): Promise<Deck | undefined> {
+  ): Promise<Deck[] | undefined> {
     if (!ctx.req.session!.userId) {
       return undefined
     }
@@ -22,7 +22,7 @@ export class DeckResolver {
     user!.decks = [...user!.decks, deck]
     await user!.save()
 
-    return deck
+    return this.decks()
   }
   @Mutation(() => [Deck], { nullable: true, complexity: 5 })
   async deleteDeck(

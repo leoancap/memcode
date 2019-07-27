@@ -43,8 +43,6 @@ export default observer(function PageIndex() {
         },
       })
 
-      console.log(res)
-
       if (res && res.data && res.data.login === null) {
         await register({
           variables: { data },

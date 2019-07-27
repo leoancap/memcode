@@ -4,8 +4,14 @@ import { useStore } from "../../store"
 import styled from "../../styled"
 import map from "ramda/src/map"
 import { IDeck } from "../../generated/apolloComponents"
+import { Languages } from "../../typings/appTypes"
 
-const languages = ["Typescript", "Javascript"]
+export const languages: Languages[] = [
+  "All",
+  "Typescript",
+  "Javascript",
+  "Python",
+]
 const tags = [
   "Algorithms",
   "String",
@@ -16,18 +22,27 @@ const tags = [
 ]
 
 interface IDeckSidebar {
-  setDecks: (decks: IDeck[]) => void
+  setLanguageFilter: (language: Languages) => void
+  languageFilter: Languages
 }
 
-export default function DeckSidebar({ ...props }) {
+export default function DeckSidebar({
+  setLanguageFilter,
+  languageFilter,
+}: IDeckSidebar) {
   const store = useStore()
 
   return (
     <Container>
       <LanguagesWrapper>
         <h1>Languages</h1>
-        {map((lan: string) => (
-          <LanguageStyled onClick={() => {}} key={lan}>
+        {map((lan: Languages) => (
+          <LanguageStyled
+            onClick={() => {
+              setLanguageFilter(lan)
+            }}
+            key={lan}
+          >
             {lan}
           </LanguageStyled>
         ))(languages)}

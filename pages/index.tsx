@@ -8,11 +8,47 @@ import { MyCtx } from "../typings/MyCtx"
 import { decksQuery } from "../graphql/deck/queries/decks"
 import DeckSidebar from "../components/decks/deckSidebar"
 import DeckListing from "../components/decks/deckListing"
+import { Languages } from "../typings/appTypes"
+import { useApolloClient, useQuery } from "react-apollo-hooks"
+import gql from "graphql-tag"
+import { IDeck } from "../generated/apolloComponents"
+
+const getDecksQuery = gql`
+  {
+    decks @client {
+      id
+      title
+      description
+      tags
+      language
+      bundledExercises
+      user {
+        id
+        uuid
+      }
+    }
+  }
+`
 
 export default function Decks({ initialDecks }) {
   const store = useStore()
+  const client = useApolloClient()
 
-  const [decks, setDecks] = React.useState(initialDecks)
+  const data = client.readQuery({
+    query: getDecksQuery,
+  })
+
+  const [decks, setDecks] = React.useState(data.decks)
+
+  const [languageFilter, setLanguageFilter] = React.useState<Languages>("All")
+
+  React.useEffect(() => {
+    setDecks(
+      data.decks.filter(deck =>
+        languageFilter === "All" ? true : deck.language === languageFilter,
+      ),
+    )
+  }, [languageFilter, data.decks])
 
   return (
     <Layout>
@@ -34,6 +70,10 @@ export default function Decks({ initialDecks }) {
           )}
         </PageHeader>
         <Container>
+          <DeckSidebar
+            languageFilter={languageFilter}
+            setLanguageFilter={setLanguageFilter}
+          />
           <DeckListing decks={decks} />
         </Container>
       </Content>
@@ -41,9 +81,15 @@ export default function Decks({ initialDecks }) {
   )
 }
 Decks.getInitialProps = async ({ apolloClient }: MyCtx) => {
+  await apolloClient.resetStore()
   const {
     data: { decks },
   } = await apolloClient.query({ query: decksQuery })
+  apolloClient.cache.writeData({
+    data: {
+      decks,
+    },
+  })
   return { initialDecks: decks }
 }
 

@@ -75,7 +75,7 @@ export type IMutation = {
   login?: Maybe<IUser>;
   logout: Scalars["Boolean"];
   register: IUser;
-  createDeck?: Maybe<IDeck>;
+  createDeck?: Maybe<Array<IDeck>>;
   deleteDeck?: Maybe<Array<IDeck>>;
   createExercise?: Maybe<IDeck>;
   deleteExercise?: Maybe<IDeck>;
@@ -187,7 +187,19 @@ export type ICreateDeckMutationVariables = {
 };
 
 export type ICreateDeckMutation = { __typename?: "Mutation" } & {
-  createDeck: Maybe<{ __typename?: "Deck" } & Pick<IDeck, "id">>;
+  createDeck: Maybe<
+    Array<
+      { __typename?: "Deck" } & Pick<
+        IDeck,
+        | "id"
+        | "title"
+        | "description"
+        | "tags"
+        | "language"
+        | "bundledExercises"
+      > & { user: { __typename?: "User" } & Pick<IUser, "id" | "uuid"> }
+    >
+  >;
 };
 
 export type ICreateExerciseMutationVariables = {
@@ -420,6 +432,15 @@ export const CreateDeckDocument = gql`
   mutation CreateDeck($data: DeckInput!) {
     createDeck(data: $data) {
       id
+      title
+      description
+      tags
+      language
+      bundledExercises
+      user {
+        id
+        uuid
+      }
     }
   }
 `;

@@ -36,7 +36,7 @@ let DeckResolver = class DeckResolver {
             });
             user.decks = [...user.decks, deck];
             yield user.save();
-            return deck;
+            return this.decks();
         });
     }
     deleteDeck(deckId, ctx) {
@@ -85,7 +85,7 @@ let DeckResolver = class DeckResolver {
     }
 };
 __decorate([
-    type_graphql_1.Mutation(() => Deck_1.Deck, { nullable: true, complexity: 5 }),
+    type_graphql_1.Mutation(() => [Deck_1.Deck], { nullable: true, complexity: 5 }),
     __param(0, type_graphql_1.Arg("data")),
     __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),

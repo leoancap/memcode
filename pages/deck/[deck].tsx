@@ -349,6 +349,7 @@ const ExercisesPane = styled.div`
   justify-content: space-between;
   border-right: 0.5px solid rgba(0, 0, 0, 0.5);
   height: 100%;
+  background: ${props => props.theme.bg1};
   section {
     width: 18.5rem;
     overflow-y: auto;

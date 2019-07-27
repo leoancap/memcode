@@ -3,41 +3,65 @@ import { useStore } from "../store"
 import styled from "../styled"
 import Layout from "../components/shared/Layout"
 import { Button, Box, Flex, Text } from "@rebass/emotion"
-import { useCreateDeckMutation } from "../generated/apolloComponents"
+import {
+  useCreateDeckMutation,
+  IDecksQuery,
+} from "../generated/apolloComponents"
 import { decksQuery } from "../graphql/deck/queries/decks"
 import Router from "next/router"
+import TagsInput from "react-tagsinput"
+
+import "react-tagsinput/react-tagsinput.css" // If using WebPack and style-loader.
+import { autosuggestRenderInput } from "../components/shared/AutoSuggest"
+import { useApolloClient } from "react-apollo-hooks"
 
 export default function CreateDecks() {
   const store = useStore()
 
   const createDeck = useCreateDeckMutation()
 
+  const [tags, setTags] = React.useState([])
+  const [submitting, setSubmitting] = React.useState(false)
+  const client = useApolloClient()
+
   const [deckData, setDeckData] = React.useState({
     title: "",
     description: "",
-    tags: [""],
     language: "Typescript",
   })
 
   const handleChange = ({ target: { name, value } }: any) => {
-    if (name === "tags") {
-      setDeckData({
-        ...deckData,
-        [name]: value.split(",").map(v => v.trim()),
-      })
-    } else {
-      setDeckData({
-        ...deckData,
-        [name]: value,
-      })
-    }
+    setDeckData({
+      ...deckData,
+      [name]: value,
+    })
   }
 
   const onSubmit = async () => {
-    await createDeck({
-      variables: { data: deckData },
-    })
-    Router.push("/")
+    if (!submitting) {
+      setSubmitting(true)
+      await createDeck({
+        variables: {
+          data: {
+            ...deckData,
+            tags,
+          },
+        },
+        update: (cache, { data }) => {
+          if (!data || !data.createDeck) {
+            return undefined
+          }
+          cache.writeQuery<IDecksQuery>({
+            query: decksQuery,
+            data: {
+              //@ts-ignore
+              decks: data.createDeck,
+            },
+          })
+        },
+      })
+      Router.push("/")
+    }
   }
 
   return (
@@ -68,21 +92,17 @@ export default function CreateDecks() {
             >
               <option value="Typescript">Typescript</option>
               <option value="Javascript">Javascript</option>
-              <option value="Python">Javascript</option>
+              <option value="Python">Python</option>
             </Select>
           </FormField>
           <FormField>
             <Label>Tags</Label>
-            <InputStyled
-              onChange={handleChange}
-              value={deckData.tags}
-              name="tags"
-            />
-          </FormField>
-          <FormField>
-            <div />
             <TagsTip>
-              E.g. Algorithms, fp, string. (should be comma separated)
+              <TagsInput
+                renderInput={autosuggestRenderInput}
+                value={tags}
+                onChange={setTags}
+              />
             </TagsTip>
           </FormField>
           <FormField>
@@ -137,15 +157,40 @@ const Label = styled(Text)`
   text-align: right;
 `
 
-export const TagsTip = styled.p`
-  padding: 0;
+export const TagsTip = styled.div`
   margin: 0;
-  margin-top: -3rem;
-  margin-bottom: 1rem;
-  padding-left: 2rem;
-  font-size: 13px;
+  margin-bottom: 2rem;
   width: 75%;
   max-width: 75vw;
+  .react-tagsinput {
+    border-radius: 0.9rem;
+    border: 1px solid ${props => props.theme.bo1};
+  }
+  .react-tagsinput-tag {
+    background: ${props => props.theme.bg1};
+    color: ${props => props.theme.co1};
+    border: 1px solid ${props => props.theme.bo1};
+    font-size: 16px;
+  }
+  .react-autosuggest__suggestion--highlighted {
+    filter: invert(0.09);
+  }
+  .react-autosuggest__suggestion {
+    cursor: pointer;
+    font-size: 14px;
+    background: ${props => props.theme.bg1};
+    color: ${props => props.theme.co1};
+    border-bottom: 1px solid ${props => props.theme.bo1};
+    padding: 0.5rem;
+  }
+  ul {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+  }
+  li {
+    margin: 0.3rem;
+    list-style-type: none;
+  }
 `
 
 const Select = styled.select`
