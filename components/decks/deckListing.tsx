@@ -58,7 +58,7 @@ export default function DeckListing({
                 >
                   <TitleStyled my={2}>
                     <LanguageLogoWrapper>
-                      <img src={jsLogo} alt="" />
+                      <img src={logoSorter(deck.deck.language)} alt="" />
                     </LanguageLogoWrapper>
                     {deck.deck.title}
                   </TitleStyled>

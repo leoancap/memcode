@@ -12,13 +12,15 @@ const isServer = typeof window === "undefined"
 
 export const runPythonEndpoint =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:5000/"
-    : "https://memcode.leoancap.now.sh/python"
+    ? "http://localhost:3000/python"
+    : // ? "http://localhost:5000/"
+      "https://memcode.leoancap.now.sh/python"
 
 export const uri =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:4000/be"
-    : "https://memcode.leoancap.now.sh/be"
+    ? "http://localhost:3000/be"
+    : // ? "http://localhost:4000/be"
+      "https://memcode.leoancap.now.sh/be"
 
 export function createApolloClient(state: any, { getToken }: any) {
   if (apolloClient) {
