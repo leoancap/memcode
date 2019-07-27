@@ -59,4 +59,3 @@ ChangePasswordResolver = __decorate([
     type_graphql_1.Resolver()
 ], ChangePasswordResolver);
 exports.ChangePasswordResolver = ChangePasswordResolver;
-//# sourceMappingURL=ChangePassword.js.map

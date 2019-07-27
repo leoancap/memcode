@@ -14,7 +14,7 @@
     "strictNullChecks": true,
     "removeComments": false,
     "preserveConstEnums": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "skipLibCheck": true,
     "allowUnusedLabels": true,
     "emitDecoratorMetadata": true,

@@ -29,33 +29,14 @@ export function createStore(storeState: IStoreState): IStore {
   }
 }
 
-const Tokens = types.model("Tokens", {
-  accessToken: types.string,
-  refreshToken: types.string,
-})
-
 const Store = types
   .model("Store", {
-    environments: types.map(types.string),
-    tokens: types.maybe(Tokens),
     user: "",
     dark: false,
     vim: false,
     sideBarOpen: true,
   })
-  .views(self => ({
-    get isAuthenticated() {
-      return typeof self.tokens !== "undefined"
-    },
-  }))
   .actions(self => ({
-    setEnvironments(environments: { [key: string]: string }) {
-      Object.entries(environments).map(([key, value]) => {
-        if (value) {
-          self.environments.set(key, value)
-        }
-      })
-    },
     toggleVim() {
       self.vim = !self.vim
     },

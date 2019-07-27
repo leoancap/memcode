@@ -187,4 +187,3 @@ DeckToReviewResolver = __decorate([
     type_graphql_1.Resolver()
 ], DeckToReviewResolver);
 exports.DeckToReviewResolver = DeckToReviewResolver;
-//# sourceMappingURL=DeckToReview.js.map

@@ -25,4 +25,3 @@ RegisterInput = __decorate([
     type_graphql_1.InputType()
 ], RegisterInput);
 exports.RegisterInput = RegisterInput;
-//# sourceMappingURL=RegisterInput.js.map

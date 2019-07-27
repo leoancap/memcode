@@ -14,9 +14,9 @@ export default function ErrorCode({ error }: any) {
     <Wrapper>
       <DescriptionWrapper>
         <h1>Error</h1>
-        <code>
-          <pre>{error}</pre>
-        </code>
+        <pre>
+          <code>{error}</code>
+        </pre>
       </DescriptionWrapper>
     </Wrapper>
   )
@@ -25,12 +25,16 @@ export default function ErrorCode({ error }: any) {
 const Wrapper = styled.div`
   display: flex;
   padding: 2rem;
+  width: 100%;
   code {
+    white-space: pre-wrap;
+    word-break: break-all;
     font-size: 16px;
   }
 `
 const DescriptionWrapper = styled.div`
   margin: 0 auto;
+  width: 100%;
   h1 {
     text-align: center;
     padding: 1rem;

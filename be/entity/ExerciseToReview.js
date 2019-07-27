@@ -55,4 +55,3 @@ ExerciseToReview = __decorate([
     typeorm_1.Entity()
 ], ExerciseToReview);
 exports.ExerciseToReview = ExerciseToReview;
-//# sourceMappingURL=ExerciseToReview.js.map

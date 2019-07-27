@@ -188,4 +188,3 @@ ExerciseResolver = __decorate([
     type_graphql_1.Resolver()
 ], ExerciseResolver);
 exports.ExerciseResolver = ExerciseResolver;
-//# sourceMappingURL=Exercise.js.map

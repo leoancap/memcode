@@ -61,4 +61,3 @@ Exercise = __decorate([
     typeorm_1.Entity()
 ], Exercise);
 exports.Exercise = Exercise;
-//# sourceMappingURL=Exercise.js.map

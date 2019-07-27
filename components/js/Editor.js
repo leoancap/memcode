@@ -1,6 +1,6 @@
 import brace from "brace"
 import "brace/mode/typescript"
-import "brace/mode/javascript"
+import "brace/mode/python"
 import "brace/theme/monokai"
 import "brace/theme/solarized_light"
 import "brace/keybinding/vim"
@@ -10,12 +10,12 @@ import { observer } from "mobx-react-lite"
 import { useStore } from "../../store"
 import styled from "../../styled"
 
-const Editor = observer(({ height, code, onChange }) => {
+const Editor = observer(({ height, code, onChange, language }) => {
   const store = useStore()
   return (
     <EditorWrapper>
       <AceEditor
-        mode={"typescript"}
+        mode={language ? language.toLowerCase() : "typescript"}
         theme={store.dark ? "monokai" : "solarized_light"}
         onChange={onChange}
         value={code}
@@ -27,7 +27,7 @@ const Editor = observer(({ height, code, onChange }) => {
           fontFamily: "monospace",
           tabSize: 2,
         }}
-        keyboardHandler={store.vim && "vim"}
+        keyboardHandler={store.vim ? "vim" : ""}
         fontSize={21}
         height={height}
         width="100%"

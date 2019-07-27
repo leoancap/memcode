@@ -50,4 +50,3 @@ ForgotPasswordResolver = __decorate([
     type_graphql_1.Resolver()
 ], ForgotPasswordResolver);
 exports.ForgotPasswordResolver = ForgotPasswordResolver;
-//# sourceMappingURL=ForgotPassword.js.map

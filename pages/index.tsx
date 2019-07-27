@@ -41,7 +41,6 @@ export default function Decks({ initialDecks }) {
   )
 }
 Decks.getInitialProps = async ({ apolloClient }: MyCtx) => {
-  await apolloClient.resetStore()
   const {
     data: { decks },
   } = await apolloClient.query({ query: decksQuery })

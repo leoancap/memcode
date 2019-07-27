@@ -38,4 +38,3 @@ function sendEmail(email, url) {
     });
 }
 exports.sendEmail = sendEmail;
-//# sourceMappingURL=sendEmail.js.map

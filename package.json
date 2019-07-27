@@ -1,10 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "start:fe": "dotenv -e ./.env.production next dev",
+    "start:fe": "dotenv -e ./.env.development next dev",
     "be": "concurrently \"yarn buildServer\" \"yarn start:be\" ",
     "start:be": "dotenv -e ./.env.development nodemon --watch server --exec node be/index.js",
-    "start": "concurrently \"yarn start:fe\" \"yarn be\" ",
+    "start:python": "dotenv -e ./.env.development nodemon --watch server --exec node python/index.js",
+    "start": "concurrently \"yarn start:fe\" \"yarn be\" \"yarn start:python\" ",
     "buildServer": "tsc -p server -w",
     "build": "next build",
     "generate": "graphql-codegen --config codegen.yml",
@@ -63,6 +64,7 @@
     "nodemailer": "^5.1.1",
     "pg": "^7.11.0",
     "prettier": "^1.18.2",
+    "python-shell": "^1.0.7",
     "ramda": "^0.26.1",
     "react": "^16.8.6",
     "react-ace": "^7.0.2",

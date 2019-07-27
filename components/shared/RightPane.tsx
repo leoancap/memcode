@@ -15,12 +15,17 @@ interface IRightPane {
   results: any
   handleReview: (value: number) => void
   error: string
+  language: string
 }
 
-export default ({ results, exercise, handleReview, error }: IRightPane) => {
+export default ({
+  language,
+  results,
+  exercise,
+  handleReview,
+  error,
+}: IRightPane) => {
   const store = useStore()
-  // console.log(results)
-  // console.log(error)
   const [tabIndex, setTabIndex] = React.useState(0)
 
   React.useEffect(() => {
@@ -53,7 +58,11 @@ export default ({ results, exercise, handleReview, error }: IRightPane) => {
           <TabContent>
             <SolutionWrapper>
               <code>
-                <pre>{prettify(exercise.solution).code}</pre>
+                <pre>
+                  {language === "Python"
+                    ? exercise.solution
+                    : prettify(exercise.solution).code}
+                </pre>
               </code>
             </SolutionWrapper>
           </TabContent>

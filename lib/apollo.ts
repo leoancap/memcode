@@ -9,10 +9,16 @@ import Router from "next/router"
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 const isServer = typeof window === "undefined"
-const dev = process.env.NODE_ENV !== "production"
-export const apiUrl = dev
-  ? "http://localhost:4000/be"
-  : "https://memcode.leoancap.now.sh/be"
+
+export const runPythonEndpoint =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000"
+    : "https://memcode.leoancap.now.sh/python"
+
+export const uri =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000/be"
+    : "https://memcode.leoancap.now.sh"
 
 export function createApolloClient(state: any, { getToken }: any) {
   if (apolloClient) {
@@ -20,7 +26,8 @@ export function createApolloClient(state: any, { getToken }: any) {
   } else {
     const httpLink = createHttpLink({
       fetch,
-      uri: apiUrl,
+      // uri: process.env.NEXT_APP_GRAPHQL_ENDPOINT,
+      uri,
       credentials: "include",
     })
 

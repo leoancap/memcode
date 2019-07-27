@@ -68,6 +68,7 @@ export default function CreateDecks() {
             >
               <option value="Typescript">Typescript</option>
               <option value="Javascript">Javascript</option>
+              <option value="Python">Javascript</option>
             </Select>
           </FormField>
           <FormField>

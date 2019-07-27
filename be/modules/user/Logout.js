@@ -46,4 +46,3 @@ LogoutResolver = __decorate([
     type_graphql_1.Resolver()
 ], LogoutResolver);
 exports.LogoutResolver = LogoutResolver;
-//# sourceMappingURL=Logout.js.map

@@ -20,6 +20,7 @@ import redirect from "../../lib/redirect"
 import { MyCtx } from "../../typings/MyCtx"
 import { NextComponentType } from "next"
 import RightPane from "../../components/shared/RightPane"
+import { runPythonEndpoint } from "../../lib/apollo"
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
@@ -68,25 +69,52 @@ const Review: NextComponentType = observer(
     }, [currentExerIndex])
 
     const evalCode = async () => {
-      const res = await testCode(
-        userCode,
-        currentExercise.solution,
-        currentExercise.tests,
-        bundledExercises,
-      )
-      setResults(res.results)
-      setRightPane("results")
-      if (res.message) {
-        if (res.error !== "implementation") {
-          setRightPane("error")
+      if (deck.deck.language === "Python") {
+        const rawResponse = await fetch(runPythonEndpoint, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify({
+            code: userCode,
+            solution: currentExercise.solution,
+            tests: currentExercise.tests,
+            isTesting: true,
+          }),
+        })
+        const res = await rawResponse.json()
+        setResults(res.results)
+        setRightPane("results")
+        if (res.message) {
           setErrors(res.message)
+          setRightPane("error")
+          console.log(res)
+        } else {
+          setResults(res.results)
+        }
+      } else {
+        const res = await testCode(
+          userCode,
+          currentExercise.solution,
+          currentExercise.tests,
+          bundledExercises,
+        )
+        setResults(res.results)
+        setRightPane("results")
+        if (res.message) {
+          if (res.error !== "implementation") {
+            setRightPane("error")
+            setErrors(res.message)
+          } else {
+            setErrors("")
+          }
         } else {
           setErrors("")
         }
-      } else {
-        setErrors("")
       }
     }
+
     React.useEffect(() => {
       cookie.set("memcodeSidebar", store.sideBarOpen)
     }, [store.sideBarOpen])
@@ -159,6 +187,7 @@ const Review: NextComponentType = observer(
                     <Editor
                       height="inherit"
                       code={userCode}
+                      language={deck.deck.language}
                       onChange={value => {
                         setUserCode(value)
                       }}
@@ -171,6 +200,7 @@ const Review: NextComponentType = observer(
                       exercise={currentExercise}
                       rightPane={rightPane}
                       handleReview={handleReview}
+                      language={deck.deck.language}
                       error={error}
                     />
                   </ResultsPane>

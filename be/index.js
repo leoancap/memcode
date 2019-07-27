@@ -72,4 +72,3 @@ const dev = process.env.NODE_ENV !== "production";
         console.log("Listening on http://localhost:4000/be");
     });
 }))();
-//# sourceMappingURL=index.js.map

@@ -32,4 +32,3 @@ DeckInput = __decorate([
     type_graphql_1.InputType()
 ], DeckInput);
 exports.DeckInput = DeckInput;
-//# sourceMappingURL=deckInput.js.map

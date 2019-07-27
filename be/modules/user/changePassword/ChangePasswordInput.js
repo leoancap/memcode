@@ -21,4 +21,3 @@ ChangePasswordInput = __decorate([
     type_graphql_1.InputType()
 ], ChangePasswordInput);
 exports.ChangePasswordInput = ChangePasswordInput;
-//# sourceMappingURL=ChangePasswordInput.js.map

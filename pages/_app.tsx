@@ -20,15 +20,16 @@ export default class extends React.Component {
       ctx: { req, res },
     } = ctx
 
-    //@ts-ignore
-    const store = createStore({})
+    const store = createStore({
+      user: "",
+      dark: false,
+      vim: false,
+      sideBarOpen: true,
+    })
 
-    const apolloClient = createApolloClient(
-      {},
-      {
-        getToken: () => parseCookies(req).qid,
-      },
-    )
+    const apolloClient = createApolloClient(store, {
+      getToken: () => parseCookies(req).qid,
+    })
     const theme = parseCookies(req).memcodeTheme
     const vim = parseCookies(req).memcodeVim
     const sideBar = parseCookies(req).memcodeSidebar

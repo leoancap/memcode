@@ -14,4 +14,3 @@ exports.isAuth = ({ context }, next) => __awaiter(this, void 0, void 0, function
     }
     return next();
 });
-//# sourceMappingURL=isAuth.js.map

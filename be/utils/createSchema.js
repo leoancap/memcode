@@ -26,4 +26,3 @@ exports.createSchema = () => type_graphql_1.buildSchema({
         return !!req.session.userId;
     },
 });
-//# sourceMappingURL=createSchema.js.map

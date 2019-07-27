@@ -10,13 +10,15 @@ interface rightPane {
   exercise: IExercise
 }
 
-export default function Solution({ solution }: any) {
+export default function Solution({ language, solution }: any) {
   return (
     <Wrapper>
       <DescriptionWrapper>
         <h1>Solution</h1>
         <code>
-          <pre>{prettify(solution).code}</pre>
+          <pre>
+            {language === "Python" ? solution : prettify(solution).code}
+          </pre>
         </code>
       </DescriptionWrapper>
     </Wrapper>

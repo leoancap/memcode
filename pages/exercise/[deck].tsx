@@ -19,6 +19,7 @@ import {
 import { NextComponentType } from "next"
 import RightPane from "../../components/shared/RightPane"
 import ShadowScroll from "../../components/js/ShadowScroll"
+import { runPythonEndpoint } from "../../lib/apollo"
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
@@ -40,9 +41,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
   const [error, setErrors] = React.useState("")
   const [currentExerIndex, setCurrentExerIndex] = React.useState(0)
   const addDeckToReview = useAddDeckToReviewMutation()
-  // console.log(deck)
   let currentExercise: any = deck.exercises[currentExerIndex]
-  // let currentExercise: any = [][currentExerIndex]
   if (!currentExercise) {
     currentExercise = {
       title: "add",
@@ -59,23 +58,49 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
     }
   }, [currentExerIndex])
   const evalCode = async () => {
-    const res = await testCode(
-      userCode,
-      currentExercise.solution,
-      currentExercise.tests,
-      deck.bundledExercises,
-    )
-    setResults(res.results)
-    setRightPane("results")
-    if (res.message) {
-      if (res.error !== "implementation") {
-        setRightPane("error")
+    if (deck.language === "Python") {
+      const rawResponse = await fetch(runPythonEndpoint, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          code: userCode,
+          solution: currentExercise.solution,
+          tests: currentExercise.tests,
+          isTesting: true,
+        }),
+      })
+      const res = await rawResponse.json()
+      setResults(res.results)
+      setRightPane("results")
+      if (res.message) {
         setErrors(res.message)
+        setRightPane("error")
+        console.log(res)
+      } else {
+        setResults(res.results)
+      }
+    } else {
+      const res = await testCode(
+        userCode,
+        currentExercise.solution,
+        currentExercise.tests,
+        deck.bundledExercises,
+      )
+      setResults(res.results)
+      setRightPane("results")
+      if (res.message) {
+        if (res.error !== "implementation") {
+          setRightPane("error")
+          setErrors(res.message)
+        } else {
+          setErrors("")
+        }
       } else {
         setErrors("")
       }
-    } else {
-      setErrors("")
     }
   }
   // React.useEffect(() => {
@@ -176,6 +201,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
                     rightPane={rightPane}
                     handleReview={handleReview}
                     error={error}
+                    language={deck.language}
                   />
                 </ResultsPane>
               </SplitPane>
@@ -245,6 +271,7 @@ const ExercisesItemPane = styled.div`
 `
 const Content = styled.div`
   height: 100vh;
+  width: 100vw;
   overflow: auto;
 `
 const ResizerCss = css`

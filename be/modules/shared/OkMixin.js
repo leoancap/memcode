@@ -22,4 +22,3 @@ exports.OkMixin = (BaseClass) => {
     ], OkInput);
     return OkInput;
 };
-//# sourceMappingURL=OkMixin.js.map

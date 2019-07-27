@@ -49,4 +49,3 @@ DeckToReview = __decorate([
     typeorm_1.Entity()
 ], DeckToReview);
 exports.DeckToReview = DeckToReview;
-//# sourceMappingURL=DeckToReview.js.map

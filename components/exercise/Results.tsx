@@ -55,6 +55,7 @@ export default function Results({ results, tests }: any) {
 
 const Wrapper = styled.div`
   display: flex;
+  overflow: hidden;
   padding: 2rem;
 `
 const DescriptionWrapper = styled.div`
@@ -68,7 +69,10 @@ const DescriptionWrapper = styled.div`
 `
 
 const ResultsWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
+
   h1 {
     padding: 1rem;
     text-align: center;
@@ -78,6 +82,7 @@ const ResultsWrapper = styled.div`
     font-size: 17px;
     padding: 1rem;
     text-align: center;
+    height: 100%;
     border: 0.5px solid ${props => props.theme.bo1};
   }
 `
@@ -104,6 +109,7 @@ const ComparedResults = styled.div`
 const EmojiWrapper = styled.div`
   font-size: 2.1rem;
   padding: 0.5rem;
+  height: 100%;
   text-align: center;
   border: 0.5px solid ${props => props.theme.bo1};
 `

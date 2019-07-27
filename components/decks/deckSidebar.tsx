@@ -4,10 +4,6 @@ import { useStore } from "../../store"
 import styled from "../../styled"
 import map from "ramda/src/map"
 import { IDeck } from "../../generated/apolloComponents"
-import { findDecksByLanguage } from "../../graphql/deck/queries/findDeck"
-import { MyCtx } from "../../typings/MyCtx"
-import { apiUrl } from "../../lib/apollo"
-import { createApolloFetch } from "apollo-fetch"
 
 const languages = ["Typescript", "Javascript"]
 const tags = [
@@ -26,26 +22,12 @@ interface IDeckSidebar {
 export default function DeckSidebar({ ...props }) {
   const store = useStore()
 
-  console.log(props)
-
-  const apolloFetch = createApolloFetch({ uri: apiUrl })
-
-  const fetchDecks = (language: string) => async () => {
-    const decks = await apolloFetch({
-      query: findDecksByLanguage,
-      variables: {
-        language,
-      },
-    })
-    console.log(decks)
-  }
-
   return (
     <Container>
       <LanguagesWrapper>
         <h1>Languages</h1>
         {map((lan: string) => (
-          <LanguageStyled onClick={fetchDecks(lan)} key={lan}>
+          <LanguageStyled onClick={() => {}} key={lan}>
             {lan}
           </LanguageStyled>
         ))(languages)}

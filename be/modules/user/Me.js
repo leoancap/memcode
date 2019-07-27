@@ -45,4 +45,3 @@ MeResolver = __decorate([
     type_graphql_1.Resolver()
 ], MeResolver);
 exports.MeResolver = MeResolver;
-//# sourceMappingURL=Me.js.map

@@ -55,4 +55,3 @@ LoginResolver = __decorate([
     type_graphql_1.Resolver()
 ], LoginResolver);
 exports.LoginResolver = LoginResolver;
-//# sourceMappingURL=Login.js.map

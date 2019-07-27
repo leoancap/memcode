@@ -65,4 +65,3 @@ RegisterResolver = __decorate([
     type_graphql_1.Resolver()
 ], RegisterResolver);
 exports.RegisterResolver = RegisterResolver;
-//# sourceMappingURL=Register.js.map

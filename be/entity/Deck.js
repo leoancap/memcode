@@ -80,4 +80,3 @@ Deck = __decorate([
     typeorm_1.Entity()
 ], Deck);
 exports.Deck = Deck;
-//# sourceMappingURL=Deck.js.map

@@ -40,4 +40,3 @@ ExerciseInput = __decorate([
     type_graphql_1.InputType()
 ], ExerciseInput);
 exports.ExerciseInput = ExerciseInput;
-//# sourceMappingURL=exerciseInput.js.map

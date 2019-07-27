@@ -1,12 +1,35 @@
 import React from "react"
 import dynamic from "next/dynamic"
 
+import { MyCtx } from "../../typings/MyCtx"
 import styled from "../../styled"
 import Layout from "../../components/shared/Layout"
 import { Button, Box, Flex, Text } from "@rebass/emotion"
 import { useCreateExerciseMutation } from "../../generated/apolloComponents"
 import { testCode } from "../../utils/testCode"
 import Router from "next/router"
+import { findDeckByIdQuery } from "../../graphql/deck/queries/findDeck"
+import fetch from "isomorphic-unfetch"
+import { runPythonEndpoint } from "../../lib/apollo"
+
+const jsDefaultCode = `const add = (a, b) => {
+  
+}`
+const jsDefaultSolution = `const add = (a, b) => {
+  return a + b
+}`
+const tsDefaultCode = `const add = (a:number, b:number) => {
+  
+}`
+const tsDefaultSolution = `const add = (a:number, b:number):number => {
+  return a + b
+}`
+
+const pyDefaultCode = `def add(x): 
+`
+
+const pyDefaultSolution = `def add(a, b): return a + b 
+`
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
@@ -20,13 +43,18 @@ function ExerciseCreate({ deck }) {
   const [exerciseData, setExerciseData] = React.useState({
     title: "",
     description: "",
-    code: `const add = (a:number, b:number) => {
-  return a + b
-}
-`,
-    solution: `const add = (a, b) => {
-  return a + b
-}`,
+    code:
+      deck.language === "Python"
+        ? pyDefaultCode
+        : deck.language === "Javascript"
+        ? jsDefaultCode
+        : tsDefaultCode,
+    solution:
+      deck.language === "Python"
+        ? pyDefaultSolution
+        : deck.language === "Javascript"
+        ? jsDefaultSolution
+        : tsDefaultSolution,
     tests: `add(1,2);
 add(2,3);`,
   })
@@ -52,18 +80,23 @@ add(2,3);`,
       [name]: value,
     })
   }
+  console.log(deck)
 
   const onSubmit = async () => {
-    const res = await testCode(code, solution, tests)
-    if (res.error) {
-      setError(res.message)
-    } else {
-      if (title.length === 0) {
-        setError("Title can't be empty")
-      } else if (description.length === 0) {
-        setError("Description can't be empty")
-      } else {
+    if (deck.language === "Python") {
+      const rawResponse = await fetch(runPythonEndpoint, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(exerciseData),
+      })
+      const res = await rawResponse.json()
+      if (res.message) {
+        setError(res.message)
         console.log(res)
+      } else {
         await createExercise({
           variables: {
             data: {
@@ -72,11 +105,37 @@ add(2,3);`,
                 .split(";")
                 .filter(t => t)
                 .join(";"),
-              deckId: deck,
+              deckId: deck.id,
             },
           },
         })
-        Router.push(`/exercise/${deck}`)
+        Router.push(`/exercise/${deck.id}`)
+      }
+    } else {
+      const res = await testCode(code, solution, tests)
+      if (res.error) {
+        setError(res.message)
+      } else {
+        if (title.length === 0) {
+          setError("Title can't be empty")
+        } else if (description.length === 0) {
+          setError("Description can't be empty")
+        } else {
+          console.log(res)
+          await createExercise({
+            variables: {
+              data: {
+                ...exerciseData,
+                tests: tests
+                  .split(";")
+                  .filter(t => t)
+                  .join(";"),
+                deckId: deck.id,
+              },
+            },
+          })
+          Router.push(`/exercise/${deck.id}`)
+        }
       }
     }
   }
@@ -96,9 +155,11 @@ add(2,3);`,
           </Box>
         </PageHeader>
         <ErrorBanner show={!!error}>
-          <h1>
-            <b>Error:</b> {error}{" "}
-          </h1>
+          <pre>
+            <code>
+              <b>Error:</b> {error}{" "}
+            </code>
+          </pre>
         </ErrorBanner>
 
         <FormWrapper>
@@ -156,8 +217,21 @@ add(2,3);`,
   )
 }
 
-ExerciseCreate.getInitialProps = ({ query }) => {
-  return { ...query }
+ExerciseCreate.getInitialProps = async ({
+  apolloClient,
+  query: { deck },
+}: MyCtx) => {
+  try {
+    const {
+      data: { findDeckById },
+    } = await apolloClient.query({
+      query: findDeckByIdQuery,
+      variables: { deckId: deck },
+    })
+    return { deck: findDeckById }
+  } catch (error) {
+    console.log("error::::::::::: ", error)
+  }
 }
 
 const Container = styled.div`
@@ -174,7 +248,7 @@ const PageHeader = styled(Flex)`
 `
 
 const ErrorBanner = styled.div<{ show: boolean }>`
-  height: 0;
+  display: none;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1rem;
@@ -192,11 +266,15 @@ const ErrorBanner = styled.div<{ show: boolean }>`
   ${({ show }) =>
     show &&
     `
-  height: 6rem;
+  height: auto;
+display: block;
   padding: 1rem;
-  h1 {
+  pre {
     font-size: 18px;
     color: #FEefef;
+  }
+  code {
+    white-space: pre-wrap;
   }
 
   `}
@@ -249,6 +327,7 @@ const InputStyled = styled.input`
   width: 75%;
   border: 1px solid ${props => props.theme.bo1};
   background: ${props => props.theme.bg4};
+  color: ${props => props.theme.co4};
   width: 50%;
   margin-right: 1rem;
   max-width: 75vw;
@@ -266,6 +345,7 @@ const TextAreaStyled = styled.textarea`
     outline: none;
   }
   background: ${props => props.theme.bg4};
+  color: ${props => props.theme.co4};
   font-size: 16px;
   width: 75%;
   max-width: 75vw;

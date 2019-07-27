@@ -62,4 +62,3 @@ ContinueResolver = __decorate([
     type_graphql_1.Resolver()
 ], ContinueResolver);
 exports.ContinueResolver = ContinueResolver;
-//# sourceMappingURL=Continue.js.map

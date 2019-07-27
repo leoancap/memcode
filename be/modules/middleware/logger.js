@@ -4,4 +4,3 @@ exports.logger = ({ args }, next) => {
     console.log("args: ", args);
     return next();
 };
-//# sourceMappingURL=logger.js.map
