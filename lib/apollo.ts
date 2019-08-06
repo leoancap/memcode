@@ -17,8 +17,7 @@ export const runPythonEndpoint =
 
 export const uri =
   process.env.NODE_ENV === "development"
-    ? // ? "http://localhost:3000/be"
-      "http://localhost:4000/be"
+    ? "http://localhost:4000/be"
     : "https://memcode.leoancap.now.sh/be"
 
 export function createApolloClient(state: any, { getToken }: any) {
