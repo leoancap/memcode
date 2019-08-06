@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "name": "memcode",
+  "alias": "memcode.now.sh",
+  "builds": [
+    { "src": "be/index.js", "use": "@now/node-server" },
+    { "src": "python/index.js", "use": "@now/node" },
+    { "src": "next.config.js", "use": "@now/next" }
+  ],
+  "routes": [
+    {
+      "src": "/be",
+      "dest": "be/index.js"
+    },
+    {
+      "src": "/python",
+      "dest": "python/index.js"
+    }
+  ]
+}
