@@ -4,5 +4,4 @@
 .now
 node_modules
 .be
-now.json
 yarn-error.log
