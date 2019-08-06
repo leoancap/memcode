@@ -172,13 +172,13 @@ const DeckCard = styled(Box)`
   display: flex;
   flex-direction: column;
   height: 20rem;
-  border-radius: 0.3rem;
+  border-radius: 0.9rem;
+  box-shadow: 0 2px 8px rgba(59, 64, 69, 0.1);
   &:hover {
-    filter: brightness(109%);
     filter: invert(0.09);
   }
   cursor: pointer;
-  transition: all 200ms ease-in-out;
+  transition: all 50ms;
 `
 
 export const DeleteDeckIcon = styled.nav`
@@ -236,7 +236,6 @@ const Container = styled(Flex)`
   @media (max-width: 950px) {
     width: 80%;
   }
-  /* justify-content: flex-start; */
 `
 
 const TextStyled = styled(Text)`

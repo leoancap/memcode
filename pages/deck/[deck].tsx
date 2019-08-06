@@ -103,11 +103,11 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
       }
     }
   }
-  // React.useEffect(() => {
-  //   setTimeout(() => {
-  //     evalCode()
-  //   }, 20)
-  // }, [userCode])
+  React.useEffect(() => {
+    setTimeout(() => {
+      evalCode()
+    }, 20)
+  }, [userCode])
   const handleReview = (level: -1 | 1 | 2) => async () => {
     await addDeckToReview({
       variables: {

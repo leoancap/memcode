@@ -12,8 +12,6 @@ import { Deck } from "./entity/Deck"
 import { Exercise } from "./entity/Exercise"
 import { DeckToReview } from "./entity/DeckToReview"
 import { ExerciseToReview } from "./entity/ExerciseToReview"
-
-const dev = process.env.NODE_ENV !== "production"
 ;(async () => {
   await createConnection({
     name: "default",
@@ -33,7 +31,6 @@ const dev = process.env.NODE_ENV !== "production"
     }),
   })
   const RedisStore = connectRedis(session)
-  // app.use(cors())
   app.use(
     cors({
       credentials: true,

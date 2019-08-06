@@ -4,9 +4,6 @@ const { PythonShell } = require("python-shell")
 const evalCodeAsync = () => promisify(PythonShell.runString)
 const evalSolutionAsync = () => promisify(PythonShell.runString)
 
-const errParser = (...rest) => {
-  console.log(rest)
-}
 const evalPythonCode = async (
   code,
   solution,
@@ -39,7 +36,6 @@ const evalPythonCode = async (
       }
     } catch (err) {
       error.message = err.stack.substr(0, err.stack.indexOf(" at "))
-      console.log(err)
       return {
         ...error,
         results,

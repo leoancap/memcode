@@ -91,6 +91,8 @@ const Container = styled.div`
     background-color: ${props => props.theme.bg1};
     color: ${props => props.theme.co1};
     border-color: ${props => props.theme.bo1};
+    box-shadow: 0 1px 2px rgba(59, 64, 69, 0.1);
+    margin-left: 0.1rem;
   }
   .react-tabs__tab-list {
     border-color: ${props => props.theme.bo1};

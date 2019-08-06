@@ -3,15 +3,6 @@ import { Deck } from "../../entity/Deck"
 import { MyContext } from "../../types/MyContext"
 import { Exercise } from "../../entity/Exercise"
 import { ExerciseInput } from "./exerciseInput"
-// import decksjson from "../../../utils/decks.json"
-// const decksJson: any = Object.values(JSON.parse(decksjson.payload)[1].decks)[5]
-// const katas = decksJson.katas.map(k => ({
-//   title: k.title,
-//   description: k.description,
-//   code: k.code,
-//   solution: k.solution,
-//   tests: k.tests.join(";"),
-// }))
 
 @Resolver()
 export class ExerciseResolver {
@@ -60,23 +51,6 @@ export class ExerciseResolver {
     })
   }
 
-  // @Query(() => Deck, { nullable: true })
-  // async update(): Promise<Deck | undefined> {
-  //   const deck = await Deck.findOne({
-  //     relations: ["exercises", "user"],
-  //     where: {
-  //       id: "122",
-  //     },
-  //   })
-  //   console.log(decksJson.title)
-  //   for (let i = 0; i < katas.length; i++) {
-  //     const newExer = await Exercise.create({ ...katas[i] }).save()
-  //     deck!.exercises = [...deck!.exercises, newExer]
-  //     await deck!.save()
-  //   }
-  //   return undefined
-  // }
-
   @Query(() => Deck, { nullable: true })
   async findDeckByTitle(
     @Arg("user") userId: string,
@@ -119,7 +93,6 @@ export class ExerciseResolver {
   async findDeckByPattern(
     @Arg("str") str: string,
   ): Promise<Deck[] | undefined> {
-    console.log(str)
     return Deck.find({
       relations: ["exercises", "user"],
     })

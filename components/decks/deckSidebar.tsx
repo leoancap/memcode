@@ -22,24 +22,23 @@ const tags = [
 ]
 
 interface IDeckSidebar {
-  setLanguageFilter: (language: Languages) => void
-  languageFilter: Languages
+  setCurrentLanguage: (language: Languages) => void
+  currentLanguage: Languages
 }
 
 export default function DeckSidebar({
-  setLanguageFilter,
-  languageFilter,
+  setCurrentLanguage,
+  currentLanguage,
 }: IDeckSidebar) {
-  const store = useStore()
-
   return (
     <Container>
       <LanguagesWrapper>
         <h1>Languages</h1>
         {map((lan: Languages) => (
           <LanguageStyled
+            isSelected={lan === currentLanguage}
             onClick={() => {
-              setLanguageFilter(lan)
+              setCurrentLanguage(lan)
             }}
             key={lan}
           >
@@ -58,9 +57,6 @@ export default function DeckSidebar({
 }
 
 const Container = styled(Box)`
-  /* flex-direction: column; */
-  /* margin-left: auto; */
-  /* width: 20rem; */
   width: 15%;
   @media (max-width: 950px) {
     width: 50%;
@@ -75,11 +71,19 @@ const FilterTags = styled(Flex)`
   flex-direction: column;
 `
 
-const LanguageStyled = styled(Text)`
+const LanguageStyled = styled(Text)<{ isSelected: boolean }>`
   cursor: pointer;
-  background: ${props => props.theme.bg4};
   padding: 1rem;
   font-size: 16px;
   border-radius: 0.2rem;
   border-bottom: 1px solid ${props => props.theme.bo1};
+  background: ${props => props.theme.bg4};
+  ${props =>
+    props.isSelected &&
+    `
+        filter: brightness(90%);
+      `}
+  &:hover {
+    filter: invert(0.09);
+  }
 `

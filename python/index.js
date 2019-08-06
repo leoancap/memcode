@@ -10,15 +10,6 @@ app.use(
 app.use(bodyParser.json())
 app.use(cors({}))
 
-const code = `
-def square(x): return x*x
-`
-
-const solution = `
-def square(x): return x*x
-`
-const tests = "square(2); square(3)"
-
 app.set("port", process.env.PORT || 5000)
 
 app.post("*", async (req, res) => {
@@ -28,7 +19,6 @@ app.post("*", async (req, res) => {
     solution,
     tests,
   )
-  console.log(results)
   res.writeHeader(200, { "Content-Type": "text/json" })
   res.end(JSON.stringify(results))
 })

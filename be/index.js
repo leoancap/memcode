@@ -25,7 +25,6 @@ const Deck_1 = require("./entity/Deck");
 const Exercise_1 = require("./entity/Exercise");
 const DeckToReview_1 = require("./entity/DeckToReview");
 const ExerciseToReview_1 = require("./entity/ExerciseToReview");
-const dev = process.env.NODE_ENV !== "production";
 (() => __awaiter(this, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
         name: "default",
@@ -45,7 +44,6 @@ const dev = process.env.NODE_ENV !== "production";
         }),
     });
     const RedisStore = connect_redis_1.default(express_session_1.default);
-    // app.use(cors())
     app.use(cors_1.default({
         credentials: true,
         origin: [

@@ -80,7 +80,6 @@ add(2,3);`,
       [name]: value,
     })
   }
-  console.log(deck)
 
   const onSubmit = async () => {
     if (deck.language === "Python") {
@@ -95,7 +94,6 @@ add(2,3);`,
       const res = await rawResponse.json()
       if (res.message) {
         setError(res.message)
-        console.log(res)
       } else {
         await createExercise({
           variables: {
@@ -121,7 +119,6 @@ add(2,3);`,
         } else if (description.length === 0) {
           setError("Description can't be empty")
         } else {
-          console.log(res)
           await createExercise({
             variables: {
               data: {

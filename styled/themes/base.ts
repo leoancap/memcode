@@ -15,6 +15,7 @@ const lightTheme = {
   co3: "#646464",
   co4: "#111",
   bo1: "#e6e6e6",
+  bo2: "#e6e6e6",
 }
 
 const darkTheme = {
@@ -28,6 +29,7 @@ const darkTheme = {
   co3: "#C7C7C7",
   co4: "#EDEDED",
   bo1: "#767676",
+  bo2: "#454545",
 }
 
 export { darkTheme, lightTheme }

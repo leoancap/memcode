@@ -35,15 +35,6 @@ const type_graphql_1 = require("type-graphql");
 const Deck_1 = require("../../entity/Deck");
 const Exercise_1 = require("../../entity/Exercise");
 const exerciseInput_1 = require("./exerciseInput");
-// import decksjson from "../../../utils/decks.json"
-// const decksJson: any = Object.values(JSON.parse(decksjson.payload)[1].decks)[5]
-// const katas = decksJson.katas.map(k => ({
-//   title: k.title,
-//   description: k.description,
-//   code: k.code,
-//   solution: k.solution,
-//   tests: k.tests.join(";"),
-// }))
 let ExerciseResolver = class ExerciseResolver {
     createExercise(_a, ctx) {
         var { deckId } = _a, data = __rest(_a, ["deckId"]);
@@ -80,22 +71,6 @@ let ExerciseResolver = class ExerciseResolver {
             });
         });
     }
-    // @Query(() => Deck, { nullable: true })
-    // async update(): Promise<Deck | undefined> {
-    //   const deck = await Deck.findOne({
-    //     relations: ["exercises", "user"],
-    //     where: {
-    //       id: "122",
-    //     },
-    //   })
-    //   console.log(decksJson.title)
-    //   for (let i = 0; i < katas.length; i++) {
-    //     const newExer = await Exercise.create({ ...katas[i] }).save()
-    //     deck!.exercises = [...deck!.exercises, newExer]
-    //     await deck!.save()
-    //   }
-    //   return undefined
-    // }
     findDeckByTitle(userId, title) {
         return __awaiter(this, void 0, void 0, function* () {
             return Deck_1.Deck.findOne({
@@ -130,7 +105,6 @@ let ExerciseResolver = class ExerciseResolver {
     }
     findDeckByPattern(str) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(str);
             return Deck_1.Deck.find({
                 relations: ["exercises", "user"],
             });

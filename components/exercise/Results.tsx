@@ -74,16 +74,22 @@ const ResultsWrapper = styled.div`
   grid-auto-rows: 1fr;
 
   h1 {
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 1px ${props => props.theme.bo2};
     padding: 1rem;
+    margin: 0.2rem;
     text-align: center;
-    border: 0.5px solid ${props => props.theme.bo1};
+    border: 0.5px solid ${props => props.theme.bo2};
   }
   span {
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 1px ${props => props.theme.bo2};
     font-size: 17px;
     padding: 1rem;
+    margin: 0.2rem;
     text-align: center;
     height: 100%;
-    border: 0.5px solid ${props => props.theme.bo1};
+    border: 0.5px solid ${props => props.theme.bo2};
   }
 `
 const Tests = styled.div`
@@ -111,5 +117,7 @@ const EmojiWrapper = styled.div`
   padding: 0.5rem;
   height: 100%;
   text-align: center;
-  border: 0.5px solid ${props => props.theme.bo1};
+  border: 0.5px solid ${props => props.theme.bo2};
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 1px ${props => props.theme.bo2};
 `

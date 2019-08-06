@@ -40,15 +40,15 @@ export default function Decks({ initialDecks }) {
 
   const [decks, setDecks] = React.useState(data.decks)
 
-  const [languageFilter, setLanguageFilter] = React.useState<Languages>("All")
+  const [currentLanguage, setCurrentLanguage] = React.useState<Languages>("All")
 
   React.useEffect(() => {
     setDecks(
       data.decks.filter(deck =>
-        languageFilter === "All" ? true : deck.language === languageFilter,
+        currentLanguage === "All" ? true : deck.language === currentLanguage,
       ),
     )
-  }, [languageFilter, data.decks])
+  }, [currentLanguage, data.decks])
 
   return (
     <Layout>
@@ -71,8 +71,8 @@ export default function Decks({ initialDecks }) {
         </PageHeader>
         <Container>
           <DeckSidebar
-            languageFilter={languageFilter}
-            setLanguageFilter={setLanguageFilter}
+            currentLanguage={currentLanguage}
+            setCurrentLanguage={setCurrentLanguage}
           />
           <DeckListing decks={decks} />
         </Container>
@@ -113,7 +113,8 @@ const PageCrumbButton = styled(Text)`
   font-size: 18px;
   transition: all 0.3s ease;
   &:hover {
-    transform: scale(1.02);
+    transform: scale(1.001);
+    filter: brightness(109%);
   }
 `
 
