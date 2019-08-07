@@ -43,9 +43,7 @@ const Content = styled.div`
 
 const Container = styled(Flex)`
   justify-content: center;
-  width: 85%;
-  @media (max-width: 950px) {
-    flex-direction: column;
-    align-items: center;
-  }
+  width: 99%;
+  margin-left: -10%;
+  margin-right: 4%;
 `

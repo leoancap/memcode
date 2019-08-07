@@ -1,6 +1,6 @@
 const lightTheme = {
   bg1: "#ffffff",
-  bg2: "#ffffff",
+  bg2: "#f9f9f9",
   co1: "#000",
   co2: "#000000",
   bo1: "#e6e6e6",
@@ -9,7 +9,7 @@ const lightTheme = {
 
 const darkTheme = {
   bg1: "#000000",
-  bg2: "#090000",
+  bg2: "#212121",
   co1: "#ffffff",
   co2: "#ffffff",
   bo1: "#767676",

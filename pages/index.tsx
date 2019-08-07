@@ -92,7 +92,7 @@ Decks.getInitialProps = async ({ apolloClient }: MyCtx) => {
 
 export const PageHeader = styled(Flex)`
   height: 70px;
-  background: ${props => props.theme.bg2};
+  background: ${props => props.theme.bg1};
   border-bottom: solid 0.5px ${props => props.theme.bo1};
   position: fixed;
   z-index: 1;
@@ -101,7 +101,7 @@ export const PageHeader = styled(Flex)`
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co2};
+  color: ${props => props.theme.co1};
   font-weight: 500;
   font-size: 18px;
 `

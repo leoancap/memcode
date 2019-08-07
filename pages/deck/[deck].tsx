@@ -223,7 +223,7 @@ Exercise.getInitialProps = async ({ apolloClient, query: { deck } }: MyCtx) => {
 }
 export const PageHeader = styled(Flex)`
   height: 70px;
-  background: ${props => props.theme.bg2};
+  background: ${props => props.theme.bg1};
   border-bottom: solid 0.5px ${props => props.theme.bo1};
   width: 100%;
   padding: 0 10%;
@@ -231,7 +231,7 @@ export const PageHeader = styled(Flex)`
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co2};
+  color: ${props => props.theme.co1};
   font-weight: 500;
   font-size: 18px;
 `
@@ -254,8 +254,8 @@ const ExercisesItemPane = styled.div`
   background: ${props => props.theme.bg1};
   transition: background-color 0.1s ease-in-out;
   &:hover {
-    background: ${props => props.theme.bg2};
-    color: ${props => props.theme.co2};
+    background: ${props => props.theme.bg1};
+    color: ${props => props.theme.co1};
   }
   color: ${props => props.theme.co1};
   padding: 1rem;
@@ -325,7 +325,7 @@ const ToggleExercisePaneButton = styled.div`
   justify-content: center;
   align-items: center; */
   &:hover {
-    background: ${props => props.theme.bg2};
+    background: ${props => props.theme.bg1};
   }
   span {
     margin: 0;

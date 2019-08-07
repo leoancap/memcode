@@ -277,7 +277,7 @@ const FormWrapper = styled(Flex)`
   @media (max-width: 950px) {
     max-width: 95%;
   }
-  background: ${props => props.theme.bg2};
+  background: ${props => props.theme.bg1};
   flex-direction: column;
   box-shadow: ${props => props.theme.bo2};
   border-radius: 0.3rem;
@@ -299,8 +299,8 @@ const InputStyled = styled.input`
   margin-bottom: 7px;
   width: 75%;
   border: 1px solid ${props => props.theme.bo1};
-  background: ${props => props.theme.bg2};
-  color: ${props => props.theme.co2};
+  background: ${props => props.theme.bg1};
+  color: ${props => props.theme.co1};
   width: 50%;
   margin-right: 1rem;
   max-width: 75vw;
@@ -317,8 +317,8 @@ const TextAreaStyled = styled.textarea`
   &:hover {
     outline: none;
   }
-  background: ${props => props.theme.bg2};
-  color: ${props => props.theme.co2};
+  background: ${props => props.theme.bg1};
+  color: ${props => props.theme.co1};
   font-size: 16px;
   width: 75%;
   max-width: 75vw;
@@ -334,10 +334,10 @@ const TextAreaStyled = styled.textarea`
 `
 
 const CreateButton = styled(Button)`
-  background: ${props => props.theme.bg2};
+  background: ${props => props.theme.bg1};
   border-radius: 0.9rem;
   cursor: pointer;
-  color: ${props => props.theme.co2};
+  color: ${props => props.theme.co1};
   filter: invert(1);
   margin: 2rem auto;
   font-size: 18px;

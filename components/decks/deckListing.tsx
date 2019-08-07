@@ -236,8 +236,8 @@ const Container = styled(Box)`
   width: 84%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
-  margin-left: 17%;
+  grid-gap: 3rem;
+  margin-left: 20%;
   margin-top: 1.5%;
 `
 

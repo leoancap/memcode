@@ -18,7 +18,7 @@ export const LightBulb = () => (
 )
 
 const Wrapper = styled.div`
-  background: ${props => props.theme.bg2};
+  background: ${props => props.theme.bg1};
   height: 3rem;
   width: 3rem;
   svg {
@@ -26,6 +26,6 @@ const Wrapper = styled.div`
     width: 100%;
   }
   g {
-    fill: ${props => props.theme.co2};
+    fill: ${props => props.theme.co1};
   }
 `

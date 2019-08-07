@@ -13,18 +13,19 @@ import Router from "next/router"
 
 const customStyles = {
   content: {
-    top: "15rem",
-    left: "90%",
+    top: "50px",
+    left: "82%",
     right: "auto",
     bottom: "auto",
-    marginRight: "-50%",
-    padding: 0,
-    borderRadius: "0.9rem",
-    transform: "translate(-50%, -50%)",
+    background: "transparent",
+    margin: 0,
+    // borderRadius: "0.9rem",
+    transform: "translateX(-50%)",
+    border: "none",
   },
   overlay: {
     background: "transparent",
-    zIndex: 2,
+    zIndex: 1000,
   },
 }
 
@@ -103,7 +104,7 @@ export const GlobalContainer = styled.div`
 `
 
 export const TextStyled = styled(Text)`
-  color: ${props => props.theme.co2};
+  color: ${props => props.theme.co1};
 `
 
 const PlugInWrapper = styled.div<{ invert: boolean }>`
@@ -125,7 +126,7 @@ export const Header = styled(Flex)`
   top: 0;
   width: 99%;
   padding: 0 10%;
-  background: ${props => props.theme.bg2};
+  background: ${props => props.theme.bg1};
 `
 
 export const NavHeader = styled.nav``
