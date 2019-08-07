@@ -239,7 +239,7 @@ const Container = styled.div`
 `
 const PageHeader = styled(Flex)`
   height: 7rem;
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg2};
   border-bottom: solid 0.5px ${props => props.theme.bo1};
   margin-bottom: 1rem;
 `
@@ -288,7 +288,7 @@ const EditorTitle = styled.div`
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
 `
 
@@ -300,7 +300,7 @@ const FormWrapper = styled(Flex)`
   @media (max-width: 950px) {
     max-width: 95%;
   }
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg2};
   flex-direction: column;
   border: 1px solid ${props => props.theme.bo1};
   border-radius: 0.5rem;
@@ -323,8 +323,8 @@ const InputStyled = styled.input`
   margin-bottom: 7px;
   width: 75%;
   border: 1px solid ${props => props.theme.bo1};
-  background: ${props => props.theme.bg4};
-  color: ${props => props.theme.co4};
+  background: ${props => props.theme.bg2};
+  color: ${props => props.theme.co2};
   width: 50%;
   margin-right: 1rem;
   max-width: 75vw;
@@ -341,8 +341,8 @@ const TextAreaStyled = styled.textarea`
   &:hover {
     outline: none;
   }
-  background: ${props => props.theme.bg4};
-  color: ${props => props.theme.co4};
+  background: ${props => props.theme.bg2};
+  color: ${props => props.theme.co2};
   font-size: 16px;
   width: 75%;
   max-width: 75vw;
@@ -358,9 +358,9 @@ const TextAreaStyled = styled.textarea`
 `
 
 const CreateButton = styled(Button)`
-  background: ${props => props.theme.bg3};
+  background: ${props => props.theme.bg2};
   border-radius: 0.9rem;
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   margin: 0 auto;
   margin-left: auto;
   margin-right: auto;

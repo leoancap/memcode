@@ -240,12 +240,12 @@ Review.getInitialProps = async ({
 
 export const PageHeader = styled(Flex)`
   height: 7rem;
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg2};
 `
 
 const HeaderButton = styled(Button)`
   background: ${props => props.theme.bo1};
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   transition: transform 400ms ease-in-out;
   cursor: pointer;
   &:hover {
@@ -284,13 +284,13 @@ const StrenghtenButtons = styled.div`
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
   font-size: 18px;
 `
 const PageCrumbButton = styled(Text)`
-  background: ${props => props.theme.bg3};
-  color: ${props => props.theme.co3};
+  background: ${props => props.theme.bg2};
+  color: ${props => props.theme.co2};
   border-radius: 1.9rem;
   padding: 1rem;
   font-weight: 500;
@@ -307,8 +307,8 @@ const ExercisesItemPane = styled.div`
   background: ${props => props.theme.bg1};
   transition: background-color 0.1s ease-in-out;
   &:hover {
-    background: ${props => props.theme.bg4};
-    color: ${props => props.theme.co4};
+    background: ${props => props.theme.bg2};
+    color: ${props => props.theme.co2};
   }
   color: ${props => props.theme.co1};
   padding: 1rem;
@@ -381,7 +381,7 @@ const ToggleExercisePaneButton = styled.div`
   justify-content: center;
   align-items: center; */
   &:hover {
-    background: ${props => props.theme.bg4};
+    background: ${props => props.theme.bg2};
   }
   span {
     margin: 0;

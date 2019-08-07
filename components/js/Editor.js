@@ -1,8 +1,8 @@
 import brace from "brace"
 import "brace/mode/typescript"
 import "brace/mode/python"
-import "brace/theme/monokai"
-import "brace/theme/solarized_light"
+import "brace/theme/terminal"
+import "brace/theme/chrome"
 import "brace/keybinding/vim"
 import AceEditor from "react-ace"
 import React from "react"
@@ -16,7 +16,7 @@ const Editor = observer(({ height, code, onChange, language }) => {
     <EditorWrapper>
       <AceEditor
         mode={language ? language.toLowerCase() : "typescript"}
-        theme={store.dark ? "monokai" : "solarized_light"}
+        theme={store.dark ? "terminal" : "chrome"}
         onChange={onChange}
         value={code}
         name="UNIQUE_ID_OF_DIV"
@@ -26,6 +26,7 @@ const Editor = observer(({ height, code, onChange, language }) => {
         setOptions={{
           fontFamily: "monospace",
           tabSize: 2,
+          showGutter: false,
         }}
         keyboardHandler={store.vim ? "vim" : ""}
         fontSize={21}

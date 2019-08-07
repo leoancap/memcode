@@ -139,7 +139,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
               <Box ml="auto" pr={[1, 2, 4, 6]}>
                 <Link to={`/exercise-create/${deck.id}`}>
                   <PageCrumbButton fontSize={[2, 3, 4]}>
-                    Create Exercise
+                    New Exercise
                   </PageCrumbButton>
                 </Link>
               </Box>
@@ -223,36 +223,26 @@ Exercise.getInitialProps = async ({ apolloClient, query: { deck } }: MyCtx) => {
 }
 export const PageHeader = styled(Flex)`
   height: 7rem;
-  background: ${props => props.theme.bg4};
-`
-const HeaderButton = styled(Button)`
-  background: ${props => props.theme.bo1};
-  color: ${props => props.theme.co3};
-  transition: transform 400ms ease-in-out;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.05);
-  }
-  &:focus {
-    outline: none;
-  }
+  background: ${props => props.theme.bg2};
+  border-bottom: 1px solid ${props => props.theme.bo1};
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
   font-size: 18px;
 `
 const PageCrumbButton = styled(Text)`
-  background: ${props => props.theme.bg3};
-  color: ${props => props.theme.co3};
-  border-radius: 1.9rem;
-  padding: 1rem;
+  background: ${props => props.theme.bg1};
+  color: ${props => props.theme.co1};
+  filter: invert(1);
+  border-radius: 0.3rem;
+  padding: 0.5rem 1rem;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   transition: all 0.3s ease;
   &:hover {
-    transform: scale(1.02);
+    filter: invert(0.9);
   }
 `
 const ExercisesItemPane = styled.div`
@@ -261,8 +251,8 @@ const ExercisesItemPane = styled.div`
   background: ${props => props.theme.bg1};
   transition: background-color 0.1s ease-in-out;
   &:hover {
-    background: ${props => props.theme.bg4};
-    color: ${props => props.theme.co4};
+    background: ${props => props.theme.bg2};
+    color: ${props => props.theme.co2};
   }
   color: ${props => props.theme.co1};
   padding: 1rem;
@@ -270,9 +260,10 @@ const ExercisesItemPane = styled.div`
   border-bottom: 0.5px solid ${props => props.theme.bo1};
 `
 const Content = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 100vw;
-  overflow: auto;
+  padding-top: 80px;
+  overflow: hidden;
 `
 const ResizerCss = css`
   .Resizer {
@@ -291,15 +282,15 @@ const ResizerCss = css`
     transition: all 2s ease;
   }
   .Resizer.vertical {
-    width: 11px;
-    margin: 0 -5px;
-    border-left: 5px solid rgba(255, 255, 255, 0);
-    border-right: 5px solid rgba(255, 255, 255, 0);
+    width: 1px;
+    margin: 0 -1px;
+    border-left: 1px solid #767676;
+    border-right: 1px solid #767676;
     cursor: col-resize;
   }
   .Resizer.vertical:hover {
-    border-left: 5px solid rgba(0, 0, 0, 0.5);
-    border-right: 5px solid rgba(0, 0, 0, 0.5);
+    border-left: 1px solid #767676;
+    border-right: 1px solid #767676;
   }
   .Resizer.vertical.disabled:hover {
     cursor: pointer;
@@ -331,7 +322,7 @@ const ToggleExercisePaneButton = styled.div`
   justify-content: center;
   align-items: center; */
   &:hover {
-    background: ${props => props.theme.bg4};
+    background: ${props => props.theme.bg2};
   }
   span {
     margin: 0;
@@ -357,8 +348,6 @@ const ExercisesPane = styled.div`
   }
 `
 const EditorPane = styled.div`
-  /* width: 20rem; */
-  /* padding-bottom: 6rem; */
   height: 100%;
   * {
     height: calc(100vh - 14rem);
@@ -371,7 +360,6 @@ const EditorPane = styled.div`
 `
 const ResultsPane = styled.div`
   position: relative;
-  /* width: 20rem; */
   height: 100%;
 `
 export default Exercise

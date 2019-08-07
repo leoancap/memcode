@@ -1,7 +1,6 @@
-.env.development
-.env.production
+node_modules
+.env
+.env.build
 .next
 .now
-node_modules
-.be
 yarn-error.log

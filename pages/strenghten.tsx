@@ -51,20 +51,20 @@ Strenghten.getInitialProps = async ({ apolloClient }: MyCtx) => {
 
 export const PageHeader = styled(Flex)`
   height: 7rem;
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg2};
   border-bottom: solid 0.5px ${props => props.theme.bo1};
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
   font-size: 18px;
 `
 const PageCrumbButton = styled(Text)`
-  background: ${props => props.theme.bg3};
+  background: ${props => props.theme.bg2};
   border-radius: 1.9rem;
   padding: 1rem;
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
   font-size: 18px;
   transition: all 0.3s ease;

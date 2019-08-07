@@ -126,17 +126,17 @@ export default function CreateDecks() {
 const Container = styled.div``
 export const PageHeader = styled(Flex)`
   height: 7rem;
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg1};
   border-bottom: solid 0.5px ${props => props.theme.bo1};
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co1};
   font-weight: 500;
 `
 
 const FormWrapper = styled(Flex)`
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg1};
   flex-direction: column;
   width: 50rem;
   max-width: 90vw;
@@ -158,18 +158,33 @@ const Label = styled(Text)`
 `
 
 export const TagsTip = styled.div`
-  margin: 0;
+  /* margin: 0; */
   margin-bottom: 2rem;
   width: 75%;
   max-width: 75vw;
   .react-tagsinput {
+    padding: 1rem;
     border-radius: 0.9rem;
     border: 1px solid ${props => props.theme.bo1};
   }
+  .react-tagsinput-input {
+    border: none;
+    height: 2rem;
+    margin: 1rem;
+    font-size: 18px;
+    outline:none;
+    /* box-shadow:${props => props.theme.bo2}; */
+
+  }
   .react-tagsinput-tag {
     background: ${props => props.theme.bg1};
+    filter:invert(0.1);
+    border-radius: 0.3rem;
     color: ${props => props.theme.co1};
     border: 1px solid ${props => props.theme.bo1};
+    margin: 0.3rem;
+    padding: 0.5rem;
+    height: 3rem;
     font-size: 16px;
   }
   .react-autosuggest__suggestion--highlighted {
@@ -203,7 +218,7 @@ const Select = styled.select`
   &:focus {
     outline: none;
   }
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg1};
   filter: brightness(90%);
   font-size: 16px;
   padding-left: 2rem;
@@ -218,7 +233,7 @@ const InputStyled = styled.input`
   height: 4rem;
   border-radius: 0.9rem;
   border: 1px solid ${props => props.theme.bo1};
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg1};
   width: 75%;
   max-width: 75vw;
   font-size: 16px;
@@ -226,7 +241,7 @@ const InputStyled = styled.input`
 `
 
 const TextAreaStyled = styled.textarea`
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg1};
   font-size: 16px;
   width: 75%;
   max-width: 75vw;
@@ -237,10 +252,18 @@ const TextAreaStyled = styled.textarea`
 `
 
 const CreateButton = styled(Button)`
-  background: ${props => props.theme.bg3};
-  border-radius: 0.9rem;
-  color: ${props => props.theme.co3};
+  background: ${props => props.theme.bg1};
+  border-radius: 0.5rem;
+  color: ${props => props.theme.co1};
   margin: 0 auto;
   margin-top: 2rem;
   font-size: 18px;
+  cursor: pointer;
+  filter: invert(1);
+  font-weight: 500;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  &:hover {
+    filter: invert(0.8);
+  }
 `

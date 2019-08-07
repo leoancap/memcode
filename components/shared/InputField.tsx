@@ -73,10 +73,10 @@ const InputStyled = styled.input`
   width: 35rem;
   max-width: 90vw;
   min-height: 6rem;
-  font-size: ${props => props.theme.fz4};
+  font-size: 16px;
   border-radius: 0.8rem;
   opacity: 0.8;
-  background-color: ${props => props.theme.bg4};
+  background-color: ${props => props.theme.bg1};
   color: ${props => props.theme.co1};
 `
 const SubmitWrapper = styled.div`
@@ -87,9 +87,9 @@ const SubmitStyled = styled.button`
   padding: 1rem;
   border-radius: 0.8rem;
   border: none;
-  background-color: ${props => props.theme.bg3};
-  color: ${props => props.theme.co3};
-  font-size: ${props => props.theme.fz3};
+  background-color: ${props => props.theme.bg1};
+  color: ${props => props.theme.co1};
+  font-size: 18px;
   min-height: 6rem;
   margin-top: 2rem;
   box-shadow: 0px 1px 1px 1px rgba(5, 0, 10, 0.15);

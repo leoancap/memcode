@@ -38,6 +38,7 @@ const Popup: any = observer(({ toggleModal, popupOpen }: any) => {
 })
 
 const PopUpWrapper = styled.div`
+  z-index: 2;
   padding: 1rem;
   border-radius: 0.9rem;
   min-width: 20rem;
