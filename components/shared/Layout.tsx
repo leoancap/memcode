@@ -7,10 +7,8 @@ import { globalStyles } from "../../styled/global"
 import Link from "./Link"
 import { Button, Box, Flex, Text } from "@rebass/emotion"
 import { observer } from "mobx-react-lite"
-import { LightBulb } from "../../styled/lightBulb"
 import PopUp from "./PopUp"
 import Modal from "react-modal"
-import { resetGlobalState } from "mobx/lib/internal"
 import Router from "next/router"
 
 const customStyles = {
@@ -26,6 +24,7 @@ const customStyles = {
   },
   overlay: {
     background: "transparent",
+    zIndex: 2,
   },
 }
 
@@ -57,7 +56,7 @@ const Layout = observer(({ children, title = "MemCode" }: any) => {
       <ThemeProvider theme={theme}>
         <Global styles={globalStyles(theme)} />
         <Header alignItems="center">
-          <Box mr="auto" pl={[1, 2, 4, 6]}>
+          <Box mr="auto">
             <Link to="/">
               <TextStyled fontSize={[2, 3, 4, 5]} pr="auto">
                 MemCode
@@ -76,9 +75,8 @@ const Layout = observer(({ children, title = "MemCode" }: any) => {
             style={{ cursor: "pointer" }}
             onClick={store.user ? toggleModal : handleContinue}
             pl="2rem"
-            pr={[1, 2, 4, 6]}
           >
-            <PlugInWrapper>
+            <PlugInWrapper invert={store.dark}>
               <img src="../../static/plug-in.png" alt="" />
             </PlugInWrapper>
           </Box>
@@ -99,9 +97,8 @@ const Layout = observer(({ children, title = "MemCode" }: any) => {
 })
 
 export const GlobalContainer = styled.div`
-  /* display: flex; */
-  /* align-items: center; */
   overflow: hidden;
+  overflow-y: auto;
   height: 100vh;
 `
 
@@ -109,24 +106,30 @@ export const TextStyled = styled(Text)`
   color: ${props => props.theme.co2};
 `
 
-const PlugInWrapper = styled.div`
+const PlugInWrapper = styled.div<{ invert: boolean }>`
   img {
     height: 3rem;
     width: 3rem;
-    filter: invert(1);
+    ${({ invert }) =>
+      invert &&
+      `
+      filter: invert(1);
+    `}
   }
 `
 
 export const Header = styled(Flex)`
-  height: 7rem;
+  height: 80px;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 99%;
+  padding: 0 10%;
   background: ${props => props.theme.bg2};
 `
 
 export const NavHeader = styled.nav``
 
-export const LinkStyled = styled.h5`
-  /* text-decoration: none; */
-  /* font-size: ${props => props.theme.fz2}; */
-`
+export const LinkStyled = styled.h5``
 
 export default Layout

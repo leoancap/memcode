@@ -1,11 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "start:fe": "dotenv -e ./.env.development next dev",
+    "dev": "dotenv -e ./.env next dev",
     "be": "concurrently \"yarn buildServer\" \"yarn start:be\" ",
-    "start:be": "dotenv -e ./.env.development nodemon --watch server --exec node be/index.js",
-    "start:python": "dotenv -e ./.env.development nodemon --watch server --exec node python/index.js",
-    "start": "concurrently \"yarn start:fe\" \"yarn be\" \"yarn start:python\" ",
+    "start:be": "dotenv -e ./.env nodemon --watch server --exec node be/index.js",
+    "start:python": "dotenv -e ./.env nodemon --watch server --exec node python/index.js",
+    "start": "concurrently \"yarn dev\" \"yarn be\" \"yarn start:python\" ",
     "buildServer": "tsc -p server -w",
     "build": "next build",
     "generate": "graphql-codegen --config codegen.yml",
@@ -127,7 +127,6 @@
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-styled-components": "^1.10.0",
     "dotenv-cli": "^2.0.0",
-    "faker": "^4.1.0",
     "get-graphql-schema": "^2.1.2",
     "jest": "^23.6.0",
     "nodemon": "^1.19.1",
@@ -137,7 +136,6 @@
     "ts-node": "^8.3.0",
     "ts-node-dev": "^1.0.0-pre.32",
     "tslint": "^5.17.0",
-    "tslint-react": "^4.0.0",
-    "typescript": "^3.5.1"
+    "tslint-react": "^4.0.0"
   }
 }

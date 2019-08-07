@@ -130,19 +130,19 @@ Deck.getInitialProps = async ({
 
 export const PageHeader = styled(Flex)`
   height: 7rem;
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg2};
   border-bottom: solid 0.5px ${props => props.theme.bo1};
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
 `
 const PageCrumbButton = styled(Text)`
-  background: ${props => props.theme.bg3};
+  background: ${props => props.theme.bg2};
   border-radius: 1.9rem;
   padding: 1rem;
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
   transition: all 0.3s ease;
   &:hover {
@@ -170,7 +170,7 @@ const ExerciseOuter = styled.div`
   width: 100%;
   height: 100%;
   top: 50%;
-  background: ${props => props.theme.bg3};
+  background: ${props => props.theme.bg2};
   transform: translateY(-50%);
   margin-left: -1.5rem;
   padding: 1.5rem;
@@ -194,8 +194,8 @@ const ExercisesItem = styled.div`
   text-decoration: none;
   margin: 15px;
   padding: 1.5rem;
-  background: ${props => props.theme.bg4};
-  color: ${props => props.theme.co4};
+  background: ${props => props.theme.bg2};
+  color: ${props => props.theme.co2};
   box-shadow: 1px 3px 5px rgba(50, 50, 50, 0.1);
   border-radius: 0.6rem;
   section {

@@ -57,10 +57,10 @@ export default function DeckSidebar({
 }
 
 const Container = styled(Box)`
-  width: 15%;
-  @media (max-width: 950px) {
-    width: 50%;
-  }
+  width: 15rem;
+  position: fixed;
+  top: calc(80px + 7rem);
+  left: 10%;
 `
 
 const LanguagesWrapper = styled(Flex)`
@@ -77,7 +77,7 @@ const LanguageStyled = styled(Text)<{ isSelected: boolean }>`
   font-size: 16px;
   border-radius: 0.2rem;
   border-bottom: 1px solid ${props => props.theme.bo1};
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg1};
   ${props =>
     props.isSelected &&
     `

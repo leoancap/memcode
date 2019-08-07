@@ -83,9 +83,9 @@ export default observer(function PageIndex() {
 
 const Container = styled.div`
   padding: 1rem;
+  padding-top: 100px;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
 `

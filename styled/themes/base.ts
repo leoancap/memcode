@@ -1,35 +1,19 @@
-const commonTheme = {
-  fz1: "calc(1rem + 1vmin)",
-  fz2: "calc(1.1rem + 1.1vmin)",
-  fz3: "calc(1.2rem + 1.2vmin)",
-  fz4: "calc(1.3rem + 1.3vmin)",
-}
 const lightTheme = {
-  ...commonTheme,
-  bg1: "#FCFAF2",
-  bg2: "#2B3647",
-  bg3: "#FDBF2C",
-  bg4: "#Fff",
-  co1: "#333333",
-  co2: "#FFFFFF",
-  co3: "#646464",
-  co4: "#111",
+  bg1: "#ffffff",
+  bg2: "#ffffff",
+  co1: "#000",
+  co2: "#000000",
   bo1: "#e6e6e6",
-  bo2: "#e6e6e6",
+  bo2: "rgba(0, 0, 0, 0.12) 0px 5px 10px",
 }
 
 const darkTheme = {
-  ...commonTheme,
-  bg1: "#2F3129",
-  bg2: "#333",
-  bg3: "#555",
-  bg4: "#444",
-  co1: "#eee",
-  co2: "#C7C7C7",
-  co3: "#C7C7C7",
-  co4: "#EDEDED",
+  bg1: "#000000",
+  bg2: "#090000",
+  co1: "#ffffff",
+  co2: "#ffffff",
   bo1: "#767676",
-  bo2: "#454545",
+  bo2: "rgb(51, 51, 51) 0px 0px 0px 1px",
 }
 
 export { darkTheme, lightTheme }

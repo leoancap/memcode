@@ -131,7 +131,7 @@ add(2,3);`,
               },
             },
           })
-          Router.push(`/exercise/${deck.id}`)
+          Router.push(`/deck/${deck.id}`)
         }
       }
     }
@@ -139,29 +139,14 @@ add(2,3);`,
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
-  }, [error])
+  })
 
   return (
     <Layout>
       <Container>
-        <PageHeader alignItems="center">
-          <Box mr="auto" pl={[1, 2, 4, 6]}>
-            <PageCrumb fontSize={[2, 3, 4, 5]} mr="auto">
-              Create an Exercise
-            </PageCrumb>
-          </Box>
-        </PageHeader>
-        <ErrorBanner show={!!error}>
-          <pre>
-            <code>
-              <b>Error:</b> {error}{" "}
-            </code>
-          </pre>
-        </ErrorBanner>
-
         <FormWrapper>
           <FormField>
-            <Label>Title</Label>
+            <Label>Title:</Label>
             <InputStyled
               onChange={handleChange}
               name="title"
@@ -170,7 +155,7 @@ add(2,3);`,
             />
           </FormField>
           <FormField>
-            <Label>Description</Label>
+            <Label>Description:</Label>
             <TextAreaStyled
               onChange={handleChange}
               name="description"
@@ -207,6 +192,13 @@ add(2,3);`,
               onChange={handleEditorChange("tests")}
             />
           </EditorWrapper>
+          <ErrorBanner show={!!error}>
+            <pre>
+              <code>
+                <b>Error:</b> {error}{" "}
+              </code>
+            </pre>
+          </ErrorBanner>
           <CreateButton onClick={onSubmit}>Create Exercise</CreateButton>
         </FormWrapper>
       </Container>
@@ -232,16 +224,11 @@ ExerciseCreate.getInitialProps = async ({
 }
 
 const Container = styled.div`
-  overflow: auto;
-  overflow-x: hidden;
-  height: 100%;
+  /* overflow: auto; */
+  /* overflow-x: hidden; */
+  /* height: 100%; */
   padding-bottom: 7rem;
-`
-const PageHeader = styled(Flex)`
-  height: 7rem;
-  background: ${props => props.theme.bg4};
-  border-bottom: solid 0.5px ${props => props.theme.bo1};
-  margin-bottom: 1rem;
+  padding-top: 110px;
 `
 
 const ErrorBanner = styled.div<{ show: boolean }>`
@@ -251,12 +238,9 @@ const ErrorBanner = styled.div<{ show: boolean }>`
   margin-bottom: 1rem;
   padding: 0;
   border-radius: 0.9rem;
-  max-width: 60%;
-  @media (max-width: 950px) {
-    max-width: 95%;
-  }
   background: #fd766e;
   transition: all 0.5s ease;
+  width: 98%;
   h1 {
     font-size: 0;
   }
@@ -264,7 +248,7 @@ const ErrorBanner = styled.div<{ show: boolean }>`
     show &&
     `
   height: auto;
-display: block;
+  display: block;
   padding: 1rem;
   pre {
     font-size: 18px;
@@ -281,15 +265,8 @@ const EditorWrapper = styled.div``
 
 const EditorTitle = styled.div`
   font-size: 18px;
-  margin: 1rem;
-  span {
-    font-size: 14px;
-  }
-`
-
-const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
-  font-weight: 500;
+  padding: 1rem;
+  border-bottom: 1px solid ${props => props.theme.bo1};
 `
 
 const FormWrapper = styled(Flex)`
@@ -300,14 +277,13 @@ const FormWrapper = styled(Flex)`
   @media (max-width: 950px) {
     max-width: 95%;
   }
-  background: ${props => props.theme.bg4};
+  background: ${props => props.theme.bg2};
   flex-direction: column;
-  border: 1px solid ${props => props.theme.bo1};
-  border-radius: 0.5rem;
+  box-shadow: ${props => props.theme.bo2};
+  border-radius: 0.3rem;
 `
 
 const FormField = styled.div`
-  /* justify-content: space-between; */
   border-bottom: 1px solid ${props => props.theme.bo1};
 `
 
@@ -323,8 +299,8 @@ const InputStyled = styled.input`
   margin-bottom: 7px;
   width: 75%;
   border: 1px solid ${props => props.theme.bo1};
-  background: ${props => props.theme.bg4};
-  color: ${props => props.theme.co4};
+  background: ${props => props.theme.bg2};
+  color: ${props => props.theme.co2};
   width: 50%;
   margin-right: 1rem;
   max-width: 75vw;
@@ -341,8 +317,8 @@ const TextAreaStyled = styled.textarea`
   &:hover {
     outline: none;
   }
-  background: ${props => props.theme.bg4};
-  color: ${props => props.theme.co4};
+  background: ${props => props.theme.bg2};
+  color: ${props => props.theme.co2};
   font-size: 16px;
   width: 75%;
   max-width: 75vw;
@@ -358,14 +334,12 @@ const TextAreaStyled = styled.textarea`
 `
 
 const CreateButton = styled(Button)`
-  background: ${props => props.theme.bg3};
+  background: ${props => props.theme.bg2};
   border-radius: 0.9rem;
-  color: ${props => props.theme.co3};
-  margin: 0 auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
+  cursor: pointer;
+  color: ${props => props.theme.co2};
+  filter: invert(1);
+  margin: 2rem auto;
   font-size: 18px;
 `
 export default ExerciseCreate

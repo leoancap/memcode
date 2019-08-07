@@ -134,7 +134,7 @@ const Review: NextComponentType = observer(
         <Layout>
           <Content>
             <PageHeader alignItems="center">
-              <Box mr="2rem" pl={[1, 2, 4, 6]}>
+              <Box mr="2rem">
                 <PageCrumb fontSize={[2, 3, 4]} mr="0">
                   {deck.deck.title}
                 </PageCrumb>
@@ -240,65 +240,15 @@ Review.getInitialProps = async ({
 
 export const PageHeader = styled(Flex)`
   height: 7rem;
-  background: ${props => props.theme.bg4};
-`
-
-const HeaderButton = styled(Button)`
-  background: ${props => props.theme.bo1};
-  color: ${props => props.theme.co3};
-  transition: transform 400ms ease-in-out;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.05);
-  }
-  &:focus {
-    outline: none;
-  }
-`
-
-const StrenghtenButtons = styled.div`
-  position: absolute;
-  bottom: 5%;
-  margin-bottom: 14rem;
-  display: flex;
-  justify-content: space-evenly;
-  right: 0;
-  height: 6rem;
-  width: 100%;
-  button {
-    transition: transform 400ms ease-in-out;
-    cursor: pointer;
-    &:hover {
-      transform: scale(1.1);
-      font-size: 18px;
-    }
-    font-size: 16px;
-    margin: 1rem;
-    &:first-child {
-      background: #fb7771;
-    }
-    &:nth-child(2) {
-      background: #3bba33;
-    }
-  }
+  background: ${props => props.theme.bg2};
+  border-bottom: solid 0.5px ${props => props.theme.bo1};
+  padding: 0 10%;
 `
 
 const PageCrumb = styled(Text)`
-  color: ${props => props.theme.co3};
+  color: ${props => props.theme.co2};
   font-weight: 500;
   font-size: 18px;
-`
-const PageCrumbButton = styled(Text)`
-  background: ${props => props.theme.bg3};
-  color: ${props => props.theme.co3};
-  border-radius: 1.9rem;
-  padding: 1rem;
-  font-weight: 500;
-  font-size: 18px;
-  transition: all 0.3s ease;
-  &:hover {
-    transform: scale(1.02);
-  }
 `
 
 const ExercisesItemPane = styled.div`
@@ -307,8 +257,8 @@ const ExercisesItemPane = styled.div`
   background: ${props => props.theme.bg1};
   transition: background-color 0.1s ease-in-out;
   &:hover {
-    background: ${props => props.theme.bg4};
-    color: ${props => props.theme.co4};
+    background: ${props => props.theme.bg2};
+    color: ${props => props.theme.co2};
   }
   color: ${props => props.theme.co1};
   padding: 1rem;
@@ -318,7 +268,9 @@ const ExercisesItemPane = styled.div`
 
 const Content = styled.div`
   height: 100vh;
-  overflow: auto;
+  width: 100vw;
+  overflow: hidden;
+  padding-top: 80px;
 `
 
 const ResizerCss = css`
@@ -381,7 +333,7 @@ const ToggleExercisePaneButton = styled.div`
   justify-content: center;
   align-items: center; */
   &:hover {
-    background: ${props => props.theme.bg4};
+    background: ${props => props.theme.bg2};
   }
   span {
     margin: 0;

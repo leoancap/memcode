@@ -33,12 +33,12 @@ const Wrapper = styled.div`
   }
 `
 const DescriptionWrapper = styled.div`
-  margin: 0 auto;
+  padding: 0 auto;
   width: 100%;
   h1 {
     text-align: center;
     padding: 1rem;
-    border-bottom: 0.5px solid ${props => props.theme.bo1};
+    /* border-bottom: 0.5px solid ${props => props.theme.bo1}; */
   }
   p {
     font-size: 16px;

@@ -13,37 +13,46 @@ export default function Results({ results, tests }: any) {
   return (
     <Wrapper>
       <DescriptionWrapper>
-        <h1>Results</h1>
         <ResultsWrapper>
           <Tests>
             <h1>Tests</h1>
             {tests.split(";").map((test, key: number) => (
-              <span key={key}>{test}</span>
+              <section key={key}>
+                <span>{test}</span>
+              </section>
             ))}
           </Tests>
           <UserResults>
             <h1>Received</h1>
             {results.map((res, key: number) => (
-              <span key={key}>{res.user}</span>
+              <section key={key}>
+                <span>{res.user}</span>
+              </section>
             ))}
           </UserResults>
           <SolResults>
             <h1>Expected</h1>
             {results.map((res, key: number) => (
-              <span key={key}>{res.solution}</span>
+              <section key={key}>
+                <span>{res.solution}</span>
+              </section>
             ))}
           </SolResults>
           <ComparedResults>
             <h1>Results</h1>
             {results.map((res, key: number) =>
               res.solution === res.user ? (
-                <EmojiWrapper key={key} style={{}}>
-                  ✅
-                </EmojiWrapper>
+                <section key={key}>
+                  <EmojiWrapper key={key} style={{}}>
+                    ✅
+                  </EmojiWrapper>
+                </section>
               ) : (
-                <EmojiWrapper key={key} style={{}}>
-                  🚫
-                </EmojiWrapper>
+                <section key={key}>
+                  <EmojiWrapper key={key} style={{}}>
+                    🚫
+                  </EmojiWrapper>
+                </section>
               ),
             )}
           </ComparedResults>
@@ -72,24 +81,27 @@ const ResultsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-auto-rows: 1fr;
+  grid-gap: 1rem;
 
   h1 {
     border-radius: 0.5rem;
-    box-shadow: 0 1px 1px ${props => props.theme.bo2};
     padding: 1rem;
-    margin: 0.2rem;
     text-align: center;
-    border: 0.5px solid ${props => props.theme.bo2};
+    box-shadow: ${props => props.theme.bo2};
   }
-  span {
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 1px ${props => props.theme.bo2};
-    font-size: 17px;
+  section {
+    width: 100%;
     padding: 1rem;
-    margin: 0.2rem;
-    text-align: center;
     height: 100%;
     border: 0.5px solid ${props => props.theme.bo2};
+    box-shadow: ${props => props.theme.bo2};
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  span {
+    font-size: 17px;
   }
 `
 const Tests = styled.div`
@@ -114,10 +126,4 @@ const ComparedResults = styled.div`
 
 const EmojiWrapper = styled.div`
   font-size: 2.1rem;
-  padding: 0.5rem;
-  height: 100%;
-  text-align: center;
-  border: 0.5px solid ${props => props.theme.bo2};
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 1px ${props => props.theme.bo2};
 `

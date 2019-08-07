@@ -33,7 +33,10 @@ export async function testCode(
         1000,
       )
       const resSolution = await evalWorker(
-        ts.transpile(bundledExercises) + ` ; ${tests[i]}`,
+        ts.transpile(bundledExercises) +
+          " ; " +
+          ts.transpile(solution) +
+          ` ; ${tests[i]}`,
         1000,
       )
       results.push({
@@ -46,7 +49,7 @@ export async function testCode(
       if (resCode !== resSolution) {
         error = {
           message: "Code and Solution don't always return the same value",
-          error: "implementation",
+          error: "",
         }
       }
     } catch (error) {

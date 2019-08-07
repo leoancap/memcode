@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
   svg {
     path {
-      fill: ${props => props.theme.co3};
+      fill: ${props => props.theme.co1};
     }
   }
   width: 5.5rem;

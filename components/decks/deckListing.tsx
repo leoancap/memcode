@@ -6,7 +6,6 @@ import map from "ramda/src/map"
 import {
   IDeck,
   useDeleteDeckMutation,
-  IDeleteDeckMutation,
   IDecksQuery,
   IDeckToReview,
 } from "../../generated/apolloComponents"
@@ -43,10 +42,10 @@ export default function DeckListing({
     language === "Python" ? pyLogo : language === "Javascript" ? jsLogo : tsLogo
 
   return (
-    <Container flexWrap="wrap" px={3} mx={-2}>
+    <Container>
       {isStrenghten
         ? map((deck: IDeckToReview) => (
-            <Box key={deck.id} px={2} my={2} width={[1 / 2]}>
+            <Box key={deck.id}>
               <Link to={`/review/${deck.deckToReviewId}`}>
                 <DeckCard
                   fontSize={1}
@@ -62,10 +61,10 @@ export default function DeckListing({
                     </LanguageLogoWrapper>
                     {deck.deck.title}
                   </TitleStyled>
-                  <DescriptionText my={2}>
+                  <DescriptionText py={2}>
                     {deck.deck.description.slice(0, 255) + "..."}
                   </DescriptionText>
-                  <TagsStyled pt={1} my={2}>
+                  <TagsStyled pt={1} py={2}>
                     {map((tag: string) => (
                       <TextStyled key={tag} py={1} px={2} mr={2}>
                         {tag}
@@ -77,14 +76,13 @@ export default function DeckListing({
             </Box>
           ))(decks as IDeckToReview[])
         : map((deck: IDeck) => (
-            <Box key={deck.id} px={2} my={2} width={[1 / 2]}>
+            <Box key={deck.id}>
               <DeckCard
                 fontSize={1}
                 fontWeight="bold"
                 borderRadius={8}
                 boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-                py={2}
-                px={2}
+                p={2}
                 onClick={handleDeckClick(deck.id)}
               >
                 <TitleStyled my={2}>
@@ -167,13 +165,14 @@ export default function DeckListing({
 
 const DeckCard = styled(Box)`
   position: relative;
-  background: ${props => props.theme.bg4};
-  color: ${props => props.theme.co4};
+  background: ${props => props.theme.bg1};
+  color: ${props => props.theme.co1};
   display: flex;
   flex-direction: column;
   height: 20rem;
   border-radius: 0.9rem;
-  box-shadow: 0 2px 8px rgba(59, 64, 69, 0.1);
+  box-shadow: ${props => props.theme.bo2};
+  transition: box-shadow 0.2s ease 0s;
   &:hover {
     filter: invert(0.09);
   }
@@ -220,6 +219,7 @@ const DescriptionText = styled(Text)`
   justify-self: flex-start;
   overflow: hidden;
   max-height: 10rem;
+  color: ${props => props.theme.co1};
 `
 
 const TitleStyled = styled(Text)`
@@ -228,23 +228,28 @@ const TitleStyled = styled(Text)`
   font-size: 20px;
   font-weight: 500;
   transition: all 0.5s;
+  color: ${props => props.theme.co1};
   width: 90%;
 `
 
-const Container = styled(Flex)`
-  width: 60%;
-  @media (max-width: 950px) {
-    width: 80%;
-  }
+const Container = styled(Box)`
+  width: 84%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  margin-left: 17%;
+  margin-top: 1.5%;
 `
 
 const TextStyled = styled(Text)`
   border-radius: 0.8rem;
-  background: ${props => props.theme.bg3};
+  background: ${props => props.theme.bg1};
+  color: ${props => props.theme.co1};
   font-size: 15px;
 `
 
 const TagsStyled = styled(Box)`
+  filter: invert(1);
   display: flex;
   flex-wrap: wrap;
 `
