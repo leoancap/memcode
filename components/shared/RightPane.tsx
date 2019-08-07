@@ -74,7 +74,9 @@ export default ({
             {store && store.user && (
               <StrenghtenButtons>
                 <Button onClick={handleReview(-1)}>Again</Button>
-                <Button onClick={handleReview(1)}>Good</Button>
+                <Button my="auto" onClick={handleReview(1)}>
+                  Good
+                </Button>
                 <Button onClick={handleReview(2)}>Easy</Button>
               </StrenghtenButtons>
             )}
@@ -146,19 +148,19 @@ const StrenghtenButtons = styled.div`
   bottom: 5%;
   margin-bottom: 14rem;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   right: 0;
   height: 6rem;
   width: 100%;
   button {
-    transition: transform 400ms ease-in-out;
+    transition: all 0.2s;
     cursor: pointer;
     &:hover {
-      transform: scale(1.1);
-      font-size: 18px;
+      transform: scale(1.03);
+      filter: invert(0.03);
     }
-    font-size: 16px;
-    margin: 1rem;
+    margin: 1rem auto;
+    font-size: 17px;
     &:first-child {
       background: #fb7771;
     }

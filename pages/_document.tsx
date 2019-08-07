@@ -12,7 +12,15 @@ export default class extends Document {
   render() {
     return (
       <html>
-        <Head />
+        <Head>
+          <link rel="shortcut icon" href="/static/logo.png" />
+          {/* <link
+            rel="icon"
+            sizes="any"
+            type="image/svg+xml"
+            href="/static/logo.svg"
+          /> */}
+        </Head>
         <body>
           <Main />
           <NextScript />

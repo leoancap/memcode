@@ -22,16 +22,17 @@ export default function Play() {
 
 const Wrapper = styled.div`
   &:hover {
-    transform: scale(1.09);
-    border-width: 7px;
+    /* transform: scale(1.03); */
+    border-width: 6px;
+    filter: invert(0.1);
   }
   svg {
     path {
       fill: ${props => props.theme.co1};
     }
   }
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 5rem;
+  height: 5rem;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -40,7 +41,7 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.bg1};
   cursor: pointer;
   border-radius: 100%;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s;
   border-width: 3px;
   border-style: solid;
   border-color: ${props => props.theme.bo1};

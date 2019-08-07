@@ -71,6 +71,7 @@ const DescriptionWrapper = styled.div`
   margin: 0 auto;
   h1 {
     text-align: center;
+    font-size: 17px;
   }
   p {
     font-size: 16px;
@@ -101,7 +102,7 @@ const ResultsWrapper = styled.div`
     align-items: center;
   }
   span {
-    font-size: 17px;
+    font-size: 16px;
   }
 `
 const Tests = styled.div`

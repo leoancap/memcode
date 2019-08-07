@@ -10,6 +10,7 @@ import { observer } from "mobx-react-lite"
 import PopUp from "./PopUp"
 import Modal from "react-modal"
 import Router from "next/router"
+import logo from "../../static/logo.svg"
 
 const customStyles = {
   content: {
@@ -59,15 +60,15 @@ const Layout = observer(({ children, title = "MemCode" }: any) => {
         <Header alignItems="center">
           <Box mr="auto">
             <Link to="/">
-              <TextStyled fontSize={[2, 3, 4, 5]} pr="auto">
-                MemCode
+              <TextStyled invert={store.dark} fontSize={[2, 3, 4, 5]} pr="auto">
+                <img src={logo} alt="" />
               </TextStyled>
             </Link>
           </Box>
           {store.user && (
             <Box pl="2rem">
               <Link to="/strenghten">
-                <TextStyled fontSize={[2, 3, 4, 5]}>Strenghten</TextStyled>
+                <TextStyled fontSize={[2, 3, 4]}>Strenghten</TextStyled>
               </Link>
             </Box>
           )}
@@ -103,8 +104,17 @@ export const GlobalContainer = styled.div`
   height: 100vh;
 `
 
-export const TextStyled = styled(Text)`
-  color: ${props => props.theme.co1};
+export const TextStyled = styled(Text)<{ invert: boolean }>`
+  color: ${props => props.theme.co2};
+  img {
+    ${({ invert }) =>
+      invert &&
+      `
+    filter: invert(1);
+    `}
+    height: 4rem;
+    width: 4rem;
+  }
 `
 
 const PlugInWrapper = styled.div<{ invert: boolean }>`

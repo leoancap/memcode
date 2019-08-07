@@ -1,0 +1,25 @@
+<svg width="225" height="260" viewBox="0 0 225 260" fill="transparent" xmlns="http://www.w3.org/2000/svg">
+<path d="M225 130L0 0.0961894L0 259.904L225 130Z" fill="black"/>
+<path d="M220 130L2.5 255.574L2.5 4.42632L220 130Z" fill="#111111"/>
+<path d="M215 130L5 8.75644L5 251.244L215 130Z" fill="#222222"/>
+<path d="M210 130L7.5 246.913L7.5 13.0866L210 130Z" fill="#333333"/>
+<path d="M205 130L10 242.583L10 17.4167L205 130Z" fill="#444444"/>
+<path d="M200 130L12.5 238.253L12.5 21.7468L200 130Z" fill="#333333"/>
+<path d="M195 130L15 233.923L15 26.077L195 130Z" fill="#222222"/>
+<path d="M190 130L17.5 229.593L17.5 30.4071L190 130Z" fill="#111111"/>
+<path d="M185 130L20 225.263L20 34.7372L185 130Z" fill="#222222"/>
+<path d="M180 130L22.5 220.933L22.5 39.0673L180 130Z" fill="#333333"/>
+<path d="M175 130L25 216.603L25 43.3975L175 130Z" fill="#444444"/>
+<path d="M170 130L27.5 212.272L27.5 47.7276L170 130Z" fill="#555555"/>
+<path d="M165 130L30 207.942L30 52.0577L165 130Z" fill="#444444"/>
+<path d="M160 130L32.5 203.612L32.5 56.3878L160 130Z" fill="#333333"/>
+<path d="M155 130L35 199.282L35 60.718L155 130Z" fill="#222222"/>
+<path d="M150 130L37.5 194.952L37.5 65.0481L150 130Z" fill="#111111"/>
+<path d="M150 130L37.5 194.952L37.5 65.0481L150 130Z" fill="url(#paint0_linear)"/>
+<defs>
+<linearGradient id="paint0_linear" x1="150" y1="130" x2="0" y2="130" gradientUnits="userSpaceOnUse">
+<stop stop-color="#4F4F4F"/>
+<stop offset="1" stop-color="#434343" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
