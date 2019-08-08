@@ -8,17 +8,22 @@ import Router from "next/router"
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
-const isServer = typeof window === "undefined"
+export const isServer = typeof window === "undefined"
+
+export const runReasonEndpoint =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:1234/"
+    : "https://memcode.now.sh/reason"
 
 export const runPythonEndpoint =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000/"
-    : "https://memcode.leoancap.now.sh/python"
+    : "https://memcode.now.sh/python"
 
 export const uri =
   process.env.NODE_ENV === "development"
     ? "http://localhost:4000/be"
-    : "https://memcode.leoancap.now.sh/be"
+    : "https://memcode.now.sh/be"
 
 export function createApolloClient(state: any, { getToken }: any) {
   if (apolloClient) {

@@ -16,6 +16,6 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve"
   },
-  "exclude": ["node_modules", "server", "be", "python"],
+  "exclude": ["node_modules", "server", "be", "python", "reason"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

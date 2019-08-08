@@ -10,7 +10,7 @@ import { testCode } from "../../utils/testCode"
 import Router from "next/router"
 import { findDeckByIdQuery } from "../../graphql/deck/queries/findDeck"
 import fetch from "isomorphic-unfetch"
-import { runPythonEndpoint } from "../../lib/apollo"
+import { runPythonEndpoint, runReasonEndpoint } from "../../lib/apollo"
 
 const jsDefaultCode = `const add = (a, b) => {
   
@@ -30,6 +30,15 @@ const pyDefaultCode = `def add(x):
 
 const pyDefaultSolution = `def add(a, b): return a + b 
 `
+const reDefaultCode = `
+let add = (a:int, b:int) => {
+
+};
+`
+const reDefaultSolution = `let add = (a:int, b:int) => {
+  a + b;
+};
+`
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
@@ -48,12 +57,16 @@ function ExerciseCreate({ deck }) {
         ? pyDefaultCode
         : deck.language === "Javascript"
         ? jsDefaultCode
+        : deck.language === "Reason"
+        ? reDefaultCode
         : tsDefaultCode,
     solution:
       deck.language === "Python"
         ? pyDefaultSolution
         : deck.language === "Javascript"
         ? jsDefaultSolution
+        : deck.language === "Reason"
+        ? reDefaultSolution
         : tsDefaultSolution,
     tests: `add(1,2);
 add(2,3);`,
@@ -82,8 +95,8 @@ add(2,3);`,
   }
 
   const onSubmit = async () => {
-    if (deck.language === "Python") {
-      const rawResponse = await fetch(runPythonEndpoint, {
+    if (deck.language === "Reason") {
+      const rawResponse = await fetch(runReasonEndpoint, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -92,8 +105,13 @@ add(2,3);`,
         body: JSON.stringify(exerciseData),
       })
       const res = await rawResponse.json()
-      if (res.message) {
-        setError(res.message)
+      console.log(res)
+      if (res.error) {
+        setError(res.error.message)
+      } else if (title.length === 0) {
+        setError("Title can't be empty")
+      } else if (description.length === 0) {
+        setError("Description can't be empty")
       } else {
         await createExercise({
           variables: {
@@ -107,7 +125,40 @@ add(2,3);`,
             },
           },
         })
-        Router.push(`/exercise/${deck.id}`)
+        Router.push(`/deck/${deck.id}`)
+      }
+    } else if (deck.language === "Python") {
+      const rawResponse = await fetch(runPythonEndpoint, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(exerciseData),
+      })
+      const res = await rawResponse.json()
+      if (res.message) {
+        setError(res.message)
+      } else {
+        if (title.length === 0) {
+          setError("Title can't be empty")
+        } else if (description.length === 0) {
+          setError("Description can't be empty")
+        } else {
+          await createExercise({
+            variables: {
+              data: {
+                ...exerciseData,
+                tests: tests
+                  .split(";")
+                  .filter(t => t)
+                  .join(";"),
+                deckId: deck.id,
+              },
+            },
+          })
+          Router.push(`/deck/${deck.id}`)
+        }
       }
     } else {
       const res = await testCode(code, solution, tests)

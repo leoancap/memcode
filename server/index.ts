@@ -13,6 +13,9 @@ import { Exercise } from "./entity/Exercise"
 import { DeckToReview } from "./entity/DeckToReview"
 import { ExerciseToReview } from "./entity/ExerciseToReview"
 import cookieParser from "cookie-parser"
+//@ts-ignore
+
+//
 ;(async () => {
   await createConnection({
     name: "default",

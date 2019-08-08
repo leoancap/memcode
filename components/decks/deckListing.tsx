@@ -15,6 +15,7 @@ import Router from "next/router"
 import jsLogo from "../../static/javascript.svg"
 import tsLogo from "../../static/typescript.svg"
 import pyLogo from "../../static/python.svg"
+import reLogo from "../../static/reason.png"
 
 interface IDecksListing {
   decks: IDeck[] | IDeckToReview[]
@@ -39,7 +40,13 @@ export default function DeckListing({
   }
 
   const logoSorter = (language: string) =>
-    language === "Python" ? pyLogo : language === "Javascript" ? jsLogo : tsLogo
+    language === "Python"
+      ? pyLogo
+      : language === "Javascript"
+      ? jsLogo
+      : language === "Reason"
+      ? reLogo
+      : tsLogo
 
   return (
     <Container>

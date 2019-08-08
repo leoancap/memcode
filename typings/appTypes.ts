@@ -1,1 +1,6 @@
-export type Languages = "All" | "Typescript" | "Javascript" | "Python"
+export type Languages =
+  | "All"
+  | "Typescript"
+  | "Javascript"
+  | "Python"
+  | "Reason"

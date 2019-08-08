@@ -1,5 +1,6 @@
 import brace from "brace"
 import "brace/mode/typescript"
+import "brace/mode/rust"
 import "brace/mode/python"
 import "brace/theme/terminal"
 import "brace/theme/chrome"
@@ -15,7 +16,13 @@ const Editor = observer(({ height, code, onChange, language }) => {
   return (
     <EditorWrapper>
       <AceEditor
-        mode={language ? language.toLowerCase() : "typescript"}
+        mode={
+          language === "Reason"
+            ? "rust"
+            : language
+            ? language.toLowerCase()
+            : "typescript"
+        }
         theme={store.dark ? "terminal" : "chrome"}
         onChange={onChange}
         value={code}

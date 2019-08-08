@@ -19,11 +19,12 @@ import {
 import { NextComponentType } from "next"
 import RightPane from "../../components/shared/RightPane"
 import ShadowScroll from "../../components/js/ShadowScroll"
-import { runPythonEndpoint } from "../../lib/apollo"
+import { runPythonEndpoint, runReasonEndpoint } from "../../lib/apollo"
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
 })
+
 export type IRightPane = "description" | "error" | "results" | "solution"
 type IResults = {
   user: string
@@ -58,7 +59,31 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
     }
   }, [currentExerIndex])
   const evalCode = async () => {
-    if (deck.language === "Python") {
+    if (deck.language === "Reason") {
+      const rawResponse = await fetch(runReasonEndpoint, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          code: userCode,
+          solution: currentExercise.solution,
+          tests: currentExercise.tests,
+          isTesting: true,
+        }),
+      })
+      const res = await rawResponse.json()
+      console.log(res)
+      setResults(res.results)
+      setRightPane("results")
+      if (res.error) {
+        setErrors(res.error.message)
+        setRightPane("error")
+      } else {
+        setResults(res.results)
+      }
+    } else if (deck.language === "Python") {
       const rawResponse = await fetch(runPythonEndpoint, {
         headers: {
           Accept: "application/json",

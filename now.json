@@ -5,6 +5,7 @@
   "builds": [
     { "src": "be/index.js", "use": "@now/node-server" },
     { "src": "python/index.js", "use": "@now/node" },
+    { "src": "reason/index.js", "use": "@now/node" },
     { "src": "next.config.js", "use": "@now/next" }
   ],
   "routes": [
@@ -15,6 +16,10 @@
     {
       "src": "/python",
       "dest": "python/index.js"
+    },
+    {
+      "src": "/reason",
+      "dest": "reason/index.js"
     }
   ],
   "build": {

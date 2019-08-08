@@ -11,6 +11,7 @@ export const languages: Languages[] = [
   "Typescript",
   "Javascript",
   "Python",
+  "Reason",
 ]
 const tags = [
   "Algorithms",
@@ -42,7 +43,7 @@ export default function DeckSidebar({
             }}
             key={lan}
           >
-            {lan}
+            {lan === "Reason" ? lan + "ML" : lan}
           </LanguageStyled>
         ))(languages)}
       </LanguagesWrapper>
