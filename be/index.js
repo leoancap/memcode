@@ -25,6 +25,7 @@ const Deck_1 = require("./entity/Deck");
 const Exercise_1 = require("./entity/Exercise");
 const DeckToReview_1 = require("./entity/DeckToReview");
 const ExerciseToReview_1 = require("./entity/ExerciseToReview");
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 (() => __awaiter(this, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
         name: "default",
@@ -44,6 +45,7 @@ const ExerciseToReview_1 = require("./entity/ExerciseToReview");
         }),
     });
     const RedisStore = connect_redis_1.default(express_session_1.default);
+    app.use(cookie_parser_1.default());
     app.use(cors_1.default({
         credentials: true,
         origin: [
@@ -61,7 +63,7 @@ const ExerciseToReview_1 = require("./entity/ExerciseToReview");
         resave: false,
         saveUninitialized: false,
         cookie: {
-            httpOnly: true,
+            httpOnly: false,
             maxAge: 1000 * 60 * 60 * 24 * 7 * 365,
         },
     }));

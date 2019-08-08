@@ -12,6 +12,7 @@ import { Deck } from "./entity/Deck"
 import { Exercise } from "./entity/Exercise"
 import { DeckToReview } from "./entity/DeckToReview"
 import { ExerciseToReview } from "./entity/ExerciseToReview"
+import cookieParser from "cookie-parser"
 ;(async () => {
   await createConnection({
     name: "default",
@@ -31,6 +32,7 @@ import { ExerciseToReview } from "./entity/ExerciseToReview"
     }),
   })
   const RedisStore = connectRedis(session)
+  app.use(cookieParser())
   app.use(
     cors({
       credentials: true,
@@ -51,7 +53,7 @@ import { ExerciseToReview } from "./entity/ExerciseToReview"
       resave: false,
       saveUninitialized: false,
       cookie: {
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 1000 * 60 * 60 * 24 * 7 * 365, // 7 years
       },
     }),
