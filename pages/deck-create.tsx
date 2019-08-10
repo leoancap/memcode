@@ -1,7 +1,7 @@
 import React from "react"
 import { useStore } from "../store"
 import styled from "../styled"
-import Layout from "../components/shared/Layout"
+import Layout from "../components/Layout/Layout"
 import { Button, Box, Flex, Text } from "@rebass/emotion"
 import {
   useCreateDeckMutation,

@@ -5,7 +5,7 @@
   "builds": [
     { "src": "be/index.js", "use": "@now/node-server" },
     { "src": "python/index.js", "use": "@now/node" },
-    { "src": "reason/index.js", "use": "@now/node" },
+    { "src": "reason/index.js", "use": "@now/node-server" },
     { "src": "next.config.js", "use": "@now/next" }
   ],
   "routes": [

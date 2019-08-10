@@ -1,7 +1,7 @@
 import React from "react"
 import { useStore } from "../store"
 import styled from "../styled"
-import Layout, { TextStyled } from "../components/shared/Layout"
+import Layout from "../components/Layout/Layout"
 import { Box, Flex, Text } from "@rebass/emotion"
 import Link from "../components/shared/Link"
 import { MyCtx } from "../typings/MyCtx"

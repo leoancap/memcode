@@ -3,7 +3,7 @@ import dynamic from "next/dynamic"
 
 import { MyCtx } from "../../typings/MyCtx"
 import styled from "../../styled"
-import Layout from "../../components/shared/Layout"
+import Layout from "../../components/Layout/Layout"
 import { Button, Box, Flex, Text } from "@rebass/emotion"
 import { useCreateExerciseMutation } from "../../generated/apolloComponents"
 import { testCode } from "../../utils/testCode"

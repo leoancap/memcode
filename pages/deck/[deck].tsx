@@ -2,7 +2,7 @@ import React from "react"
 import dynamic from "next/dynamic"
 import { useStore } from "../../store"
 import styled, { css } from "../../styled"
-import Layout from "../../components/shared/Layout"
+import Layout from "../../components/Layout/Layout"
 import { Button, Box, Flex, Text } from "@rebass/emotion"
 import Link from "../../components/shared/Link"
 import { MyCtx } from "../../typings/MyCtx"
@@ -64,6 +64,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         method: "POST",
         body: JSON.stringify({

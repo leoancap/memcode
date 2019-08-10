@@ -1,7 +1,7 @@
 import { useStore } from "../store"
 import styled from "../styled"
 import React from "react"
-import Layout from "../components/shared/Layout"
+import Layout from "../components/Layout/Layout"
 import InputField from "../components/shared/InputField"
 import { observer } from "mobx-react-lite"
 import {

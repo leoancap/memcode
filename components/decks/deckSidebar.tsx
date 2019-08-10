@@ -47,12 +47,6 @@ export default function DeckSidebar({
           </LanguageStyled>
         ))(languages)}
       </LanguagesWrapper>
-      {/* <FilterTags>
-        <h1>Tags</h1>
-        {map((tag: string) => <LanguageStyled key={tag}>{tag}</LanguageStyled>)(
-          tags,
-        )}
-      </FilterTags> */}
     </Container>
   )
 }

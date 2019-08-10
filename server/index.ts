@@ -13,10 +13,8 @@ import { Exercise } from "./entity/Exercise"
 import { DeckToReview } from "./entity/DeckToReview"
 import { ExerciseToReview } from "./entity/ExerciseToReview"
 import cookieParser from "cookie-parser"
-//@ts-ignore
 
-//
-;(async () => {
+const main = async () => {
   await createConnection({
     name: "default",
     type: "postgres",
@@ -25,6 +23,7 @@ import cookieParser from "cookie-parser"
     ssl: true,
     entities: [User, Deck, Exercise, DeckToReview, ExerciseToReview],
   })
+
   const app = express()
   const schema = await createSchema()
   const apolloServer = new ApolloServer({
@@ -66,4 +65,6 @@ import cookieParser from "cookie-parser"
   app.listen(4000, () => {
     console.log("Listening on http://localhost:4000/be")
   })
-})()
+}
+
+main()

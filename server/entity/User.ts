@@ -29,6 +29,7 @@ export class User extends BaseEntity {
   @isEmailAlreadyInUse()
   email: string
 
+  @Field()
   @Column()
   password: string
 

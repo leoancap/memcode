@@ -26,7 +26,7 @@ const Exercise_1 = require("./entity/Exercise");
 const DeckToReview_1 = require("./entity/DeckToReview");
 const ExerciseToReview_1 = require("./entity/ExerciseToReview");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-(() => __awaiter(this, void 0, void 0, function* () {
+const main = () => __awaiter(this, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
         name: "default",
         type: "postgres",
@@ -71,4 +71,5 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
     app.listen(4000, () => {
         console.log("Listening on http://localhost:4000/be");
     });
-}))();
+});
+main();
