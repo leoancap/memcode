@@ -1,6 +1,6 @@
-import { css } from "."
+import { createGlobalStyle } from "."
 
-export const globalStyles = props => css`
+export default createGlobalStyle`
   * {
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Segoe UI",
@@ -12,8 +12,8 @@ export const globalStyles = props => css`
     font-size: 62.5%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: ${props.co1};
-    background-color: ${props.bg1};
+    color: ${props => props.theme.co1};
+    background-color: ${props => props.theme.bg1};
   }
 
   body {

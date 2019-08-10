@@ -1,5 +1,5 @@
 import styled from "../../styled"
-import { Button, Box, Flex, Text } from "@rebass/emotion"
+import { Button, Box, Flex, Text } from "rebass"
 
 export const GlobalContainer = styled.div`
   overflow: hidden;

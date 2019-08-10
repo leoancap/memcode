@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Card, Flex, Text } from "@rebass/emotion"
+import { Box, Card, Flex, Text } from "rebass"
 import { useStore } from "../../store"
 import styled from "../../styled"
 import map from "ramda/src/map"
