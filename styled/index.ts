@@ -1,6 +1,3 @@
-// export { css, Global, keyframes, ThemeProvider }
-// export default styled as CreateStyled<Theme>
-
 import * as styledComponents from "styled-components"
 import { ThemedStyledComponentsModule } from "styled-components"
 import { Theme } from "./themes/base"

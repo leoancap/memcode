@@ -65,7 +65,7 @@ const Layout = observer(({ children, title = "MemCode" }: ILayout) => {
         <GlobalContainer>
           <Header alignItems="center">
             <Box mr="auto">
-              <Link to="/">
+              <Link prefetch={true} to="/">
                 <TextStyled
                   invert={store.dark}
                   fontSize={[2, 3, 4, 5]}
@@ -77,7 +77,7 @@ const Layout = observer(({ children, title = "MemCode" }: ILayout) => {
             </Box>
             {store.user && (
               <Box pl="2rem">
-                <Link to="/strenghten">
+                <Link prefetch={true} to="/strenghten">
                   <TextStyled fontSize={[2, 3, 4]}>Strenghten</TextStyled>
                 </Link>
               </Box>

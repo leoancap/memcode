@@ -40,7 +40,7 @@ const Deck: any = observer(({ deck }: any) => {
           </Box>
           {store.user && store.user === deck.user.uuid && (
             <Box ml="2rem" pr={[1, 2, 4, 6]}>
-              <Link to={`/${deck.user.id}/${deck.id}/exercise-create`}>
+              <Link prefetch={true} to={`/${deck.user.id}/${deck.id}/exercise-create`}>
                 <PageCrumbButton fontSize={[2, 3, 4]}>
                   Create Exercise
                 </PageCrumbButton>

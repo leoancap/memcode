@@ -53,7 +53,7 @@ export default function DeckListing({
       {isStrenghten
         ? map((deck: IDeckToReview) => (
             <Box key={deck.id}>
-              <Link to={`/review/${deck.deckToReviewId}`}>
+              <Link prefetch={true} to={`/review/${deck.deckToReviewId}`}>
                 <DeckCard
                   fontSize={1}
                   fontWeight="bold"

@@ -15,7 +15,10 @@ export const runReasonEndpoint =
 
 export const runPythonEndpoint = "https://memcode-api.now.sh/python"
 
-export const uri = "https://memcode-api.now.sh/graphql"
+export const uri =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000/graphql"
+    : "https://memcode-api.now.sh/graphql"
 
 export function createApolloClient(state: any, { getToken }: any) {
   if (apolloClient) {

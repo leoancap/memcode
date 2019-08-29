@@ -60,7 +60,7 @@ export default function Decks({ initialDecks }) {
           </Box>
           {store.user && (
             <Box ml="2rem">
-              <Link to="/deck-create">
+              <Link to="/deck-create" prefetch={true}>
                 <PageCrumbButton fontSize={[2, 3, 4]}>New Deck</PageCrumbButton>
               </Link>
             </Box>

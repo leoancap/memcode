@@ -19,7 +19,7 @@ type IStoreState = typeof Store.CreationType
 
 let store: IStore | null = null
 
-export function createStore(storeState: IStoreState): IStore {
+export function createStore(storeState?: IStoreState): IStore {
   if (isServer) {
     return Store.create(storeState)
   } else if (store !== null) {
