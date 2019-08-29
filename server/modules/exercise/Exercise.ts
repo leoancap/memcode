@@ -91,7 +91,7 @@ export class ExerciseResolver {
 
   @Query(() => Deck, { nullable: true })
   async findDeckByPattern(
-    @Arg("str") str: string,
+    @Arg("str") _: string,
   ): Promise<Deck[] | undefined> {
     return Deck.find({
       relations: ["exercises", "user"],

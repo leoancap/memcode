@@ -103,7 +103,7 @@ let ExerciseResolver = class ExerciseResolver {
             });
         });
     }
-    findDeckByPattern(str) {
+    findDeckByPattern(_) {
         return __awaiter(this, void 0, void 0, function* () {
             return Deck_1.Deck.find({
                 relations: ["exercises", "user"],

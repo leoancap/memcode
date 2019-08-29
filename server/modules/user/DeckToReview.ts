@@ -138,15 +138,14 @@ export class DeckToReviewResolver {
   async myDecksToReview(
     @Ctx() ctx: MyContext,
   ): Promise<DeckToReview[] | undefined> {
-    const userId = ctx.req.session!.userId
+    const user = ctx.req.session!.userId
     const decks = await DeckToReview.find({
       relations: ["user", "exercisesToReview", "deck"],
       where: {
-        userId,
+        user
       },
     })
 
-    console.log(decks)
     return decks
   }
 }

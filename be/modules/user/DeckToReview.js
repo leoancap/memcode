@@ -135,14 +135,13 @@ let DeckToReviewResolver = class DeckToReviewResolver {
     }
     myDecksToReview(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userId = ctx.req.session.userId;
+            const user = ctx.req.session.userId;
             const decks = yield DeckToReview_1.DeckToReview.find({
                 relations: ["user", "exercisesToReview", "deck"],
                 where: {
-                    userId,
+                    user
                 },
             });
-            console.log(decks);
             return decks;
         });
     }

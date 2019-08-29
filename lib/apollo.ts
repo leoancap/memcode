@@ -10,15 +10,11 @@ let apolloClient: ApolloClient<NormalizedCacheObject>
 
 export const isServer = typeof window === "undefined"
 
-export const runReasonEndpoint =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:1234/"
-    : "https://memcode.now.sh/reason"
+    export const runReasonEndpoint =
+  "https://fathomless-refuge-53477.herokuapp.com/"
 
-export const runPythonEndpoint =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5000/"
-    : "https://memcode.now.sh/python"
+export const runPythonEndpoint = "https://memcode-api.now.sh/python"
+
 
 export const uri =
   process.env.NODE_ENV === "development"
