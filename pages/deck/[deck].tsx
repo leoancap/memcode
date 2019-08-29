@@ -163,7 +163,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
             </Box>
             {store.user && store.user === deck.user.uuid && (
               <Box ml="auto">
-                <Link prefetch={true} to={`/exercise-create/${deck.id}`}>
+                <Link prefetch={true} to={`/create/${deck.id}`}>
                   <PageCrumbButton fontSize={[2, 3, 4]}>
                     New Exercise
                   </PageCrumbButton>

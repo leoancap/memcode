@@ -31,23 +31,18 @@ const getDecksQuery = gql`
 
 export default function Decks({ initialDecks }) {
   const store = useStore()
-  const client = useApolloClient()
 
-  const data = client.readQuery({
-    query: getDecksQuery,
-  })
-
-  const [decks, setDecks] = React.useState(data.decks)
+  const [decks, setDecks] = React.useState(initialDecks)
 
   const [currentLanguage, setCurrentLanguage] = React.useState<Languages>("All")
 
   React.useEffect(() => {
     setDecks(
-      data.decks.filter(deck =>
-        currentLanguage === "All" ? true : deck.language === currentLanguage,
+      initialDecks.filter(
+        deck => currentLanguage === "All" || deck.language === currentLanguage,
       ),
     )
-  }, [currentLanguage, data.decks])
+  }, [currentLanguage])
 
   return (
     <Layout>
@@ -60,7 +55,7 @@ export default function Decks({ initialDecks }) {
           </Box>
           {store.user && (
             <Box ml="2rem">
-              <Link to="/deck-create" prefetch={true}>
+              <Link to="/create-deck" prefetch={true}>
                 <PageCrumbButton fontSize={[2, 3, 4]}>New Deck</PageCrumbButton>
               </Link>
             </Box>
@@ -82,11 +77,6 @@ Decks.getInitialProps = async ({ apolloClient }: MyCtx) => {
   const {
     data: { decks },
   } = await apolloClient.query({ query: decksQuery })
-  apolloClient.cache.writeData({
-    data: {
-      decks,
-    },
-  })
   return { initialDecks: decks }
 }
 

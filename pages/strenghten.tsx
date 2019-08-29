@@ -10,10 +10,6 @@ import DeckSidebar from "../components/decks/deckSidebar"
 import DeckListing from "../components/decks/deckListing"
 
 export default function Strenghten({ decks }) {
-  const store = useStore()
-
-  console.log(decks)
-
   return (
     <Layout>
       <Content>
@@ -25,7 +21,6 @@ export default function Strenghten({ decks }) {
   )
 }
 Strenghten.getInitialProps = async ({ apolloClient }: MyCtx) => {
-  await apolloClient.resetStore()
   const {
     data: { myDecksToReview },
   } = await apolloClient.query({ query: myDecksToReviewQuery })

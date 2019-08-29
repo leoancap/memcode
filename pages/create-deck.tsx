@@ -1,5 +1,4 @@
 import React from "react"
-import { useStore } from "../store"
 import styled from "../styled"
 import Layout from "../components/Layout/Layout"
 import { Button, Box, Flex, Text } from "rebass"
@@ -13,16 +12,12 @@ import TagsInput from "react-tagsinput"
 
 import "react-tagsinput/react-tagsinput.css" // If using WebPack and style-loader.
 import { autosuggestRenderInput } from "../components/shared/AutoSuggest"
-import { useApolloClient } from "react-apollo-hooks"
 
 export default function CreateDecks() {
-  const store = useStore()
-
   const createDeck = useCreateDeckMutation()
 
   const [tags, setTags] = React.useState([])
   const [submitting, setSubmitting] = React.useState(false)
-  const client = useApolloClient()
 
   const [deckData, setDeckData] = React.useState({
     title: "",

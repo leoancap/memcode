@@ -56,7 +56,7 @@ export function createApolloClient(state: any, { getToken }: any) {
 
     const cache = new InMemoryCache()
 
-    cache.restore(state || {})
+    cache.restore({})
 
     if (isServer) {
       return new ApolloClient({
