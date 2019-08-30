@@ -1,5 +1,5 @@
 import styled from "../../styled"
-import React from "react"
+import React, { useEffect } from "react"
 import { useStore } from "../../store"
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
 import "react-tabs/style/react-tabs.css"
@@ -8,13 +8,16 @@ import { Button, Text, Box } from "@rebass/emotion"
 import { prettify } from "../../utils/prettify"
 import Results from "../exercise/Results"
 import ErrorCode from "../exercise/ErrorCode"
+import { RightPaneEnum } from "../../pages/deck/[deck]"
+import { IResults } from "../../utils/testCode"
 
 interface IRightPane {
   exercise: IExercise
-  rightPane: string
-  results: any
+  rightPane: RightPaneEnum
+  results: IResults[] | null
   handleReview: (value: number) => void
   error: string
+  isReviewed: boolean
   language: string
 }
 
@@ -24,15 +27,15 @@ export default ({
   exercise,
   handleReview,
   error,
+  rightPane,
+  isReviewed,
 }: IRightPane) => {
   const store = useStore()
   const [tabIndex, setTabIndex] = React.useState(0)
 
-  React.useEffect(() => {
-    if (results) {
-      setTabIndex(2)
-    }
-  }, [results])
+  useEffect(() => {
+    setTabIndex(rightPane)
+  }, [rightPane])
 
   return (
     <Container>
@@ -69,15 +72,21 @@ export default ({
         </TabPanel>
         <TabPanel>
           <TabContent>
-            <Results tests={exercise.tests} results={results} />
+            {results && <Results tests={exercise.tests} results={results} />}
             {error && <ErrorCode error={error} />}
             {store && store.user && (
               <StrenghtenButtons>
-                <Button onClick={handleReview(-1)}>Again</Button>
-                <Button my="auto" onClick={handleReview(1)}>
-                  Good
-                </Button>
-                <Button onClick={handleReview(2)}>Easy</Button>
+                {isReviewed ? (
+                  <h1 style={{ margin: "auto" }}>👁 Reviewed 👁</h1>
+                ) : (
+                  <>
+                    <Button onClick={handleReview(-1)}>Again</Button>
+                    <Button my="auto" onClick={handleReview(1)}>
+                      Good
+                    </Button>
+                    <Button onClick={handleReview(2)}>Easy</Button>
+                  </>
+                )}
               </StrenghtenButtons>
             )}
           </TabContent>

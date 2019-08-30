@@ -106,6 +106,10 @@ export const GlobalContainer = styled.div`
 
 export const TextStyled = styled(Text)<{ invert: boolean }>`
   color: ${props => props.theme.co2};
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.05)
+  }
   img {
     ${({ invert }) =>
       invert &&

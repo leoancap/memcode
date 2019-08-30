@@ -20,12 +20,17 @@ import { NextComponentType } from "next"
 import RightPane from "../../components/shared/RightPane"
 import ShadowScroll from "../../components/js/ShadowScroll"
 import { runPythonEndpoint, runReasonEndpoint } from "../../lib/apollo"
+import { api } from "../../services"
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
 })
 
-export type IRightPane = "description" | "error" | "results" | "solution"
+export enum RightPaneEnum {
+  "description",
+  "solution",
+  "results",
+}
 type IResults = {
   user: string
   solution: string
@@ -36,10 +41,13 @@ type IExercisePage = {
 }
 const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
   const store = useStore()
-  const [rightPane, setRightPane] = React.useState<IRightPane>("description")
+  const [rightPane, setRightPane] = React.useState<RightPaneEnum>(
+    RightPaneEnum.description,
+  )
   const [userCode, setUserCode] = React.useState("")
   const [results, setResults] = React.useState<IResults[] | null>()
   const [error, setErrors] = React.useState("")
+  const [isReviewed, setIsReviewed] = React.useState(false)
   const [currentExerIndex, setCurrentExerIndex] = React.useState(0)
   const addDeckToReview = useAddDeckToReviewMutation()
   let currentExercise: any = deck.exercises[currentExerIndex]
@@ -55,54 +63,29 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
   React.useEffect(() => {
     if (currentExercise) {
       setUserCode(currentExercise.code)
-      setRightPane("description")
+      setRightPane(RightPaneEnum.description)
+      setResults(null)
+      setIsReviewed(false)
     }
   }, [currentExerIndex])
   const evalCode = async () => {
     if (deck.language === "Reason") {
-      const rawResponse = await fetch(runReasonEndpoint, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          code: userCode,
-          solution: currentExercise.solution,
-          tests: currentExercise.tests,
-          isTesting: true,
-        }),
-      })
-      const res = await rawResponse.json()
-      console.log(res)
+      const res = await api.runReason(currentExercise, userCode)
       setResults(res.results)
-      setRightPane("results")
+      setRightPane(RightPaneEnum.results)
       if (res.error) {
         setErrors(res.error.message)
-        setRightPane("error")
+        setRightPane(RightPaneEnum.results)
       } else {
         setResults(res.results)
       }
     } else if (deck.language === "Python") {
-      const rawResponse = await fetch(runPythonEndpoint, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          code: userCode,
-          solution: currentExercise.solution,
-          tests: currentExercise.tests,
-          isTesting: true,
-        }),
-      })
-      const res = await rawResponse.json()
+      const res = await api.runPython(currentExercise, userCode)
       setResults(res.results)
-      setRightPane("results")
+      setRightPane(RightPaneEnum.results)
       if (res.message) {
         setErrors(res.message)
-        setRightPane("error")
+        setRightPane(RightPaneEnum.results)
         console.log(res)
       } else {
         setResults(res.results)
@@ -115,10 +98,10 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
         deck.bundledExercises,
       )
       setResults(res.results)
-      setRightPane("results")
+      setRightPane(RightPaneEnum.results)
       if (res.message) {
         if (res.error !== "implementation") {
-          setRightPane("error")
+          setRightPane(RightPaneEnum.results)
           setErrors(res.message)
         } else {
           setErrors("")
@@ -134,6 +117,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
   //   }, 20)
   // }, [userCode])
   const handleReview = (level: -1 | 1 | 2) => async () => {
+    setIsReviewed(true)
     await addDeckToReview({
       variables: {
         exerciseId: currentExercise.id,
@@ -222,6 +206,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
                 <ResultsPane>
                   <RightPane
                     results={results}
+                    isReviewed={isReviewed}
                     exercise={currentExercise}
                     rightPane={rightPane}
                     handleReview={handleReview}

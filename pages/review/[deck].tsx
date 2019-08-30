@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import dynamic from "next/dynamic"
 import { useStore } from "../../store"
 import styled, { css } from "../../styled"
@@ -21,6 +21,8 @@ import { MyCtx } from "../../typings/MyCtx"
 import { NextComponentType } from "next"
 import RightPane from "../../components/shared/RightPane"
 import { runPythonEndpoint } from "../../lib/apollo"
+import { RightPaneEnum } from "../deck/[deck]"
+import { api } from "../../services"
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
@@ -43,53 +45,58 @@ const Review: NextComponentType = observer(
   ({ deck, bundledExercises }: IExercisePage) => {
     const store = useStore()
 
-    const [rightPane, setRightPane] = React.useState<IRightPane>("description")
+    const [rightPane, setRightPane] = React.useState<RightPaneEnum>(
+      RightPaneEnum.description,
+    )
     const [userCode, setUserCode] = React.useState("")
     const [results, setResults] = React.useState<IResults[] | null>()
     const [error, setErrors] = React.useState("")
     const [currentExerIndex, setCurrentExerIndex] = React.useState(0)
+    const [reviewedExercises, setReviewedExercises] = React.useState([])
+    const [isReviewed, setIsReviewed] = React.useState(false)
 
     const addDeckToReview = useAddDeckToReviewMutation()
+
+    const now = today()
+
     const exerToRev = deck.exercisesToReview
       .filter(exer => {
-        if (exer.nextInterval + exer.lastAttempt <= today()) {
+        if (
+          exer.nextInterval + exer.lastAttempt <= now &&
+          !reviewedExercises.includes(exer.exerciseId)
+        ) {
           return true
         }
       })
       .map(exer => exer.exercise)
-    React.useEffect(() => {
-      console.log(exerToRev)
-    }, [])
 
-    // console.log(deck)
     const currentExercise: IExercise = exerToRev[currentExerIndex]
 
     React.useEffect(() => {
       setUserCode(currentExercise.code)
+      setRightPane(RightPaneEnum.description)
+      setResults(null)
+      setIsReviewed(false)
     }, [currentExerIndex])
 
     const evalCode = async () => {
-      if (deck.deck.language === "Python") {
-        const rawResponse = await fetch(runPythonEndpoint, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({
-            code: userCode,
-            solution: currentExercise.solution,
-            tests: currentExercise.tests,
-            isTesting: true,
-          }),
-        })
-        const res = await rawResponse.json()
+      if (deck.deck.language === "Reason") {
+        const res = await api.runReason(currentExercise, userCode)
         setResults(res.results)
-        setRightPane("results")
+        setRightPane(RightPaneEnum.results)
+        if (res.error) {
+          setErrors(res.error.message)
+          setRightPane(RightPaneEnum.results)
+        } else {
+          setResults(res.results)
+        }
+      } else if (deck.deck.language === "Python") {
+        const res = await api.runPython(currentExercise, userCode)
+        setResults(res.results)
+        setRightPane(RightPaneEnum.results)
         if (res.message) {
           setErrors(res.message)
-          setRightPane("error")
-          console.log(res)
+          setRightPane(RightPaneEnum.results)
         } else {
           setResults(res.results)
         }
@@ -101,10 +108,10 @@ const Review: NextComponentType = observer(
           bundledExercises,
         )
         setResults(res.results)
-        setRightPane("results")
+        setRightPane(RightPaneEnum.results)
         if (res.message) {
           if (res.error !== "implementation") {
-            setRightPane("error")
+            setRightPane(RightPaneEnum.results)
             setErrors(res.message)
           } else {
             setErrors("")
@@ -115,11 +122,20 @@ const Review: NextComponentType = observer(
       }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
       cookie.set("memcodeSidebar", store.sideBarOpen)
     }, [store.sideBarOpen])
 
     const handleReview = (level: -1 | 1 | 2) => async () => {
+      if (exerToRev.length > 0) {
+        setReviewedExercises([...reviewedExercises, currentExercise.id])
+        if (currentExerIndex + 1 < exerToRev.length) {
+          setUserCode(exerToRev[currentExerIndex + 1].code)
+        }
+        setCurrentExerIndex(0)
+        setRightPane(RightPaneEnum.description)
+        setResults(null)
+      }
       await addDeckToReview({
         variables: {
           exerciseId: currentExercise.id,
@@ -159,9 +175,11 @@ const Review: NextComponentType = observer(
                           onClick={() => {
                             setCurrentExerIndex(key)
                           }}
-                          key={exer.id}
+                          isSelected={currentExercise.id === exer.id}
+                          key={exer.id + key}
                         >
-                          {key + 1} - {exer.title}
+                          {key + 1} - {exer.title}{" "}
+                          {currentExercise.id === exer.id && <span>👈</span>}
                         </ExercisesItemPane>
                       ))}
                     </section>
@@ -197,6 +215,7 @@ const Review: NextComponentType = observer(
                   <ResultsPane>
                     <RightPane
                       results={results}
+                      isReviewed={isReviewed}
                       exercise={currentExercise}
                       rightPane={rightPane}
                       handleReview={handleReview}
@@ -251,11 +270,13 @@ const PageCrumb = styled(Text)`
   font-size: 18px;
 `
 
-const ExercisesItemPane = styled.div`
+const ExercisesItemPane = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: ${props => props.theme.bg1};
-  transition: background-color 0.1s ease-in-out;
   &:hover {
     background: ${props => props.theme.bg1};
     color: ${props => props.theme.co1};
@@ -264,6 +285,11 @@ const ExercisesItemPane = styled.div`
   padding: 1rem;
   width: 100%;
   border-bottom: 0.5px solid ${props => props.theme.bo1};
+  ${({ isSelected }) =>
+    isSelected &&
+    `
+    filter: invert(0.1)
+  `}
 `
 
 const Content = styled.div`
@@ -287,20 +313,21 @@ const ResizerCss = css`
   }
 
   .Resizer:hover {
-    -webkit-transition: all 2s ease;
-    transition: all 2s ease;
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
   }
 
   .Resizer.vertical {
     width: 11px;
     margin: 0 -5px;
-    border-left: 5px solid rgba(255, 255, 255, 0);
-    border-right: 5px solid rgba(255, 255, 255, 0);
+    border-left: 0.5px solid #777;
+    background: transparent;
+    border-right: 0.5px solid #777;
     cursor: col-resize;
   }
   .Resizer.vertical:hover {
-    border-left: 5px solid rgba(0, 0, 0, 0.5);
-    border-right: 5px solid rgba(0, 0, 0, 0.5);
+    border-left: 4px solid #777;
+    border-right: 4px solid #777;
   }
   .Resizer.vertical.disabled:hover {
     cursor: pointer;
@@ -309,7 +336,6 @@ const ResizerCss = css`
     width: 0;
     border-left: 0;
     border-right: 0px solid rgba(0, 0, 0, 0.5);
-    /* border-color: transparent; */
     margin: 0;
   }
 `
