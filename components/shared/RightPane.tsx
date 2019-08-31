@@ -14,6 +14,7 @@ import { IResults } from "../../utils/testCode"
 interface IRightPane {
   exercise: IExercise
   rightPane: RightPaneEnum
+  setRightPane: (value: RightPaneEnum) => void
   results: IResults[] | null
   handleReview: (value: number) => void
   error: string
@@ -29,17 +30,13 @@ export default ({
   error,
   rightPane,
   isReviewed,
+  setRightPane,
 }: IRightPane) => {
   const store = useStore()
-  const [tabIndex, setTabIndex] = React.useState(0)
-
-  useEffect(() => {
-    setTabIndex(rightPane)
-  }, [rightPane])
 
   return (
     <Container>
-      <Tabs selectedIndex={tabIndex} onSelect={setTabIndex}>
+      <Tabs selectedIndex={rightPane} onSelect={setRightPane}>
         <TabList>
           <Tab>
             <TabHeader>Description</TabHeader>

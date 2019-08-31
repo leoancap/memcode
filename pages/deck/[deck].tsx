@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useLayoutEffect } from "react"
 import dynamic from "next/dynamic"
 import { useStore } from "../../store"
 import styled, { css } from "../../styled"
@@ -15,12 +15,13 @@ import { observer } from "mobx-react-lite"
 import {
   IDeck,
   useAddDeckToReviewMutation,
+  useDeleteExerciseMutation,
 } from "../../generated/apolloComponents"
 import { NextComponentType } from "next"
 import RightPane from "../../components/shared/RightPane"
 import ShadowScroll from "../../components/js/ShadowScroll"
-import { runPythonEndpoint, runReasonEndpoint } from "../../lib/apollo"
 import { api } from "../../services"
+import Router from "next/router";
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
@@ -44,6 +45,9 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
   const [rightPane, setRightPane] = React.useState<RightPaneEnum>(
     RightPaneEnum.description,
   )
+
+  const deleteExercise = useDeleteExerciseMutation()
+
   const [userCode, setUserCode] = React.useState("")
   const [results, setResults] = React.useState<IResults[] | null>()
   const [error, setErrors] = React.useState("")
@@ -173,12 +177,31 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
                     <section>
                       {deck.exercises.map((exer, key: number) => (
                         <ExercisesItemPane
+                          isSelected={currentExercise.id === exer.id}
                           onClick={() => {
+                            console.log("here")
                             setCurrentExerIndex(key)
                           }}
                           key={exer.id}
                         >
                           {key + 1} - {exer.title}
+                          {currentExercise.id === exer.id &&
+                            store.user === deck.user.uuid && (
+                              <span
+                                onClick={e => {
+                                  e.stopPropagation()
+                                  deleteExercise({
+                                    variables: {
+                                      deckId: deck.id,
+                                      exerciseId: exer.id
+                                    }
+                                  })
+                                  Router.push(`/deck/${deck.id}`)
+                                }}
+                              >
+                                ❌
+                              </span>
+                            )}
                         </ExercisesItemPane>
                       ))}
                     </section>
@@ -205,6 +228,7 @@ const Exercise: NextComponentType = observer(({ deck }: IExercisePage) => {
                 </EditorPane>
                 <ResultsPane>
                   <RightPane
+                    setRightPane={setRightPane}
                     results={results}
                     isReviewed={isReviewed}
                     exercise={currentExercise}
@@ -229,6 +253,7 @@ Exercise.getInitialProps = async ({ apolloClient, query: { deck } }: MyCtx) => {
     query: findDeckByIdQuery,
     variables: { deckId: deck },
   })
+  findDeckById.exercises.sort((a, b) => Number(a.id) - Number(b.id))
   return { deck: findDeckById }
 }
 export const PageHeader = styled(Flex)`
@@ -258,11 +283,13 @@ const PageCrumbButton = styled(Text)`
     filter: invert(0.9);
   }
 `
-const ExercisesItemPane = styled.div`
+const ExercisesItemPane = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: ${props => props.theme.bg1};
-  transition: background-color 0.1s ease-in-out;
   &:hover {
     background: ${props => props.theme.bg1};
     color: ${props => props.theme.co1};
@@ -271,7 +298,18 @@ const ExercisesItemPane = styled.div`
   padding: 1rem;
   width: 100%;
   border-bottom: 0.5px solid ${props => props.theme.bo1};
+  ${({ isSelected }) =>
+    isSelected &&
+    `
+    filter: invert(0.1)
+  `}
+  span {
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 `
+
 const Content = styled.div`
   height: 100%;
   width: 100vw;

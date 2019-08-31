@@ -23,6 +23,7 @@ import RightPane from "../../components/shared/RightPane"
 import { runPythonEndpoint } from "../../lib/apollo"
 import { RightPaneEnum } from "../deck/[deck]"
 import { api } from "../../services"
+import { HotKeys } from "react-hotkeys"
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
@@ -70,6 +71,7 @@ const Review: NextComponentType = observer(
       })
       .map(exer => exer.exercise)
 
+
     const currentExercise: IExercise = exerToRev[currentExerIndex]
 
     React.useEffect(() => {
@@ -80,23 +82,20 @@ const Review: NextComponentType = observer(
     }, [currentExerIndex])
 
     const evalCode = async () => {
+      setRightPane(RightPaneEnum.results)
       if (deck.deck.language === "Reason") {
         const res = await api.runReason(currentExercise, userCode)
         setResults(res.results)
-        setRightPane(RightPaneEnum.results)
         if (res.error) {
           setErrors(res.error.message)
-          setRightPane(RightPaneEnum.results)
         } else {
           setResults(res.results)
         }
       } else if (deck.deck.language === "Python") {
         const res = await api.runPython(currentExercise, userCode)
         setResults(res.results)
-        setRightPane(RightPaneEnum.results)
         if (res.message) {
           setErrors(res.message)
-          setRightPane(RightPaneEnum.results)
         } else {
           setResults(res.results)
         }
@@ -108,10 +107,8 @@ const Review: NextComponentType = observer(
           bundledExercises,
         )
         setResults(res.results)
-        setRightPane(RightPaneEnum.results)
         if (res.message) {
           if (res.error !== "implementation") {
-            setRightPane(RightPaneEnum.results)
             setErrors(res.message)
           } else {
             setErrors("")
@@ -127,7 +124,7 @@ const Review: NextComponentType = observer(
     }, [store.sideBarOpen])
 
     const handleReview = (level: -1 | 1 | 2) => async () => {
-      if (exerToRev.length > 0) {
+      if (exerToRev.length > 1) {
         setReviewedExercises([...reviewedExercises, currentExercise.id])
         if (currentExerIndex + 1 < exerToRev.length) {
           setUserCode(exerToRev[currentExerIndex + 1].code)
@@ -214,6 +211,7 @@ const Review: NextComponentType = observer(
                   </EditorPane>
                   <ResultsPane>
                     <RightPane
+                      setRightPane={setRightPane}
                       results={results}
                       isReviewed={isReviewed}
                       exercise={currentExercise}

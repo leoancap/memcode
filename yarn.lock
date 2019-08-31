@@ -810,6 +810,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.4.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
+  integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.1.0", "@babel/template@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.4.4.tgz#f4b88d1225689a08f5bc3a17483545be9e4ed237"
@@ -3921,7 +3928,7 @@ class-validator@>=0.9.1, class-validator@^0.9.1:
     google-libphonenumber "^3.1.6"
     validator "10.4.0"
 
-classnames@^2.2.0, classnames@^2.2.5:
+classnames@^2.2.0, classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -6378,6 +6385,11 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
   integrity sha512-7T/BxH19zbcCTa8XkMlbK5lTo1WtgkFi3GvdWEyNuc4Vex7/9Dqbnpsf4JMydcfj9HCg4zUWFTL3Za6lapg5/w==
+
+hotkeys-js@^3.6.11:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.7.1.tgz#851f92fc3ae18f6a0b0cf77449f0e4b961a6c083"
+  integrity sha512-dCQOlRQdDBxKLFjT4/yi5QODTfKlxuXvXgz65g1T3qHuUUc5cWudJw4ok0IvL7XgGgOknbB13tcIW2VTG7ZUIw==
 
 html-encoding-sniffer@^1.0.2:
   version "1.0.2"
@@ -10271,6 +10283,11 @@ react-autowhatever@^10.1.2:
     react-themeable "^1.1.0"
     section-iterator "^2.0.0"
 
+react-codemirror2@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-6.0.0.tgz#180065df57a64026026cde569a9708fdf7656525"
+  integrity sha512-D7y9qZ05FbUh9blqECaJMdDwKluQiO3A9xB+fssd5jKM7YAXucRuEOlX32mJQumUvHUkHRHqXIPBjm6g0FW0Ag==
+
 react-custom-scrollbars@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-custom-scrollbars/-/react-custom-scrollbars-4.2.1.tgz#830fd9502927e97e8a78c2086813899b2a8b66db"
@@ -10309,6 +10326,15 @@ react-final-form-hooks@^2.0.0:
   integrity sha512-UlWO9OuHw11iUUjnvxzyMtKnI+iSgb5vdcPPP6fLT0DGoNu9DHULm9jzwojBO4Dqvp0faybfVwKeJG45uqkHyA==
   dependencies:
     np "^5.0.1"
+
+react-hot-keys@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-hot-keys/-/react-hot-keys-2.1.0.tgz#2ec05f94851e8a22bb3c714e6476a62d196e360a"
+  integrity sha512-0bCw+GfKj90c25agjV/Xdprn7XB5maqCx1y2bNUAptNwEatHRgViVJZcmG3hPNXkLzw77aN7iceNlQJVpB2HPw==
+  dependencies:
+    "@babel/runtime" "^7.4.5"
+    classnames "^2.2.6"
+    hotkeys-js "^3.6.11"
 
 react-hotkeys@^2.0.0:
   version "2.0.0"
