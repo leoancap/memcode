@@ -1,6 +1,0 @@
-{
-  "version": 2,
-  "name": "memcode",
-  "alias": "memcode.now.sh",
-  "builds": [{ "src": "next.config.js", "use": "@now/next" }]
-}

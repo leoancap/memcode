@@ -14,8 +14,10 @@
     "isolatedModules": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "incremental": true
   },
-  "exclude": ["node_modules", "server", "be", "python", "reason"],
+  "exclude": ["node_modules"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

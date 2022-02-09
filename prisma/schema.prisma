@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("postgres")
+}
+
+model Deck {
+  id           String         @id @default(cuid())
+  title        String
+  description  String
+  exercises    Exercise[]
+  language     String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  tags         String[]
+  user         User           @relation(fields: [userId], references: [id])
+  userId       String
+  deckToReview DeckToReview[]
+}
+
+model DeckToReview {
+  id                String             @id @default(cuid())
+  deck              Deck               @relation(fields: [deckId], references: [id])
+  user              User               @relation(fields: [userId], references: [id])
+  deckId            String
+  userId            String
+  exercisesToReview ExerciseToReview[]
+}
+
+model ExerciseToReview {
+  id             String        @id @default(cuid())
+  deckToReview   DeckToReview? @relation(fields: [deckToReviewId], references: [id])
+  deckToReviewId String?
+  exercise       Exercise      @relation(fields: [exerciseId], references: [id])
+  exerciseId     String
+  nextInterval   Int
+  lastAttempt    Int
+}
+
+model Exercise {
+  id               String             @id @default(cuid())
+  title            String
+  description      String
+  code             String
+  solution         String
+  tests            String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  deck             Deck?              @relation(fields: [deckId], references: [id])
+  deckId           String?
+  user             User?              @relation(fields: [userId], references: [id])
+  userId           String?
+  exerciseToReview ExerciseToReview[]
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  /// @TypeGraphQL.omit(output: true)
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  decks         Deck[]
+  Exercise      Exercise[]
+  DeckToReview  DeckToReview[]
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
