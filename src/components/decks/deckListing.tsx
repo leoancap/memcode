@@ -1,215 +1,80 @@
 import React from "react";
-import { Box, Text } from "rebass";
-import map from "ramda/src/map";
 import Router from "next/router";
+import Image from "next/image";
 import jsLogo from "public/javascript.svg";
 import tsLogo from "public/typescript.svg";
-import pyLogo from "public/python.svg";
 import reLogo from "public/reason.png";
 import { useSession } from "next-auth/react";
-import styled from "src/styled";
-import { Link } from "../shared/Link";
 
-import { XCircle } from "@styled-icons/feather";
+import { Cross1Icon } from "@radix-ui/react-icons";
+import { Card, Grid, Text, Box, Group, Title } from "@mantine/core";
+import { Deck } from "@prisma/client";
+
+const getLogo = (language: string) => {
+  if (language === "Javascript") return jsLogo;
+  if (language === "Reason") return reLogo;
+  return tsLogo;
+};
 
 interface IDecksListing {
-  // decks: IDeck[] | IDeckToReview[];
-  decks: any;
-  isStrenghten?: boolean;
+  decks: Deck[];
+  // isStrenghten?: boolean;
 }
 
 export function DeckListing({
   decks = [],
-  isStrenghten = false,
-}: IDecksListing) {
+}: // isStrenghten = false,
+IDecksListing) {
   const [isDeleting, setIsDeleting] = React.useState(false);
 
   const handleDeckClick = (deckId: string) => () => {
     Router.push(`/deck/${deckId}`);
   };
 
-  const logoSorter = (language: string) =>
-    language === "Python"
-      ? pyLogo
-      : language === "Javascript"
-      ? jsLogo
-      : language === "Reason"
-      ? reLogo
-      : tsLogo;
-
   const session = useSession();
 
   return (
-    <Container>
-      {isStrenghten
-        ? map((deck: any) => (
-            <Box key={deck.id}>
-              <Link prefetch={true} to={`/review/${deck.deckToReviewId}`}>
-                <DeckCard
-                  fontSize={1}
-                  fontWeight="bold"
-                  borderRadius={8}
-                  boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-                  py={2}
-                  px={2}
-                >
-                  <TitleStyled my={2}>
-                    <LanguageLogoWrapper>
-                      <img src={logoSorter(deck.deck.language)} alt="" />
-                    </LanguageLogoWrapper>
-                    {deck.deck.title}
-                  </TitleStyled>
-                  <DescriptionText py={2}>
-                    {deck.deck.description.slice(0, 255) + "..."}
-                  </DescriptionText>
-                  <TagsStyled pt={1} py={2}>
-                    {map((tag: string) => (
-                      <TextStyled key={tag} py={1} px={2} mr={2}>
-                        {tag}
-                      </TextStyled>
-                    ))(deck.deck.tags)}
-                  </TagsStyled>
-                </DeckCard>
-              </Link>
-            </Box>
-          ))(decks as any[])
-        : map((deck: any) => (
-            <Box key={deck.id}>
-              <DeckCard
-                fontSize={1}
-                fontWeight="bold"
-                borderRadius={8}
-                boxShadow="0 2px 16px rgba(0, 0, 0, 0.25)"
-                p={2}
-                onClick={handleDeckClick(deck.id)}
-              >
-                <TitleStyled my={2}>
-                  <LanguageLogoWrapper>
-                    <img src={logoSorter(deck.language)} alt="" />
-                  </LanguageLogoWrapper>
-                  {deck.title}
-                </TitleStyled>
-                <DescriptionText my={2}>
-                  {deck.description.slice(0, 255) + "..."}
-                </DescriptionText>
-                <TagsStyled pt={1} my={2}>
-                  {map((tag: string) => (
-                    <TextStyled key={tag} py={1} px={2} mr={2}>
-                      {tag}
-                    </TextStyled>
-                  ))(deck.tags)}
-                </TagsStyled>
-                {session.status === "authenticated" &&
-                  session.data.id === deck.userId && (
-                    <DeleteDeckIcon
-                      onClick={async (e) => {
-                        e.stopPropagation();
-                        setIsDeleting(true);
-                        if (!isDeleting) {
-                          // await deleteDeck({
-                          //   variables: {
-                          //     deckId: deck.id,
-                          //   },
-                          //   update: (cache, { data }) => {
-                          //     if (!data || !data.deleteDeck) {
-                          //       return undefined;
-                          //     }
-                          //     cache.writeQuery<IDecksQuery>({
-                          //       query: decksQuery,
-                          //       data: {
-                          //         decks: data.deleteDeck,
-                          //       },
-                          //     });
-                          //   },
-                          // });
-                          // Router.reload();
-                        }
-                      }}
-                    >
-                      <XCircle width={25} height={25} title="Delete Deck" />
-                    </DeleteDeckIcon>
-                  )}
-              </DeckCard>
-            </Box>
-          ))(decks)}
-    </Container>
+    <Grid gutter="lg" justify="space-between" columns={2}>
+      {decks.map((deck: Deck) => (
+        <Grid.Col key={deck.id} sx={{ minHeight: 80 }} span={1}>
+          <Card
+            sx={{ minHeight: "100%", cursor: "pointer" }}
+            padding="sm"
+            shadow="sm"
+            onClick={handleDeckClick(deck.id)}
+          >
+            <Group position="apart" direction="row" noWrap>
+              <Group>
+                <Image
+                  height={24}
+                  width={24}
+                  src={getLogo(deck.language)}
+                  alt={deck.language}
+                />
+                <Title order={6}>{deck.title}</Title>
+              </Group>
+              {session.status === "authenticated" &&
+                session.data.id === deck.userId && (
+                  <Box
+                    onClick={(e: { stopPropagation: () => void }) => {
+                      e.stopPropagation();
+                      setIsDeleting(true);
+                      if (!isDeleting) {
+                        // delete icon
+                      }
+                    }}
+                    title="Delete Deck"
+                  >
+                    <Cross1Icon width={25} height={25} />
+                  </Box>
+                )}
+            </Group>
+            <Card.Section>
+              <Text m="sm">{deck.description.slice(0, 255) + "..."}</Text>
+            </Card.Section>
+          </Card>
+        </Grid.Col>
+      ))}
+    </Grid>
   );
 }
-
-const DeckCard = styled(Box)`
-  position: relative;
-  background: ${(props) => props.theme.bg1};
-  color: ${(props) => props.theme.co1};
-  display: flex;
-  flex-direction: column;
-  height: 20rem;
-  border-radius: 0.9rem;
-  box-shadow: ${(props) => props.theme.bo2};
-  transition: box-shadow 0.2s ease 0s;
-  &:hover {
-    filter: invert(0.09);
-  }
-  cursor: pointer;
-  transition: all 50ms;
-`;
-
-export const DeleteDeckIcon = styled.nav`
-  cursor: pointer;
-  transition: transform 400ms ease-in-out;
-  border-radius: 50%;
-  position: absolute;
-  top: 4%;
-  right: 2%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LanguageLogoWrapper = styled.div`
-  padding-right: 1rem;
-  img {
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-`;
-
-const DescriptionText = styled(Text)`
-  text-overflow: clip;
-  margin-bottom: auto;
-  justify-self: flex-start;
-  overflow: hidden;
-  max-height: 10rem;
-  color: ${(props) => props.theme.co1};
-`;
-
-const TitleStyled = styled(Text)`
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-  font-weight: 500;
-  transition: all 0.5s;
-  color: ${(props) => props.theme.co1};
-  width: 90%;
-`;
-
-const Container = styled(Box)`
-  width: 84%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 3rem;
-  margin-left: 20%;
-  margin-top: 1.5%;
-`;
-
-const TextStyled = styled(Text)`
-  border-radius: 0.8rem;
-  background: ${(props) => props.theme.bg1};
-  color: ${(props) => props.theme.co1};
-  font-size: 15px;
-`;
-
-const TagsStyled = styled(Box)`
-  filter: invert(1);
-  display: flex;
-  flex-wrap: wrap;
-`;

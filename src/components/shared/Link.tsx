@@ -10,13 +10,7 @@ interface ILink {
 export function Link({ to, children }: ILink) {
   return (
     <LinkNext href={to} as={to}>
-      <span
-        style={{
-          cursor: "pointer",
-        }}
-      >
-        {children}
-      </span>
+      {children}
     </LinkNext>
   );
 }

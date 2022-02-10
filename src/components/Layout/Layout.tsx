@@ -1,114 +1,83 @@
 import * as React from "react";
-import Head from "next/head";
 import Image from "next/image";
-import { Box } from "rebass";
-import Modal from "react-modal";
 
 import logo from "public/logo.svg";
-import login from "public/plug-in.png";
-import { GlobalContainer, Header, TextStyled, PlugInWrapper } from "./styles";
-import { signIn, useSession } from "next-auth/react";
-import { Link, Popup } from "src/components";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { Link } from "src/components";
+import {
+  ActionIcon,
+  AppShell,
+  Box,
+  ColorScheme,
+  Group,
+  Header,
+  useMantineColorScheme,
+} from "@mantine/core";
 
-import { User } from "@styled-icons/feather";
+import { PersonIcon, SunIcon, MoonIcon } from "@radix-ui/react-icons";
 
-const customStyles = {
-  content: {
-    top: "50px",
-    left: "82%",
-    right: "auto",
-    bottom: "auto",
-    background: "transparent",
-    margin: 0,
-    transform: "translateX(-50%)",
-    border: "none",
-  },
-  overlay: {
-    background: "transparent",
-    zIndex: 1000,
-  },
+type LayoutProps = {
+  navbar?: React.ReactElement;
 };
 
-type ILayout = {
-  children: React.ReactChild;
-  title?: string;
-};
-
-export const Layout = ({ children, title = "MemCode" }: ILayout) => {
+export const Layout: React.FC<LayoutProps> = ({ children, navbar }) => {
   const session = useSession();
 
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      Modal.setAppElement("body");
-    }
-  }, []);
-
-  const [modalOpen, setModalOpen] = React.useState(false);
-
-  const toggleModal = () => setModalOpen(!modalOpen);
-
-  const isDark = false;
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === "dark";
 
   return (
-    <>
-      <Head>
-        <title>{title}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <GlobalContainer>
-        <Header alignItems="center">
-          <Box mr="auto">
-            <Link prefetch={true} to="/">
-              <TextStyled invert={isDark} fontSize={[2, 3, 4, 5]} pr="auto">
+    <AppShell
+      {...(navbar && { navbar })}
+      header={
+        <Header height={80} padding="sm" mx="md">
+          <Group position="apart" direction="row" align="center">
+            <Link to="/">
+              <span>
                 <Image src={logo} alt="logo" width="48" height="48" />
-              </TextStyled>
+              </span>
             </Link>
-          </Box>
-          {/* {session.status === "authenticated" && ( */}
-          {/*   <Box pl="2rem"> */}
-          {/*     <Link prefetch={true} to="/strenghten"> */}
-          {/*       <TextStyled fontSize={[2, 3, 4]}>Strenghten</TextStyled> */}
-          {/*     </Link> */}
-          {/*   </Box> */}
-          {/* )} */}
-
-          <Box
-            style={{ cursor: "pointer" }}
-            onClick={() => {
-              if (session.status === "authenticated") {
-                setModalOpen(true);
-              } else {
-                signIn();
-              }
-            }}
-            pl="2rem"
-          >
-            <PlugInWrapper invert={isDark}>
-              {session.status === "authenticated" ? (
-                <img
-                  src={session.data.user.image}
-                  title="Disconnect"
-                  alt="avatar"
-                  style={{ width: "48px", height: "48px" }}
-                />
-              ) : (
-                <User width={48} height={48} title={"Connect with Github"} />
-              )}
-            </PlugInWrapper>
-          </Box>
-          <Modal
-            isOpen={modalOpen}
-            onAfterOpen={() => {}}
-            onRequestClose={toggleModal}
-            shouldCloseOnOverlayClick={true}
-            style={customStyles}
-          >
-            <Popup />
-          </Modal>
+            <Group direction="row">
+              <ActionIcon onClick={() => toggleColorScheme()}>
+                {isDark ? (
+                  <SunIcon height={40} width={40} />
+                ) : (
+                  <MoonIcon height={40} width={40} />
+                )}
+              </ActionIcon>
+              <div>
+                {session.status === "authenticated" ? (
+                  <img
+                    src={session.data.user.image}
+                    title="Disconnect"
+                    alt="avatar"
+                    onClick={() => signOut()}
+                    style={{ width: "48px", height: "48px" }}
+                  />
+                ) : (
+                  <div title="Connect with Github">
+                    <PersonIcon
+                      onClick={() => signIn()}
+                      width={48}
+                      height={48}
+                    />
+                  </div>
+                )}
+              </div>
+            </Group>
+          </Group>
         </Header>
-        {children}
-      </GlobalContainer>
-    </>
+      }
+      styles={(theme) => ({
+        main: {
+          backgroundColor:
+            theme.colorScheme === "dark"
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
+        },
+      })}
+    >
+      <Box sx={{ height: "100vh" }}>{children}</Box>
+    </AppShell>
   );
 };

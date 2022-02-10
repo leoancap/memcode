@@ -1,7 +1,5 @@
 export * from "./Layout/Layout";
 
-export * from "./js/ShadowScroll.js";
-
 export * from "./shared/index";
 
 export * from "./exercise/Description";

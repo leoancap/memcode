@@ -1,33 +1,16 @@
+import { Box, Title, Text } from "@mantine/core";
 import React from "react";
-
-import styled from "../../styled";
+import { TExercise } from "src/types/Domain";
 
 interface rightPane {
-  exercise: any;
+  exercise: TExercise;
 }
 
 export default function Description({ exercise }: rightPane) {
   return (
-    <Wrapper>
-      <DescriptionWrapper>
-        <h1>Description</h1>
-        <p>{exercise.description}</p>
-      </DescriptionWrapper>
-    </Wrapper>
+    <Box>
+      <Title order={2}>Description</Title>
+      <Text>{exercise.description}</Text>
+    </Box>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  padding: 2rem;
-`;
-const DescriptionWrapper = styled.div`
-  margin: 0 auto;
-  h1 {
-    text-align: center;
-  }
-  p {
-    font-size: 16px;
-    text-align: left;
-  }
-`;

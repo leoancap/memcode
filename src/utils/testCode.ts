@@ -1,4 +1,4 @@
-import ts from "typescript";
+import { transpile } from "typescript";
 import { evalWorker } from "./evalWorker";
 
 export interface ICodeError {
@@ -23,7 +23,7 @@ export interface ITestCode {
 }
 
 const transpileCode = (code: string, test: string, bundledExercises = "") =>
-  `${ts.transpile(bundledExercises)} ; ${ts.transpile(code)} ; ${test}`;
+  `${transpile(bundledExercises)} ; ${transpile(code)} ; ${test}`;
 
 export async function testCode({
   code,

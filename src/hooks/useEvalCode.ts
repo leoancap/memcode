@@ -1,4 +1,5 @@
 import React from "react";
+import { TRightPaneTabs } from "src/components";
 import { runReasonEndpoint } from "src/utils/contants";
 import { testCode } from "src/utils/testCode";
 
@@ -15,8 +16,6 @@ type TEvalCode = {
   bundledExercises?: string;
 };
 
-export type IRightPane = "description" | "error" | "results" | "solution";
-
 export function useEvalCode({
   code,
   solution,
@@ -24,11 +23,15 @@ export function useEvalCode({
   language,
   bundledExercises = "",
 }: TEvalCode) {
-  const [rightPane, setRightPane] = React.useState<IRightPane>("description");
+  const [rightPane, setRightPane] =
+    React.useState<TRightPaneTabs>("description");
   const [results, setResults] = React.useState<IResults[] | null>();
   const [error, setErrors] = React.useState("");
 
+  const [isExecuting, setIsExecuting] = React.useState(false);
+
   const evalCode = async () => {
+    setIsExecuting(true);
     if (language === "Reason") {
       const rawResponse = await fetch(runReasonEndpoint, {
         headers: {
@@ -49,7 +52,7 @@ export function useEvalCode({
       setRightPane("results");
       if (res.error) {
         setErrors(res.error.message);
-        setRightPane("error");
+        setRightPane("results");
       } else {
         setResults(res.results);
       }
@@ -65,7 +68,7 @@ export function useEvalCode({
       setRightPane("results");
       if (res.message) {
         if (res.error !== "implementation") {
-          setRightPane("error");
+          setRightPane("results");
           setErrors(res.message);
         } else {
           setErrors("");
@@ -74,9 +77,11 @@ export function useEvalCode({
         setErrors("");
       }
     }
+    setIsExecuting(false);
   };
 
   return {
+    isExecuting,
     rightPane,
     setRightPane,
     results,
