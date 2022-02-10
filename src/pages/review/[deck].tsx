@@ -5,7 +5,6 @@ import Layout from "../../components/Layout/Layout";
 import { Button, Box, Flex, Text } from "rebass";
 import { findDeckByIdQuery } from "../../graphql/deck/queries/findDeck";
 import SplitPane from "react-split-pane";
-import Play from "../../components/shared/Play";
 import { testCode } from "../../utils/testCode";
 import cookie from "js-cookie";
 import { observer } from "mobx-react-lite";
@@ -15,6 +14,7 @@ import { MyCtx } from "../../typings/MyCtx";
 import { NextComponentType } from "next";
 import RightPane from "../../components/shared/RightPane";
 import { runPythonEndpoint } from "../../lib/apollo";
+import { Play } from "@styled-icons/feather";
 
 const Editor: any = dynamic(import("../../components/js/Editor"), {
   ssr: false,
