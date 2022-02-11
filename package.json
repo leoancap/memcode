@@ -18,7 +18,7 @@
     "next": "12.0.10",
     "next-auth": "4.2.1",
     "next-routes": "1.4.2",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.7",
     "prettier": "1.18.2",
     "prisma": "3.9.1",
     "ramda": "0.26.1",
