@@ -12,27 +12,18 @@ Memcode allows you to add your challenges and share with other users. The same g
 
 ## Languages Supported
 
-Javascript, Typescript and Python.
+Javascript, Typescript and ReasonML
 
 ## Roadmap
 
 - [x] Add, edit and remove Challenges
-- [x] Add support for Python in production
-- [ ] Forgot password
-- [ ] Add support for Scheme in production
+- [ ] Add support for spaced-repetition
+- [ ] Add support for Scheme 
 - [ ] Add support for ReasonML in production (Need a docker container with opam and bucklescript)
-- [ ] Forum for challenges
 
 ## Tech Stack
 
 - React
 - Next.js
-- Typescript
-- Mobx
-- CSS-in-JS (Emotion.js)
-- NodeJS
-- GraphQL
-- ApolloServer
-- Typeorm
-- TypeGraphQL
-- Postgres
+- Prisma
+- Postgresql

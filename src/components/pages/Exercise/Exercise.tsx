@@ -2,7 +2,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { Layout, Link, RightPane } from "src/components";
 import { useEvalCode } from "src/hooks/useEvalCode";
-import { defaultExercise } from "src/utils/contants";
+import { defaultExercise } from "src/utils/constants";
 import Router from "next/router";
 import {
   Grid,
@@ -11,7 +11,7 @@ import {
   Title,
   Box,
   ActionIcon,
-  useMantineColorScheme,
+  Text,
 } from "@mantine/core";
 
 import { PlayIcon, Cross1Icon } from "@radix-ui/react-icons";
@@ -19,6 +19,8 @@ import { TDeck, TExercise } from "src/types/Domain";
 import { api } from "src/utils/api";
 import { Editor } from "src/components/Editor/Editor";
 import { useHotkeys } from "@mantine/hooks";
+import { ConfigContext } from "src/utils/ConfigContext";
+// import Script from "next/script";
 
 type IExercisePage = {
   deck: TDeck;
@@ -33,9 +35,14 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
     exercises.length > 0 ? exercises[0] : defaultExercise
   );
 
+  const { configState } = React.useContext(ConfigContext);
+
   const bundledExercises = React.useMemo(
-    () => deck.exercises.map((exer) => exer.solution).join(" ; "),
-    [deck]
+    () =>
+      configState.includePreviousExercises === "true"
+        ? deck.exercises.map((exer) => exer.solution).join(" ;  ")
+        : "",
+    [deck, configState.includePreviousExercises]
   );
 
   const { error, results, evalCode, rightPane, setRightPane, isExecuting } =
@@ -63,29 +70,49 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
 
   useHotkeys([["ctrl+k", () => evalCode()]]);
 
-  // console.log({ deck });
   return (
     <Layout>
+      {/* <Script */}
+      {/*   src={`https://cdn.rescript-lang.org/v9.0.1/compiler.js`} */}
+      {/*   strategy="lazyOnload" */}
+      {/*   onLoad={() => { */}
+      {/*     const comp = rescript_compiler.make(); */}
+      {/*     console.log({ comp }); */}
+      {/*   }} */}
+      {/* /> */}
+      {/* <Script */}
+      {/*   src="https://reasonml.github.io/js/stdlibBundle.js" */}
+      {/*   strategy="lazyOnload" */}
+      {/*   onLoad={() => { */}
+      {/*     // const comp = rescript_compiler.make(); */}
+      {/*     console.log({ window }); */}
+      {/*   }} */}
+      {/* /> */}
+
       <Grid sx={{ height: "100%" }}>
         <Grid.Col span={2}>
           <Group m="xs" direction="column">
             {exercises.map((exer: TExercise, key: number) => {
               const selected = exer.id === currentExercise.id;
               return (
-                <Box
+                <Group
                   sx={{
                     width: "100%",
                     cursor: "pointer",
-                    // ...(selected && {
-                    //   background: "gainsboro",
-                    // }),
+                    ...(!selected && {
+                      opacity: 0.5,
+                    }),
                   }}
                   key={exer.id}
                   onClick={() => setCurrentExercise(exer)}
+                  direction="row"
+                  noWrap
+                  position="apart"
+                  mx="xs"
                 >
-                  <Group mx="xs" position="apart" direction="row">
-                    <Title order={5}>{`${key + 1} - ${exer.title}`}</Title>
-                    {session.status === "authenticated" && (
+                  <Text>{`${key + 1} - ${exer.title}`}</Text>
+                  {session.status === "authenticated" &&
+                    session.data.userId === deck.userId && (
                       <ActionIcon
                         onClick={(e: { stopPropagation: () => void }) => {
                           e.stopPropagation();
@@ -95,8 +122,7 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
                         <Cross1Icon height={20} width={20} />
                       </ActionIcon>
                     )}
-                  </Group>
-                </Box>
+                </Group>
               );
             })}
           </Group>

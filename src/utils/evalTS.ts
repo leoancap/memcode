@@ -1,4 +1,3 @@
-import { transpile } from "typescript";
 import { evalWorker } from "./evalWorker";
 
 export interface ICodeError {
@@ -22,10 +21,22 @@ export interface ITestCode {
   bundledExercises?: string;
 }
 
-const transpileCode = (code: string, test: string, bundledExercises = "") =>
-  `${transpile(bundledExercises)} ; ${transpile(code)} ; ${test}`;
+let ts = null;
 
-export async function testCode({
+const transpileCode = async (
+  code: string,
+  test: string,
+  bundledExercises = ""
+) => {
+  if (!ts) {
+    ts = await import("typescript");
+  }
+  const { transpile } = ts;
+
+  return `${transpile(bundledExercises)} ; ${transpile(code)} ; ${test}`;
+};
+
+export async function evalTS({
   code,
   solution,
   testsStrings,
@@ -41,12 +52,12 @@ export async function testCode({
   for (let i = 0; i < tests.length; i++) {
     try {
       const { message: userCode } = await evalWorker(
-        transpileCode(code, tests[i], bundledExercises),
+        await transpileCode(code, tests[i], bundledExercises),
         1000
       );
 
       const { message: codeSolution } = await evalWorker(
-        transpileCode(solution, tests[i], bundledExercises),
+        await transpileCode(solution, tests[i], bundledExercises),
         1000
       );
 

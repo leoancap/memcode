@@ -14,7 +14,7 @@ export default NextAuth({
   callbacks: {
     session: ({ session, user }) => {
       if (session.user && user) {
-        session.id = user.id;
+        session.userId = user.id;
       }
       return Promise.resolve(session);
     },

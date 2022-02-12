@@ -1,10 +1,5 @@
 import { TExercise } from "src/types/Domain";
 
-export const runReasonEndpoint =
-  "https://fathomless-refuge-53477.herokuapp.com/";
-
-export const runPythonEndpoint = "https://memcode-api.now.sh/python";
-
 export const jsDefaultCode = `const add = (a, b) => {
   
 }`;
@@ -30,10 +25,6 @@ export const reDefaultSolution = `let add = (a:int, b:int) => {
   a + b;
 };
 `;
-
-export type TLevel = "easy" | "good" | "hard";
-
-export type TEditorMode = "vim" | "default";
 
 export const defaultExercise: TExercise = {
   title: "add",

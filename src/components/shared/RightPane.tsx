@@ -1,7 +1,7 @@
 import React from "react";
 import Results from "../exercise/Results";
 import ErrorCode from "../exercise/ErrorCode";
-import { Tabs, Text, Box, Code, Checkbox } from "@mantine/core";
+import { Tabs, Text, Box, Code, Checkbox, Group } from "@mantine/core";
 
 import { ConfigContext } from "src/utils/ConfigContext";
 import { TExercise } from "src/types/Domain";
@@ -66,11 +66,18 @@ export const RightPane = ({
           {error && <ErrorCode error={error} />}
         </Tabs.Tab>
         <Tabs.Tab label="Settings">
-          <Checkbox
-            label="Vim"
-            checked={configState.editorMode === "vim"}
-            onChange={() => dispatch("toggleEditorMode")}
-          />
+          <Group direction="column" spacing="xs">
+            <Checkbox
+              label="Vim"
+              checked={configState.editorMode === "vim"}
+              onChange={() => dispatch("toggleEditorMode")}
+            />
+            <Checkbox
+              label="Include Previous Exercises"
+              checked={configState.includePreviousExercises === "true"}
+              onChange={() => dispatch("toggleIncludePreviousExercises")}
+            />
+          </Group>
         </Tabs.Tab>
       </Tabs>
     </Box>

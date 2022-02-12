@@ -5,3 +5,9 @@ export type TDeck = Deck & {
 };
 
 export type TExercise = Exercise;
+
+export type TLevel = "easy" | "good" | "hard";
+
+export type TEditorMode = "vim" | "default";
+
+export type TBool = "true" | "false";

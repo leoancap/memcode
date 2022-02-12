@@ -1,7 +1,7 @@
 import React from "react";
 import { TRightPaneTabs } from "src/components";
-import { runReasonEndpoint } from "src/utils/contants";
-import { testCode } from "src/utils/testCode";
+import { api } from "src/utils/api";
+import { evalTS } from "src/utils/evalTS";
 
 type IResults = {
   user: string;
@@ -33,37 +33,29 @@ export function useEvalCode({
   const evalCode = async () => {
     setIsExecuting(true);
     if (language === "Reason") {
-      const rawResponse = await fetch(runReasonEndpoint, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          code: code,
-          solution: solution,
-          tests: tests,
-          isTesting: true,
-        }),
+      const res = await api.runReason({
+        code: code,
+        solution: solution,
+        tests: tests,
+        bundledExercises,
+        isTesting: true,
       });
-      const res = await rawResponse.json();
       setResults(res.results);
       setRightPane("results");
       if (res.error) {
         setErrors(res.error.message);
         setRightPane("results");
       } else {
+        setErrors("");
         setResults(res.results);
       }
     } else {
-      const res = await testCode({
+      const res = await evalTS({
         code: code,
         solution: solution,
         testsStrings: tests,
         bundledExercises: bundledExercises,
       });
-      console.log({ res });
       setResults(res.results);
       setRightPane("results");
       if (res.message) {

@@ -7,7 +7,7 @@ import {
   jsDefaultSolution,
   reDefaultSolution,
   tsDefaultSolution,
-} from "src/utils/contants";
+} from "src/utils/constants";
 import { Layout } from "src/components";
 import { Box, Button, Center, Textarea, TextInput, Title } from "@mantine/core";
 import { Editor } from "src/components/Editor/Editor";
