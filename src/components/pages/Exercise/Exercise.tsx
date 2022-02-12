@@ -20,6 +20,7 @@ import { api } from "src/utils/api";
 import { Editor } from "src/components/Editor/Editor";
 import { useHotkeys } from "@mantine/hooks";
 import { ConfigContext } from "src/utils/ConfigContext";
+import { useFormatCode } from "src/hooks/useFormatCode";
 // import Script from "next/script";
 
 type IExercisePage = {
@@ -30,7 +31,7 @@ type IExercisePage = {
 export const ExercisePage = ({ deck }: IExercisePage) => {
   const exercises = deck.exercises ?? [];
 
-  const [userCode, setUserCode] = React.useState("");
+  const [code, setCode] = React.useState("");
   const [currentExercise, setCurrentExercise] = React.useState<TExercise>(
     exercises.length > 0 ? exercises[0] : defaultExercise
   );
@@ -47,7 +48,7 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
 
   const { error, results, evalCode, rightPane, setRightPane, isExecuting } =
     useEvalCode({
-      code: userCode,
+      code,
       solution: currentExercise.solution,
       tests: currentExercise.tests,
       language: deck.language,
@@ -56,7 +57,7 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
 
   React.useEffect(() => {
     if (currentExercise) {
-      setUserCode(currentExercise.code);
+      setCode(currentExercise.code);
       setRightPane("description");
     }
   }, [currentExercise]);
@@ -66,9 +67,18 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
     Router.reload();
   }, []);
 
+  const handleFormat = useFormatCode({
+    code,
+    language: deck.language,
+    setCode,
+  });
+
   const session = useSession();
 
-  useHotkeys([["ctrl+k", () => evalCode()]]);
+  useHotkeys([
+    ["ctrl+s", evalCode],
+    ["ctrl+f", handleFormat],
+  ]);
 
   return (
     <Layout>
@@ -88,7 +98,6 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
       {/*     console.log({ window }); */}
       {/*   }} */}
       {/* /> */}
-
       <Grid sx={{ height: "100%" }}>
         <Grid.Col span={2}>
           <Group m="xs" direction="column">
@@ -131,9 +140,21 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
           <Grid sx={{ height: "100%" }}>
             <Grid.Col span={6}>
               <Group mb="xs" align="center" noWrap position="right">
-                <Title mr="auto" order={3}>
-                  {deck.title}
-                </Title>
+                <Title order={3}>{deck.title}</Title>
+                {session.status === "authenticated" &&
+                  session.data.userId === deck.userId && (
+                    <Link to={`/create/${deck.id}`}>
+                      <Button variant="default">New Exercise</Button>
+                    </Link>
+                  )}
+                <Button
+                  ml="auto"
+                  // rightIcon={<PlayIcon height={18} width={18} />}
+                  onClick={handleFormat}
+                  variant="outline"
+                >
+                  Format
+                </Button>
                 <Button
                   rightIcon={<PlayIcon height={18} width={18} />}
                   onClick={evalCode}
@@ -142,20 +163,14 @@ export const ExercisePage = ({ deck }: IExercisePage) => {
                 >
                   Execute
                 </Button>
-                {session.status === "authenticated" &&
-                  session.data.id === deck.userId && (
-                    <Link to={`/create/${deck.id}`}>
-                      <Button variant="default">New Exercise</Button>
-                    </Link>
-                  )}
               </Group>
               <Box sx={{ height: "100%" }}>
                 <Editor
                   height="100%"
-                  code={userCode}
+                  code={code}
                   language={deck.language}
                   onChange={(value: string) => {
-                    setUserCode(value);
+                    setCode(value);
                   }}
                 />
               </Box>
