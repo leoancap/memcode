@@ -1,10 +1,10 @@
-import { TResult } from "./evalWorker";
+import { TWorkerData } from "./evalWorker";
 
 addEventListener("message", (event) => {
   try {
     const codeResult = eval(event.data);
 
-    const response: TResult = { status: "success", message: codeResult };
+    const response: TWorkerData = { status: "success", message: codeResult };
 
     postMessage(response);
 

@@ -1,19 +1,34 @@
+import { GetStaticProps } from "next";
 import React from "react";
 import { ExercisePage } from "src/components/pages/Exercise";
-import { prisma } from "src/lib/prisma";
+import { DeckProvider } from "src/context/DeckContext";
+import { api } from "src/utils/api";
 
-export const getServerSideProps = async ({ query: { deck: deckId } }) => {
-  const deck = await prisma.deck.findFirst({
-    where: { id: { equals: deckId as string } },
-    include: { exercises: true },
-  });
+export default function DeckPage(pageProps: any) {
+  return (
+    <DeckProvider>
+      <ExercisePage {...pageProps} />;
+    </DeckProvider>
+  );
+}
 
-  const serializedDeck = JSON.parse(JSON.stringify(deck));
+export const getStaticProps: GetStaticProps = async (context) => {
+  const deckId = context.params?.deck as string;
+
+  const deck = await api.getDeck(deckId);
+
   return {
-    props: { deck: serializedDeck },
+    props: {
+      fallback: {
+        [`/deck/${deckId}`]: deck,
+      },
+    },
   };
 };
 
-export default function DeckPage(pageProps: any) {
-  return <ExercisePage {...pageProps} />;
-}
+export const getStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};

@@ -1,4 +1,4 @@
-export type TResult = {
+export type TWorkerData = {
   status: "error" | "timeout" | "success" | "unexecuted";
   message: string;
 };
@@ -6,7 +6,7 @@ export type TResult = {
 export function evalWorker(
   code: string,
   timeout: number = 5000
-): Promise<TResult> {
+): Promise<TWorkerData> {
   return new Promise((res, rej) => {
     let worker = new Worker(new URL("./worker.ts", import.meta.url));
 

@@ -1,14 +1,18 @@
 import { Decks } from "src/components/pages/Decks";
-import { prisma } from "src/lib/prisma";
+import { api } from "src/utils/api";
 
 export default function Index(props: any) {
   return <Decks {...props} />;
 }
 
-export const getServerSideProps = async () => {
-  const initialDecks = JSON.parse(JSON.stringify(await prisma.deck.findMany()));
+export const getStaticProps = async () => {
+  const initialDecks = await api.getDecks();
 
   return {
-    props: { initialDecks },
+    props: {
+      fallback: {
+        decks: initialDecks,
+      },
+    },
   };
 };

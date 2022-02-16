@@ -7,7 +7,9 @@ import {
 } from "@mantine/core";
 import { useHotkeys, useLocalStorageValue } from "@mantine/hooks";
 import React from "react";
-import { ConfigProvider } from "src/utils/ConfigContext";
+import { SWRConfig } from "swr";
+import { ConfigProvider } from "src/context/ConfigContext";
+import { DeckProvider } from "src/context/DeckContext";
 
 export default function Main({ Component, pageProps }) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
@@ -30,25 +32,27 @@ export default function Main({ Component, pageProps }) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <ConfigProvider>
-        <ColorSchemeProvider
-          colorScheme={colorScheme}
-          toggleColorScheme={toggleColorScheme}
-        >
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              /** Put your mantine theme override here */
-              colorScheme: colorScheme === "dark" ? "dark" : "light",
-            }}
-          >
-            <SessionProvider session={pageProps.session}>
-              <Component {...pageProps} />
-            </SessionProvider>
-          </MantineProvider>
-        </ColorSchemeProvider>
-      </ConfigProvider>
+      <SessionProvider session={pageProps.session}>
+        <SWRConfig value={{ fallback: pageProps.fallback }}>
+          <ConfigProvider>
+            <MantineProvider
+              withGlobalStyles
+              withNormalizeCSS
+              theme={{
+                /** Put your mantine theme override here */
+                colorScheme: colorScheme === "dark" ? "dark" : "light",
+              }}
+            >
+              <ColorSchemeProvider
+                colorScheme={colorScheme}
+                toggleColorScheme={toggleColorScheme}
+              >
+                <Component {...pageProps} />
+              </ColorSchemeProvider>
+            </MantineProvider>
+          </ConfigProvider>
+        </SWRConfig>
+      </SessionProvider>
     </>
   );
 }

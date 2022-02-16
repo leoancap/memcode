@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-const CodeMirror: any = dynamic(import("./CodeMirror"), {
+const CodeMirror = dynamic(import("./CodeMirror"), {
   ssr: false,
 });
 

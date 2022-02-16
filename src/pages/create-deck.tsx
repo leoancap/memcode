@@ -12,6 +12,10 @@ import {
   Title,
 } from "@mantine/core";
 import { Layout } from "src/components";
+import { TDeckInput } from "src/types/Domain";
+import { api } from "src/utils/api";
+import { useSetState } from "@mantine/hooks";
+import { Language } from "@prisma/client";
 
 export default function CreateDecks() {
   const session = useSession();
@@ -21,7 +25,7 @@ export default function CreateDecks() {
     }
   }, []);
 
-  const [deckData, setDeckData] = React.useState({
+  const [deckData, setDeckData] = useSetState<TDeckInput>({
     title: "",
     description: "",
     tags: [],
@@ -30,20 +34,13 @@ export default function CreateDecks() {
 
   const handleChange = ({ target: { name, value } }: any) => {
     setDeckData({
-      ...deckData,
       [name]: value,
     });
   };
 
   const onSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const res = await (
-      await fetch("/api/create-deck", {
-        method: "POST",
-        body: JSON.stringify(deckData),
-      })
-    ).json();
-    console.log({ res });
+    await api.createDeck(deckData);
     Router.push("/");
   };
 
@@ -63,7 +60,7 @@ export default function CreateDecks() {
             />
             <Textarea
               required
-              label="description"
+              label="Description"
               name="description"
               value={deckData.description}
               onChange={handleChange}
@@ -72,14 +69,16 @@ export default function CreateDecks() {
             />
             <Select
               label="Language"
-              onChange={handleChange}
+              onChange={(language) =>
+                setDeckData({ language: language as Language })
+              }
+              name="language"
               value={deckData.language}
               size="md"
-              data={[
-                { value: "Typescript", label: "Typescript" },
-                { value: "Javascript", label: "Javascript" },
-                { value: "Reason", label: "Reason" },
-              ]}
+              data={Object.values(Language).map((l) => ({
+                value: l,
+                label: l,
+              }))}
             />
             <Button type="submit">Create Deck</Button>
           </Group>

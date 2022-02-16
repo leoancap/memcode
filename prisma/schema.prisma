@@ -7,12 +7,18 @@ datasource db {
   url      = env("postgres")
 }
 
+enum Language {
+  Typescript
+  Javascript
+  Reason
+}
+
 model Deck {
   id           String         @id @default(cuid())
   title        String
   description  String
   exercises    Exercise[]
-  language     String
+  language     Language
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   tags         String[]
@@ -46,7 +52,7 @@ model Exercise {
   description      String
   code             String
   solution         String
-  tests            String
+  tests            String[]
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   deck             Deck?              @relation(fields: [deckId], references: [id])

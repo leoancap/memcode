@@ -1,15 +1,11 @@
 export const request = {
-  post: async (url: string, body: any) => {
-    const rawResponse = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+  post: async (url: string, body: any, config = {}) => {
+    const response = await fetch(url, {
       method: "POST",
       body: JSON.stringify(body),
+      ...config,
     });
-    const res = await rawResponse.json();
-    return res;
+    const data = response.json();
+    return data;
   },
 };

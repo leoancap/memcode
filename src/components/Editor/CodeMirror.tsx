@@ -6,7 +6,7 @@ import { useMantineColorScheme } from "@mantine/core";
 
 import { vim } from "@replit/codemirror-vim";
 import React from "react";
-import { ConfigContext } from "src/utils/ConfigContext";
+import { ConfigContext } from "src/context/ConfigContext";
 
 export default function CodeMirrorEditor({ height, code, onChange }) {
   const { colorScheme } = useMantineColorScheme();
@@ -45,7 +45,7 @@ export default function CodeMirrorEditor({ height, code, onChange }) {
       value={code}
       ref={editorRef}
       height={height}
-      style={{ height: "100%", fontSize: 18 }}
+      style={{ height, fontSize: 18 }}
       theme={colorScheme ?? "dark"}
       extensions={extensions}
       onChange={(value, _viewUpdate) => {

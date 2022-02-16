@@ -8,7 +8,6 @@ import {
   ActionIcon,
   AppShell,
   Box,
-  ColorScheme,
   Group,
   Header,
   useMantineColorScheme,
@@ -30,7 +29,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, navbar }) => {
     <AppShell
       {...(navbar && { navbar })}
       header={
-        <Header height={80} padding="sm" mx="md">
+        <Header height={80} padding="sm">
           <Group position="apart" direction="row" align="center">
             <Link to="/">
               <span>
@@ -68,8 +67,10 @@ export const Layout: React.FC<LayoutProps> = ({ children, navbar }) => {
           </Group>
         </Header>
       }
+      fixed={"true" as unknown as boolean}
       styles={(theme) => ({
         main: {
+          overflow: "hidden",
           backgroundColor:
             theme.colorScheme === "dark"
               ? theme.colors.dark[8]
@@ -77,7 +78,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, navbar }) => {
         },
       })}
     >
-      <Box sx={{ height: "100vh" }}>{children}</Box>
+      <Box sx={{ height: "calc(100vh - 96px)" }}>{children}</Box>
     </AppShell>
   );
 };

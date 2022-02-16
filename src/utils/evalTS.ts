@@ -17,7 +17,7 @@ export interface IResults {
 export interface ITestCode {
   code: string;
   solution: string;
-  testsStrings: string;
+  tests: string[];
   bundledExercises?: string;
 }
 
@@ -39,7 +39,7 @@ const transpileCode = async (
 export async function evalTS({
   code,
   solution,
-  testsStrings,
+  tests,
   bundledExercises = "",
 }: ITestCode): Promise<ITestCodeResults> {
   let results: IResults[] = [];
@@ -47,7 +47,6 @@ export async function evalTS({
     message: "",
     error: "",
   };
-  const tests = testsStrings.split(";").filter((v) => v);
 
   for (let i = 0; i < tests.length; i++) {
     try {
