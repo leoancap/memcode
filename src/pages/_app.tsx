@@ -9,12 +9,11 @@ import { useHotkeys, useLocalStorageValue } from "@mantine/hooks";
 import React from "react";
 import { SWRConfig } from "swr";
 import { ConfigProvider } from "src/context/ConfigContext";
-import { DeckProvider } from "src/context/DeckContext";
 
 export default function Main({ Component, pageProps }) {
   const [colorScheme, setColorScheme] = useLocalStorageValue<ColorScheme>({
     key: "mantine-color-scheme",
-    defaultValue: "light",
+    defaultValue: "dark",
   });
 
   const toggleColorScheme = (value?: ColorScheme) =>

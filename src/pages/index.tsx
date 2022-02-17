@@ -1,12 +1,12 @@
 import { Decks } from "src/components/pages/Decks";
-import { api } from "src/utils/api";
+import { getDecks } from "./api/get-decks";
 
 export default function Index(props: any) {
   return <Decks {...props} />;
 }
 
-export const getStaticProps = async () => {
-  const initialDecks = await api.getDecks();
+export async function getServerSideProps() {
+  const initialDecks = await getDecks();
 
   return {
     props: {
@@ -15,4 +15,4 @@ export const getStaticProps = async () => {
       },
     },
   };
-};
+}

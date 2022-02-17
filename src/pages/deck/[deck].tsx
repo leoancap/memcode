@@ -1,8 +1,8 @@
-import { GetStaticProps } from "next";
+import { GetServerSidePropsContext } from "next";
 import React from "react";
 import { ExercisePage } from "src/components/pages/Exercise";
 import { DeckProvider } from "src/context/DeckContext";
-import { api } from "src/utils/api";
+import { getDeck } from "../api/get-deck";
 
 export default function DeckPage(pageProps: any) {
   return (
@@ -12,10 +12,10 @@ export default function DeckPage(pageProps: any) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const deckId = context.params?.deck as string;
 
-  const deck = await api.getDeck(deckId);
+  const deck = await getDeck(deckId);
 
   return {
     props: {
@@ -24,11 +24,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
     },
   };
-};
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-};
+}

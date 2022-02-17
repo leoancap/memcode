@@ -17,7 +17,7 @@ export const RightPane = ({ results = [], error }) => {
   const [isEditing, setIsEditing] = React.useState(false);
 
   useDidUpdate(() => {
-    if (currentExercise.id !== previousExercise.id) {
+    if (currentExercise?.id !== previousExercise?.id) {
       setActiveTab(0);
       setIsEditing(false);
     }

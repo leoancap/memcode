@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Card, Grid, Text, Box, Group, Title } from "@mantine/core";
-import { Deck } from "@prisma/client";
+import { TDeck } from "src/types/Domain";
 
 const getLogo = (language: string) => {
   if (language === "Javascript") return jsLogo;
@@ -17,8 +17,7 @@ const getLogo = (language: string) => {
 };
 
 interface IDecksListing {
-  decks: Deck[];
-  // isStrenghten?: boolean;
+  decks: TDeck[];
 }
 
 export function DeckListing({
@@ -33,9 +32,12 @@ IDecksListing) {
 
   const session = useSession();
 
+  const getIsAuthorPlaying = (deck: TDeck) =>
+    session.status === "authenticated" && session.data.id === deck.userId;
+
   return (
     <Grid gutter="lg" justify="space-between" columns={2}>
-      {decks.map((deck: Deck) => (
+      {decks.map((deck: TDeck) => (
         <Grid.Col key={deck.id} sx={{ minHeight: 80 }} span={1}>
           <Card
             sx={{ minHeight: "100%", cursor: "pointer" }}
@@ -53,24 +55,25 @@ IDecksListing) {
                 />
                 <Title order={6}>{deck.title}</Title>
               </Group>
-              {session.status === "authenticated" &&
-                session.data.id === deck.userId && (
-                  <Box
-                    onClick={(e: { stopPropagation: () => void }) => {
-                      e.stopPropagation();
-                      setIsDeleting(true);
-                      if (!isDeleting) {
-                        // delete icon
-                      }
-                    }}
-                    title="Delete Deck"
-                  >
-                    <Cross1Icon width={25} height={25} />
-                  </Box>
-                )}
+              {getIsAuthorPlaying(deck) ? (
+                <Box
+                  onClick={(e: { stopPropagation: () => void }) => {
+                    e.stopPropagation();
+                    setIsDeleting(true);
+                    if (!isDeleting) {
+                      // delete icon
+                    }
+                  }}
+                  title="Delete Deck"
+                >
+                  <Cross1Icon width={25} height={25} />
+                </Box>
+              ) : null}
             </Group>
             <Card.Section>
-              <Text m="sm">{deck.description.slice(0, 255) + "..."}</Text>
+              <Text lineClamp={4} m="sm">
+                {deck.description}
+              </Text>
             </Card.Section>
           </Card>
         </Grid.Col>

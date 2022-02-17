@@ -19,7 +19,6 @@ export const ExercisePage = () => {
     previousExercise,
     onCreateExercise,
     deck,
-    onUpdateExercise,
   } = React.useContext(DeckContext);
   const exercises = deck.exercises;
 
@@ -36,7 +35,9 @@ export const ExercisePage = () => {
     [deck, configState.includePreviousExercises]
   );
 
-  const [currentCode, setCurrentCode] = React.useState("");
+  const [currentCode, setCurrentCode] = React.useState(
+    currentExercise?.code ?? ""
+  );
 
   const { error, results, handleEvalCode, isExecuting } = useEvalCode({
     currentCode: currentCode,
@@ -80,13 +81,10 @@ export const ExercisePage = () => {
               <EditorActions
                 {...{
                   code: currentCode,
-                  currentExercise,
                   handleEvalCode,
                   handleFormat,
                   isExecuting,
-                  onUpdateExercise,
                   setCode: setCurrentCode,
-                  title: deck.title,
                 }}
               />
             </Grid.Col>

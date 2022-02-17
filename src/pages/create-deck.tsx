@@ -32,7 +32,7 @@ export default function CreateDecks() {
     language: "Typescript",
   });
 
-  const handleChange = ({ target: { name, value } }: any) => {
+  const handleChange = ({ target: { name, value } }) => {
     setDeckData({
       [name]: value,
     });
